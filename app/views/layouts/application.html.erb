@@ -14,7 +14,7 @@
     	<!-- <div class="current_char"> -->
         <h5>
         <%= link_to "#{current_char.received_battle_requests.length if current_char.received_battle_requests.length > 0 } Battle Requests", battle_requests_path %>    	  
-    		<%= link_to "#{current_user.received_messages.length if current_user.received_messages.length > 0 } Messages", messages_path %>
+    		<%= link_to "#{current_char.received_messages.length if current_char.received_messages.length > 0 } Messages", messages_path %>
         <%= current_char.name %>
 			<!-- </div> -->
       <%= link_to "Edit Profile", edit_user_path(current_user.id) %>

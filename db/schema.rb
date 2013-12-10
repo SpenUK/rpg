@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131210203426) do
+ActiveRecord::Schema.define(version: 20131210230912) do
 
   create_table "battle_requests", force: true do |t|
     t.integer  "target_id"
@@ -53,13 +53,13 @@ ActiveRecord::Schema.define(version: 20131210203426) do
   end
 
   create_table "messages", force: true do |t|
-    t.integer  "user_id"
     t.integer  "sender_id"
     t.string   "title"
     t.text     "body"
     t.string   "message_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "target_id"
   end
 
   create_table "users", force: true do |t|

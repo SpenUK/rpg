@@ -1,6 +1,8 @@
 class MessagesController < ApplicationController
 
   def index
+    @messages_received = current_char.received_messages
+    @messages_sent = current_char.sent_messages
   end
 
   def show
@@ -8,6 +10,7 @@ class MessagesController < ApplicationController
   end
 
   def new
+    @message
   end
 
   def create
