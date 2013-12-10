@@ -1,0 +1,9 @@
+<div class="container">
+	<% current_user.received_messages.each do |msg| %>
+
+		<div class="message <%= msg.message_type%>">
+			<h5><%= link_to "#{msg.display_type} from User #{msg.sender.id}", message_path(msg.id) %></h5>
+		</div>
+
+	<% end %>
+</div>

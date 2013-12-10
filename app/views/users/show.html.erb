@@ -1,0 +1,36 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+
+<p>
+  <strong>Characters:</strong>
+  <% @user.characters.each do |char| %>
+  	<%= char.name %>
+  <% end %>
+</p>
+
+<p>
+  <strong>Recieved Battle Requests:</strong><br>
+  <% @user.selected_char.received_battle_requests.each do |br| %><br>
+    ID: <%= br.id %> | Target: <%= br.receiver %> | Sender: <%= br.sender %><br>
+    Wager: <%= br.wager %> | Message: <%= br.message %><br>
+  <% end %>
+</p>
+<p>
+  <strong>Sent Battle Requests:</strong><br>
+
+  <% @user.selected_char.sent_battle_requests.each do |br| %><br>
+    ID: <%= br.id %> | Target: <%= br.receiver %> | Sender: <%= br.sender %><br>
+    Wager: <%= br.wager %> | message: <%= br.message %><br>
+  <% end %>
+
+</p>
+
+
+
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>

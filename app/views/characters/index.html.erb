@@ -1,0 +1,21 @@
+<div class= 'container'>
+
+<% @characters.each do |char| %>
+	<% if char.id != current_char.id %>
+		<div class= 'char_card' data-char="<%= char.id %>">
+			<%= link_to character_path(char.id) do %>
+				<h2><%= char.name %></h2>
+
+				<h4><%= "#{char.current_hp}/#{char.max_hp}" %></h4>
+				<h4><%= "#{char.current_mp}/#{char.max_mp}" %></h4>
+
+			<% end %>
+			<%= link_to "Battle!",  request_battle_path(char.id) %>
+
+		</div>
+	<% end %>
+<% end %>
+
+</div>
+
+<%= params.inspect %>

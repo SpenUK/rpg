@@ -1,0 +1,11 @@
+<div class ="container">
+	<%= "#{@message.display_type} from User #{@message.sender.id}" %>
+	<br>
+	<%= @message.title %>
+	<br>
+	<%= @message.body %>
+
+	<% if @message.message_type == "battle_request" %>
+		<%= link_to "Accept", root_path %> | <%= link_to "Decline", root_path %>
+	<% end %>
+</div>

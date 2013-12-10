@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  user_id: 1
+  exp: 1
+  max_hp: 1
+  max_mp: 1
+  current_hp: 1
+  current_mp: 1
+  level: 1
+  stat_strength: 1
+  stat_dex: 1
+  stat_luck: 1
+  stat_int: 1
+  gender: MyString
+
+two:
+  name: MyString
+  user_id: 1
+  exp: 1
+  max_hp: 1
+  max_mp: 1
+  current_hp: 1
+  current_mp: 1
+  level: 1
+  stat_strength: 1
+  stat_dex: 1
+  stat_luck: 1
+  stat_int: 1
+  gender: MyString
