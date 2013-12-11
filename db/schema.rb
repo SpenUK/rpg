@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20131211061135) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "attack_characters", force: true do |t|
     t.integer  "attack_id"
     t.integer  "character_id"
