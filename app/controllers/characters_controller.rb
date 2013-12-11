@@ -41,7 +41,9 @@ class CharactersController < ApplicationController
 
     @target.save
 
-    redirect_to characters_path(cr: @critical, p: @target, d: 1, dmg: @dmg)
+    # redirect_to characters_path(cr: @critical, p: @target, d: 1, dmg: @dmg)
+
+    redirect_to :back
   end
 
   def reset

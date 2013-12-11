@@ -3,10 +3,11 @@
 	<br>
 	<%= @battle_request.message %><br>
 	<%= "Wager: $#{@battle_request.wager}" %>
+	<%= debug params %>
 
 
 	
-		<%= link_to "Accept", battle_accept_path %> |
+		<%= link_to "Accept", battle_accept_path, method: :post  %> |
 		 <%= link_to "Decline", battle_decline_path(@battle_request.id), method: :post %>
 	
 </div>

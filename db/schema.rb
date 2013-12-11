@@ -11,7 +11,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131210230912) do
+ActiveRecord::Schema.define(version: 20131211061135) do
+
+  create_table "attack_characters", force: true do |t|
+    t.integer  "attack_id"
+    t.integer  "character_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "attacks", force: true do |t|
+    t.string   "title"
+    t.boolean  "melee"
+    t.boolean  "physical"
+    t.string   "elemental"
+    t.integer  "base_dmg"
+    t.integer  "mp_consumption"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "dmg_range"
+  end
+
+  create_table "attacks_characters", force: true do |t|
+    t.integer "attack_id"
+    t.integer "character_id"
+  end
 
   create_table "battle_requests", force: true do |t|
     t.integer  "target_id"
@@ -22,11 +46,20 @@ ActiveRecord::Schema.define(version: 20131210230912) do
     t.integer  "sender_id"
   end
 
+  create_table "battle_sessions", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "opponent_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "battles", force: true do |t|
-    t.integer  "whose_turn"
     t.datetime "timeout"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "challenger_id"
+    t.integer  "defender_id"
+    t.string   "status"
   end
 
   create_table "battles_users", force: true do |t|
@@ -48,6 +81,22 @@ ActiveRecord::Schema.define(version: 20131210230912) do
     t.integer  "stat_luck"
     t.integer  "stat_int"
     t.string   "gender"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "characters_consumables", force: true do |t|
+    t.integer "character_id"
+    t.integer "consumable_id"
+  end
+
+  create_table "consumables", force: true do |t|
+    t.string   "title"
+    t.string   "description"
+    t.integer  "hp_regen"
+    t.integer  "mp_regen"
+    t.integer  "base_price"
+    t.integer  "rarity"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

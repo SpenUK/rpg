@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  melee: false
+  physical: false
+  elemental: MyString
+  base_dmg: 1
+  mp_consumption: 1
+
+two:
+  title: MyString
+  melee: false
+  physical: false
+  elemental: MyString
+  base_dmg: 1
+  mp_consumption: 1

@@ -1,8 +1,19 @@
 <div class="container">
+
+	<h2>Received</h2>
 	<% current_char.received_battle_requests.each do |req| %>
 
 		<div class="message battle_request">
 			<h5><%= link_to "Battle Request from #{req.sender.name}", battle_request_path(req.id) %></h5>
+		</div>
+
+	<% end %><br>
+
+<h2>Sent</h2>
+	<% current_char.sent_battle_requests.each do |req| %>
+
+		<div class="message battle_request">
+			<h5><%= link_to "Battle Request sent to #{req.receiver.name}", battle_request_path(req.id) %></h5>
 		</div>
 
 	<% end %>

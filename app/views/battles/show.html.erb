@@ -1,0 +1,42 @@
+<div class="container">
+
+	<h1>Battle!</h1><br>
+
+	<div class="round_summary">
+		<% if params[:dmg].to_i > 0 %>
+			<%= "#{params[:dmg]}  #{'(Critical!)' if params[:cr]}" %>
+		<% end %>
+	</div>
+
+		<div class= 'char_card' data-char="<%= @player1.id %>">
+					<h2><%= @player1.name %></h2>
+
+					<h4><%= "#{@player1.current_hp}/#{@player1.max_hp}" %></h4>
+					<h4><%= "#{@player1.current_mp}/#{@player1.max_mp}" %></h4>
+
+		</div>
+
+		<div class= 'char_card' data-char="<%= @player2.id %>">
+					<h2><%= @player2.name %></h2>
+
+					<h4><%= "#{@player2.current_hp}/#{@player2.max_hp}" %></h4>
+					<h4><%= "#{@player2.current_mp}/#{@player2.max_mp}" %></h4>
+
+		</div>
+
+	<div class="skills_panel">
+
+	<p>| <% current_char.attacks.each do |att| %>
+			<%= link_to attack_url(att.id, ch: @player2.id), method: :post do %>
+				<%= att.title %>
+			<% end %> | 
+		<% end %></p>
+
+		
+	</div>
+
+
+
+
+
+</div>

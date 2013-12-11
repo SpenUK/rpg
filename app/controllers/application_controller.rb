@@ -8,6 +8,10 @@ class ApplicationController < ActionController::Base
   	Character.find(current_user.selected_character_id)
   end
 
+  def battle_session
+    current_char.battles.first
+  end
+
   private
   def not_authenticated
   	redirect_to login_path, alert: "Please login first"

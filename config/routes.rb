@@ -13,17 +13,22 @@ FightyTest::Application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'characters#index'
   resources :characters
-  resources :battles
+  resources :battles, only: [:show, :index]
   resources :battle_requests
 
+  get 'inventory' => 'inventory#index'
 
-  get 'attack/:id' => 'characters#attack'
+
+  post 'attack/:id' => 'battles#attack', as: :attack
   get 'reset' => 'characters#reset', as: :reset
 
   get 'battle_request/:id' => 'battle_requests#new', as: :request_battle
 
   post 'accept_battle_request/:id' => 'battles#create', as: :battle_accept
   post 'decline_battle_request/:id' => 'battle_requests#decline', as: :battle_decline
+
+  post 'add_consumable' => 'consumables#add', as: :add_consumable
+  post 'consume/:id' => 'consumables#consume', as: :consume
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
