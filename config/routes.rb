@@ -30,6 +30,9 @@ FightyTest::Application.routes.draw do
   post 'add_consumable' => 'consumables#add', as: :add_consumable
   post 'consume/:id' => 'consumables#consume', as: :consume
 
+  post 'select_character/:id' => 'users#select_character', as: :select_character
+  # post 'characters/new' => 'characters#new', as: :character_creation
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

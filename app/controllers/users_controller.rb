@@ -63,6 +63,19 @@ class UsersController < ApplicationController
     end
   end
 
+  def select_character
+
+  @user = User.find(current_user.id)
+
+  @user.selected_char << Character.find(params[:id])
+
+    if @user.save
+      redirect_to user_path(current_user.id), notice: "updated"
+    else
+      redirect_to user_path(current_user.id), notice: "Not updated #{@user.errors.full_messages}"
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user

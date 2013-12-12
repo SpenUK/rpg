@@ -1,0 +1,31 @@
+<div class= 'container'>
+
+<% current_user.characters.each do |char| %>
+	<% if current_user.selected_character.id == char.id %>
+		<div class= 'selected_char_card' data-char="<%= char.id %>">
+			<%= link_to character_path(char.id) do %>
+				<h2><%= char.name %></h2>
+
+				<h4><%= "#{char.current_hp}/#{char.max_hp}" %></h4>
+				<h4><%= "#{char.current_mp}/#{char.max_mp}" %></h4>
+
+			<% end %>
+			<%= link_to "Select", select_character_path(char.id), method: :post %>
+
+		</div>
+	<% else %>
+		<div class= 'char_card' data-char="<%= char.id %>">
+			<%= link_to character_path(char.id) do %>
+				<h2><%= char.name %></h2>
+
+				<h4><%= "#{char.current_hp}/#{char.max_hp}" %></h4>
+				<h4><%= "#{char.current_mp}/#{char.max_mp}" %></h4>
+
+			<% end %>
+			<%= link_to "Select", select_character_path(char.id), method: :post %>
+
+		</div>
+	<% end %>
+<% end %>
+
+</div>

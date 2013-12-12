@@ -13,6 +13,39 @@ class CharactersController < ApplicationController
 
   def create
     @character = Character.new(char_params)
+    @character.assign_attributes(
+
+      level: 1,
+      gender: 'male',
+
+      max_hp: 100,
+      max_mp: 50,
+      current_hp: 100,
+      current_mp: 50, 
+      stat_strength: 4 + rand(2), 
+      stat_dex: 4 + rand(2), 
+      stat_luck: 4 + rand(2), 
+      stat_int: 4 + rand(2)
+      )
+
+    if current_user.selected_character
+      @character.selected = false
+    else
+      @character.selected = true
+    end
+
+    if @character.save
+
+      @character.attacks << Attack.find_by(title: 'punch')
+      @character.attacks << Attack.find_by(title: 'kick')
+
+      current_user.characters << @character
+
+      redirect_to user_path(current_user.id), message: "Character Created!"
+    else
+      redirect_to user_path(current_user.id), message: "Could not create character"
+    end
+
   end
 
   def edit
@@ -57,11 +90,17 @@ class CharactersController < ApplicationController
     end
 
     redirect_to :root
+  end
 
+  def select_character
+    @character = Character.find(params[:id])
+
+    current_user.select_character_id = @character.id
+    current_user.save
   end
 
   private
   def char_params
-    # require params(blah)
+    params.require(:character).permit(:name, :gender)
   end
 end

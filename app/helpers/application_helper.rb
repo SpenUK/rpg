@@ -1,8 +1,12 @@
 module ApplicationHelper
 
 	def current_char
-  	Character.find(current_user.selected_character_id)
-	end
+    if current_user.selected_character
+  	  Character.find(current_user.selected_character)
+    else
+      false
+    end
+  end
 
 	def battle_session
 		current_char.battles.first

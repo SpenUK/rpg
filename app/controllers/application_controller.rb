@@ -4,13 +4,13 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_filter :require_login
 
-  def current_char
-  	Character.find(current_user.selected_character_id)
-  end
-
-  def battle_session
-    current_char.battles.first
-  end
+  # def current_char
+  #   if current_user.selected_character_id
+  # 	  Character.find(current_user.selected_character_id)
+  #   else
+  #     nil
+  #   end
+  # end
 
   private
   def not_authenticated

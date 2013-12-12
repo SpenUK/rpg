@@ -4,13 +4,13 @@ class BattleRequestsController < ApplicationController
 	def new
 		@battle_request = BattleRequest.new
 
-		@current = Character.find(current_user.selected_character_id)
+		@current = current_user.selected_character
 		@target = Character.find(params[:id])
 
 	end
 
 	def create
-		@current = Character.find(current_user.selected_character_id)
+		@current = current_user.selected_character
 		@target = @target
 
 

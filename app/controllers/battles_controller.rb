@@ -1,4 +1,5 @@
 class BattlesController < ApplicationController
+	include ApplicationHelper
 
 	def new
 	end
@@ -22,7 +23,7 @@ class BattlesController < ApplicationController
 		if @number_of_battles >= 1
 			redirect_to :root, notice: "You already have a battle in session" 
 		else
-			new_battle = Battle.create(challenger_id: @battle_request.sender_id , defender_id: @battle_request.target_id , status: 'begin' )
+			new_battle = Battle.create(challenger_id: @battle_request.sender_id , defender_id: @battle_request.target_id , status: @battle_request.target_id )
 			@battle_request.destroy
 
 			redirect_to battle_path(new_battle.id)
