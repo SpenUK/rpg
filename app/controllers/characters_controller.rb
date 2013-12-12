@@ -12,6 +12,8 @@ class CharactersController < ApplicationController
   end
 
   def create
+
+  if current_user
     @character = Character.new(char_params)
     @character.assign_attributes(
 
@@ -45,6 +47,9 @@ class CharactersController < ApplicationController
     else
       redirect_to user_path(current_user.id), message: "Could not create character"
     end
+  else
+    redirect_to user_path(current_user.id), message: "huh?"
+  end
 
   end
 

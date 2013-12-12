@@ -1,7 +1,7 @@
 <div class= 'container'>
 
 <% @characters.each do |char| %>
-	
+	<% if char.user.id != current_user.id %>
 
 		<div class= 'char_card' data-char="<%= char.id %>">
 			<%= link_to character_path(char.id) do %>
@@ -14,7 +14,7 @@
 			<%= link_to "Battle!",  request_battle_path(char.id) %>
 
 		</div>
-	
+	<% end %>
 <% end %>
 
 </div>
