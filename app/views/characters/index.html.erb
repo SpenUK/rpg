@@ -3,8 +3,6 @@
 <% @characters.each do |char| %>
 	<% if char.user.id != current_user.id %>
 
-		<h4><%= a= char.user; a.inspect %></h2>
-
 		<div class= 'char_card' data-char="<%= char.id %>">
 			<%= link_to character_path(char.id) do %>
 				<h2><%= char.name %></h2>
@@ -20,5 +18,3 @@
 <% end %>
 
 </div>
-
-<%= params.inspect %>
