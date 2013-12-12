@@ -12,12 +12,13 @@
  *= require_tree .
  */
 
-.container {
+.container h1 {
+	text-align: center;
 
 
 }
 
-.char_card {
+.player {
 	height: 200px;
 	width: 200px;
 	background-color: rgba(220,240,250,0.6);
