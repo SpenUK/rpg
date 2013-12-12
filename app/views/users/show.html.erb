@@ -5,7 +5,7 @@
   <%= @user.email %>
 </p>
 
-<% if @user.id = current_user.id %>
+<% if @user.id = current_user.id && current_user.characters.length > 0 %>
 
   <%= render partial: 'characters/user_characters' %>
 

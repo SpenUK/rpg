@@ -13,43 +13,43 @@ class CharactersController < ApplicationController
 
   def create
 
-  if current_user
-    @character = Character.new(char_params)
-    @character.assign_attributes(
+    if current_user
+      @character = Character.new(char_params)
+      @character.assign_attributes(
 
-      level: 1,
-      gender: 'male',
+        level: 1,
+        gender: 'male',
 
-      max_hp: 100,
-      max_mp: 50,
-      current_hp: 100,
-      current_mp: 50, 
-      stat_strength: 4 + rand(2), 
-      stat_dex: 4 + rand(2), 
-      stat_luck: 4 + rand(2), 
-      stat_int: 4 + rand(2)
-      )
+        max_hp: 100,
+        max_mp: 50,
+        current_hp: 100,
+        current_mp: 50, 
+        stat_strength: 4 + rand(2), 
+        stat_dex: 4 + rand(2), 
+        stat_luck: 4 + rand(2), 
+        stat_int: 4 + rand(2)
+        )
 
-    if current_user.selected_character
-      @character.selected = false
+      if current_user.selected_character
+        @character.selected = false
+      else
+        @character.selected = true
+      end
+
+      if @character.save
+
+        @character.attacks << Attack.find_by(title: 'punch')
+        @character.attacks << Attack.find_by(title: 'kick')
+
+        current_user.characters << @character
+
+        redirect_to user_path(current_user.id), message: "Character Created!"
+      else
+        redirect_to user_path(current_user.id), message: "Could not create character"
+      end
     else
-      @character.selected = true
+      redirect_to user_path(current_user.id), message: "huh?"
     end
-
-    if @character.save
-
-      @character.attacks << Attack.find_by(title: 'punch')
-      @character.attacks << Attack.find_by(title: 'kick')
-
-      current_user.characters << @character
-
-      redirect_to user_path(current_user.id), message: "Character Created!"
-    else
-      redirect_to user_path(current_user.id), message: "Could not create character"
-    end
-  else
-    redirect_to user_path(current_user.id), message: "huh?"
-  end
 
   end
 

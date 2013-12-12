@@ -1,7 +1,5 @@
 <div class= 'container'>
 
-	<%= current_user.selected_character.id %>
-
 <% current_user.characters.each do |char| %>
 	<% if current_user.selected_character.id == char.id %>
 		<div class= 'selected_char_card' data-char="<%= char.id %>">
