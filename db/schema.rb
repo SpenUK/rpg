@@ -11,10 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131211214811) do
+ActiveRecord::Schema.define(version: 20131213210753) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "areas", force: true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "attack_characters", force: true do |t|
     t.integer  "attack_id"
@@ -50,10 +57,11 @@ ActiveRecord::Schema.define(version: 20131211214811) do
   end
 
   create_table "battle_sessions", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "opponent_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "battle_id"
+    t.integer  "challenger_id"
+    t.integer  "defender_id"
   end
 
   create_table "battles", force: true do |t|
@@ -87,6 +95,8 @@ ActiveRecord::Schema.define(version: 20131211214811) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "selected"
+    t.string   "job"
+    t.string   "sprite_url"
   end
 
   create_table "characters_consumables", force: true do |t|
@@ -110,6 +120,17 @@ ActiveRecord::Schema.define(version: 20131211214811) do
     t.datetime "updated_at"
   end
 
+  create_table "fakebattles", force: true do |t|
+    t.integer  "challenger_id"
+    t.integer  "defender_id"
+    t.integer  "winner_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "joins_for_monsters_areas_and_items", force: true do |t|
+  end
+
   create_table "messages", force: true do |t|
     t.integer  "sender_id"
     t.string   "title"
@@ -118,6 +139,18 @@ ActiveRecord::Schema.define(version: 20131211214811) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "target_id"
+  end
+
+  create_table "monsters", force: true do |t|
+    t.string   "name"
+    t.integer  "max_hp"
+    t.integer  "max_mp"
+    t.integer  "base_exp"
+    t.integer  "exp_per_level"
+    t.integer  "base_gold"
+    t.integer  "gold_per_level"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|

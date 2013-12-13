@@ -16,6 +16,9 @@ class Character < ActiveRecord::Base
   has_and_belongs_to_many :attacks
   has_and_belongs_to_many :consumables
 
+  has_one :battle_session
+  has_many :fakebattles
+
   def battles
   	def_battles + off_battles
   end

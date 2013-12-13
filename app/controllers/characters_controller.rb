@@ -40,6 +40,7 @@ class CharactersController < ApplicationController
 
         @character.attacks << Attack.find_by(title: 'punch')
         @character.attacks << Attack.find_by(title: 'kick')
+        @character.attacks << Attack.find_by(title: 'super awesome mega-punch!')
 
         current_user.characters << @character
 

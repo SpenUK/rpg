@@ -8,38 +8,24 @@
 </head>
 <body>
 
+<div id="lightbox" data-content="<% if @splash %>splash<% end %>">
+<div class="lightbox_dim"></div>
+  <%= (render partial: 'layouts/splash') if @splash %>
+</div>
 
-	<div id="nav">
-    <% if current_user %>
-    	<!-- <div class="current_char"> -->
-        <h5>
-        <% if current_char %>
-          <%= link_to "Battle!", battle_path(battle_session.id) if battle_session %>
-          <%= link_to "#{current_char.received_battle_requests.length if current_char.received_battle_requests.length > 0 } Battle Requests", battle_requests_path %>    	  
-      		<%= link_to "#{current_char.received_messages.length if current_char.received_messages.length > 0 } Messages", messages_path %>
-          <%= link_to current_char.name, character_path(current_char.id) %>
-        <% elsif current_user.characters.length > 0 %>
-          <%= link_to "Select Character", user_path(current_user.id)%>
-        <% else %>
-          <%= link_to "Create Character", new_character_path %>
-        <% end %>
-			<%= link_to "Challenger Others", characters_path %>
-      <%= link_to "Edit Profile", edit_user_path(current_user.id) %>
-      <%= link_to "Logout", :logout, method: :post %>
-    <% else %>
-      <%= link_to "Register", new_user_path %> |
-      <%= link_to "Login", :login %>
-    <% end %></h5>
-  </div>
-  <div>
+
+<%= render partial: 'layouts/header' %>
+
+  <div class="notice">
     <p id="notice"><%= flash[:notice] %></p>
     <p id="alert"><%= flash[:alert] %></p>
   </div>
 
 <div class="page_wrap">
+  <%= yield %>
 
-<%= yield %>
 
+<%= render partial: 'layouts/footer' %>
 </div>
 
 </body>
