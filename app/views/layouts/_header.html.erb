@@ -1,0 +1,44 @@
+  <div class="header_wrap" id="header">
+
+    <div class="header">
+      <div class="container" id="navigation">
+        <a href="<%= root_path %>"><div class="logo"><h2>SomeGame</h2></div></a>
+
+        <div class="navbar">
+
+          <ul class="nav login_out">
+              
+            <% if current_user %>
+              <li><p><%= link_to current_user.email, edit_user_path %>
+              </p></li>
+              <%= link_to "Sign out", :logout, method: :post %>
+              </li>
+            <% else !current_user %>
+              <li><%= link_to "Sign Up!", new_user_path %>
+              <li><%= link_to "Sign in", :login %>
+            <% end %>
+
+            </li>
+          </ul>
+
+          <% if current_user %>
+          <ul class="nav character_nav">
+
+            <% if current_char %>
+              <li><p><%= link_to "Battle!", battle_path(battle_session.id) if battle_session %></p></li>
+              <li><p><%= link_to "#{current_char.received_battle_requests.length if current_char.received_battle_requests.length > 0 } Battle Requests", battle_requests_path %></p></li>
+              <li><p><%= link_to "#{current_char.received_messages.length if current_char.received_messages.length > 0 } Messages", messages_path %></p></li>
+              <li><p><%= link_to current_char.name, character_path(current_char.id) %></p></li>
+            <% elsif current_user.characters.length > 0 %>
+              <li><p><%= link_to "Select Character", user_path(current_user.id)%></p></li>
+            <% else %>
+              <li><p><%= link_to "Create Character", new_character_path %></p></li>
+            <% end %>
+          </ul>
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

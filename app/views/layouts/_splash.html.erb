@@ -1,0 +1,29 @@
+	<div class="splash_container">
+		<div class="pull_left">
+			<h2> SomeApp</h2><br><br>
+			<p>description description description description description description description</p>
+		</div>
+
+		<div class="pull_right">
+
+			<h2>Sign in!</h2>
+			<%= form_tag do %>
+				<div class="sign_in_field">
+					<%= email_field_tag 'email' %>
+				</div>
+
+				<div class="sign_in_field">
+					<%= password_field_tag 'password' %>
+				</div>
+
+				(image_tag (current_user.gravitar_url), :class => "header_gravitar")
+
+				<%= submit_tag("Search") %>
+			<% end %>
+
+			<div class="fb_login">Sign in with Facebook</div>
+
+			<div class="tw_login">Sign in with Twitter </div>
+		</div>
+
+	</div>
