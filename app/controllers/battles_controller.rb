@@ -18,12 +18,14 @@ class BattlesController < ApplicationController
 
 		@battle_request = BattleRequest.find(params[:id])
 
-		@number_of_battles = current_char.all_battles.length 
+		# @number_of_battles = current_char.all_battles.length 
 
-		if @number_of_battles >= 1
+		if current_char.battle_session
 			redirect_to :root, notice: "You already have a battle in session" 
 		else
 			new_battle = Battle.create(challenger_id: @battle_request.sender_id , defender_id: @battle_request.target_id , status: @battle_request.target_id )
+			BattleSession.create(battle_id: new_battle.id, character_id: new_battle.challenger_id)
+		 	BattleSession.create(battle_id: new_battle.id, character_id: new_battle.defender_id)
 			@battle_request.destroy
 
 			redirect_to battle_path(new_battle.id)
@@ -32,14 +34,14 @@ class BattlesController < ApplicationController
 
 		def attack
 
-			if battle_session.status == current_char.id.to_s
+			if battle_session.battle.status == current_char.id.to_s
 				@attack = Attack.find(params[:id])
 
 				@target = Character.find(params[:ch])
 
 				@current = Character.find(current_char.id)
 
-				@battle = Battle.find(battle_session.id)
+				@battle = Battle.find(battle_session.battle.id)
 
 				@current.current_mp -= @attack.mp_consumption
 
@@ -59,8 +61,8 @@ class BattlesController < ApplicationController
 
 	  	  change_battle_status(@battle)
 
-	    	redirect_to battle_path(battle_session.id, cr: @critical, p: @target.id, d: 1, dmg: @dmg, att: @attack)
-	    elsif battle_session.status == "ended"
+	    	redirect_to battle_path(battle_session.battle.id, cr: @critical, p: @target.id, d: 1, dmg: @dmg, att: @attack)
+	    elsif battle_session.battle.status == "ended"
 	    	redirect_to :back, notice: "This battle has ended"
 	    else
 	    	redirect_to :back, notice: "It's not your turn yet"

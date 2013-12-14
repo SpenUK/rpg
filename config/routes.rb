@@ -15,6 +15,8 @@ FightyTest::Application.routes.draw do
   resources :characters
   resources :battles, only: [:show, :index]
   resources :battle_requests
+  resources :battle_sessions
+
 
   get 'inventory' => 'inventory#index'
 
@@ -31,6 +33,8 @@ FightyTest::Application.routes.draw do
   post 'consume/:id' => 'consumables#consume', as: :consume
 
   post 'select_character/:id' => 'users#select_character', as: :select_character
+
+
   # post 'characters/new' => 'characters#new', as: :character_creation
 
   # Example of regular route:

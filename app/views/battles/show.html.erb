@@ -1,6 +1,7 @@
 <div class="container">
 
 	<h1>Battle!</h1><br>
+	<h3><%# @battle.outcome %></h3>
 
 	<div class="round_summary">
 		<% if params[:dmg].to_i > 0 %>
@@ -31,16 +32,26 @@
 
 		</div>
 
-	<div class="skills_panel">
+		<div class="skills_panel">
+			<p><strong>Skills:</strong>| <% current_char.attacks.each do |att| %>
+				<%= link_to attack_url(att.id, ch: @player2.id), method: :post do %>
+					<%= att.title %>
+				<% end %> | 
+			<% end %></p>
+		</div>
 
-	<p><strong>Skills:</strong>| <% current_char.attacks.each do |att| %>
-			<%= link_to attack_url(att.id, ch: @player2.id), method: :post do %>
-				<%= att.title %>
-			<% end %> | 
-		<% end %></p>
+		<% if @battle.winner %>
+			<div class="outcome">
 
-	</div>
+				<h1><%= @battle.outcome %></h1>
 
+				<%= link_to battle_session_path(current_char.battle_session.id), method: :delete, class: "button" do %><div>
+						<h4>Leave</h4>
+				</div><% end %>
+				
+
+			</div>
+		<% end %>
 		
 	</div>
 
