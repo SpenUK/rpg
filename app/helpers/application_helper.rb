@@ -9,7 +9,10 @@ module ApplicationHelper
   end
 
 	def battle_session
-		current_char.battles.first
+    if current_char.battle_session
+		  current_char.battle_session
+    else
+      nil
+    end
 	end
-	
 end

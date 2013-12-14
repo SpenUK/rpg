@@ -13,7 +13,10 @@ class User < ActiveRecord::Base
   has_many :characters
 
   def selected_character
+
     selected = characters.find_by(selected: true) || false
+
+
   end
 
 

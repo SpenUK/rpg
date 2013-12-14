@@ -1,2 +1,6 @@
 class BattleSessionsController < ApplicationController
+
+	# -----------------------
+
+  # -----------------------
 end

@@ -18,10 +18,10 @@
   </p>
 <% end %>
 
-<% if current_user.selected_character && @user.id = current_user.id %>
+<% if current_user.selected_character %>
   <p>
     <strong>Recieved Battle Requests:</strong><br>
-    <% current_user.selected_character.received_battle_requests.each do |br| %><br>
+    <% @user.selected_character.received_battle_requests.each do |br| %><br>
       ID: <%= br.id %> | Target: <%= br.receiver %> | Sender: <%= br.sender %><br>
       Wager: <%= br.wager %> | Message: <%= br.message %><br>
     <% end %>
@@ -29,12 +29,12 @@
   <p>
     <strong>Sent Battle Requests:</strong><br>
 
-    <% current_user.selected_character.sent_battle_requests.each do |br| %><br>
+    <% @user.selected_character.sent_battle_requests.each do |br| %><br>
       ID: <%= br.id %> | Target: <%= br.receiver %> | Sender: <%= br.sender %><br>
       Wager: <%= br.wager %> | message: <%= br.message %><br>
     <% end %>
   </p>
 <% else %>
-  No Characters!<br>   <%= link_to "Create Character", new_character_path %>
+  x
 
 <% end %>

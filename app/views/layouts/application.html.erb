@@ -16,12 +16,14 @@
 
 <%= render partial: 'layouts/header' %>
 
+<div class="page_wrap">
+
   <div class="notice">
     <p id="notice"><%= flash[:notice] %></p>
     <p id="alert"><%= flash[:alert] %></p>
   </div>
 
-<div class="page_wrap">
+
   <%= yield %>
 
 

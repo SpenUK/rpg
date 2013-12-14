@@ -1,6 +1,15 @@
 class Character < ActiveRecord::Base
 
-	# validates :off_battles, :less_than_or_equal_to 1
+ # validates_inclusion_of :gender, :in => ['male', 'female'], 
+
+
+  validate :gender_check, on: :create
+
+  def gender_check
+    if :gender != 'female' || 'male'
+      errors.add(:gender, "Please choose your character's gender.")
+    end
+  end
 
 	belongs_to :user
 
@@ -17,9 +26,17 @@ class Character < ActiveRecord::Base
   has_and_belongs_to_many :consumables
 
   has_one :battle_session
-  has_many :fakebattles
 
-  def battles
+  # ----------------------- 
+    # has_many :battles #Keys > challenger, defender
+    # has_many :battle_comments
+    # has_many :moves
+  # -----------------------
+
+
+
+
+  def all_battles
   	def_battles + off_battles
   end
 

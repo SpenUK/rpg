@@ -18,7 +18,7 @@ class BattlesController < ApplicationController
 
 		@battle_request = BattleRequest.find(params[:id])
 
-		@number_of_battles = current_char.battles.length 
+		@number_of_battles = current_char.all_battles.length 
 
 		if @number_of_battles >= 1
 			redirect_to :root, notice: "You already have a battle in session" 

@@ -18,7 +18,6 @@ class CharactersController < ApplicationController
       @character.assign_attributes(
 
         level: 1,
-        gender: 'male',
 
         max_hp: 100,
         max_mp: 50,
@@ -27,7 +26,8 @@ class CharactersController < ApplicationController
         stat_strength: 4 + rand(2), 
         stat_dex: 4 + rand(2), 
         stat_luck: 4 + rand(2), 
-        stat_int: 4 + rand(2)
+        stat_int: 4 + rand(2),
+        battle_status: 'available'
         )
 
       if current_user.selected_character
@@ -40,13 +40,12 @@ class CharactersController < ApplicationController
 
         @character.attacks << Attack.find_by(title: 'punch')
         @character.attacks << Attack.find_by(title: 'kick')
-        @character.attacks << Attack.find_by(title: 'super awesome mega-punch!')
 
         current_user.characters << @character
 
         redirect_to user_path(current_user.id), message: "Character Created!"
       else
-        redirect_to user_path(current_user.id), message: "Could not create character"
+        render :new, message: "Could not create character"
       end
     else
       redirect_to user_path(current_user.id), message: "huh?"

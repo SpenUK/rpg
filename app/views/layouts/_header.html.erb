@@ -2,14 +2,14 @@
 
     <div class="header">
       <div class="container" id="navigation">
-        <a href="<%= root_path %>"><div class="logo"><h2>SomeGame</h2></div></a>
+        <a href="<%= root_path %>"><div class="logo"><h2>SomeGame <%= current_char.battle_session.battle %></h2></div></a>
 
         <div class="navbar">
 
           <ul class="nav login_out">
               
             <% if current_user %>
-              <li><p><%= link_to current_user.email, edit_user_path %>
+              <li><p><%= link_to current_user.email, edit_user_path(current_user.id) %>
               </p></li>
               <%= link_to "Sign out", :logout, method: :post %>
               </li>

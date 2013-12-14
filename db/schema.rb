@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131213210753) do
+ActiveRecord::Schema.define(version: 20131214044127) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,8 +60,7 @@ ActiveRecord::Schema.define(version: 20131213210753) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "battle_id"
-    t.integer  "challenger_id"
-    t.integer  "defender_id"
+    t.integer  "character_id"
   end
 
   create_table "battles", force: true do |t|
@@ -71,6 +70,7 @@ ActiveRecord::Schema.define(version: 20131213210753) do
     t.integer  "challenger_id"
     t.integer  "defender_id"
     t.string   "status"
+    t.integer  "winner_id"
   end
 
   create_table "battles_users", force: true do |t|
@@ -95,8 +95,7 @@ ActiveRecord::Schema.define(version: 20131213210753) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "selected"
-    t.string   "job"
-    t.string   "sprite_url"
+    t.string   "battle_status"
   end
 
   create_table "characters_consumables", force: true do |t|

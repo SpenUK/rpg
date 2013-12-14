@@ -1,2 +1,0 @@
-class FakeBattlesController < ApplicationController
-end
