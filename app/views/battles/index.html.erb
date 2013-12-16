@@ -1,0 +1,29 @@
+<div class="container">
+	<h1><%= current_char.name %>'s Battles</h1>
+
+	<div class="battles_container">
+
+		<% @battles.each do |battle| %>
+
+			<div class="battle_listing_panel" data-battle="<%= battle.id %>">
+
+				<div class="battle_summary">
+
+					<%=image_tag "up_arrow.png", class: "arrow", style: "display:none;" %>
+					<%=image_tag "down_arrow.png", class: "arrow" %>
+
+					<%= "#{battle.challenger.name} vs. #{battle.defender.name}" %>
+
+				</div>
+				<div class="full_battle_listing">
+					<div class="session_data">
+
+					</div>
+				</div>
+			</div>
+
+		<% end %>
+
+	</div>
+
+</div>

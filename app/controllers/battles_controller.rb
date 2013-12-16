@@ -4,6 +4,10 @@ class BattlesController < ApplicationController
 	def new
 	end
 
+	def index
+		@battles = current_char.all_battles
+	end
+
 	def show
 		@battle = Battle.find(params[:id])
 

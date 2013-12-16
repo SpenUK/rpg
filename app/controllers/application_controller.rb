@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_filter :require_login
 
+  include ApplicationHelper
+
   # def current_char
   #   if current_user.selected_character_id
   # 	  Character.find(current_user.selected_character_id)

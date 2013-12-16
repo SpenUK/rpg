@@ -1,7 +1,11 @@
-  <div class="header_wrap" id="header">
+  <div class="header_wrap">
 
-    <div class="header">
-      <div class="container" id="navigation">
+    <%= render partial: 'layouts/user_admin_header' %>
+
+    <div class="header main_header">
+
+
+      <div class="container">
         <a href="<%= root_path %>"><div class="logo"><h2>SomeGame</h2></div></a>
 
         <div class="navbar">
@@ -9,6 +13,7 @@
           <ul class="nav login_out">
               
             <% if current_user %>
+              <li class="header_test" data-expansion="user">Test</li>
               <li><p><%= link_to current_user.email, edit_user_path(current_user.id) %>
               </p></li>
               <%= link_to "Sign out", :logout, method: :post %>
@@ -36,9 +41,7 @@
             <% end %>
           </ul>
           <% end %>
-
         </div>
       </div>
     </div>
   </div>
-</div>

@@ -13,15 +13,11 @@
   <%= (render partial: 'layouts/splash') if @splash %>
 </div>
 
-
 <%= render partial: 'layouts/header' %>
 
 <div class="page_wrap">
 
-  <div class="notice">
-    <p id="notice"><%= flash[:notice] %></p>
-    <p id="alert"><%= flash[:alert] %></p>
-  </div>
+<%= render partial: 'layouts/flash' %>  
 
 
   <%= yield %>

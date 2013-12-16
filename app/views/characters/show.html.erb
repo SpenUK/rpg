@@ -1,52 +1,54 @@
-<h2><%= @character.name %></h2>
+<div class="container">
+  <h2><%= @character.name %></h2>
 
-<table>
-  <tbody>
-      <tr>
-        <td>Level :</td>
-        <td><%= @character.level %></td>
-      </tr>
-  </tbody>
-  <tbody>
-      <tr>
-        <td>HP :</td>
-        <td><%= "#{@character.current_hp}/#{@character.max_hp}" %></td>
-      </tr>
-  </tbody>
-  <tbody>
-      <tr>
-        <td>MP :</td>
-        <td><%= "#{@character.current_mp}/#{@character.max_mp}" %></td>
-      </tr>
-  </tbody>
-  <tbody>
-      <tr>
-        <td>Strength :</td>
-        <td><%= @character.stat_strength %></td>
-      </tr>
-  </tbody>
-  <tbody>
-      <tr>
-        <td>Dex :</td>
-        <td><%= @character.stat_dex %></td>
-      </tr>
-  </tbody>
-  <tbody>
-      <tr>
-        <td>Luck :</td>
-        <td><%= @character.stat_luck %></td>
-      </tr>
-  </tbody>
-  <tbody>
-      <tr>
-        <td>Int :</td>
-        <td><%= @character.stat_int %></td>
-      </tr>
-  </tbody>
-</table>
+  <table>
+    <tbody>
+        <tr>
+          <td>Level :</td>
+          <td><%= @character.level %></td>
+        </tr>
+    </tbody>
+    <tbody>
+        <tr>
+          <td>HP :</td>
+          <td><%= "#{@character.current_hp}/#{@character.max_hp}" %></td>
+        </tr>
+    </tbody>
+    <tbody>
+        <tr>
+          <td>MP :</td>
+          <td><%= "#{@character.current_mp}/#{@character.max_mp}" %></td>
+        </tr>
+    </tbody>
+    <tbody>
+        <tr>
+          <td>Strength :</td>
+          <td><%= @character.stat_strength %></td>
+        </tr>
+    </tbody>
+    <tbody>
+        <tr>
+          <td>Dex :</td>
+          <td><%= @character.stat_dex %></td>
+        </tr>
+    </tbody>
+    <tbody>
+        <tr>
+          <td>Luck :</td>
+          <td><%= @character.stat_luck %></td>
+        </tr>
+    </tbody>
+    <tbody>
+        <tr>
+          <td>Int :</td>
+          <td><%= @character.stat_int %></td>
+        </tr>
+    </tbody>
+  </table>
 
-<strong>Skills:</strong> |<% @character.attacks.each do |att| %>
+  <strong>Skills:</strong> |<% @character.attacks.each do |att| %>
 
-  <%= att.title %> |
+    <%= att.title %> |
 
-<% end %>
+  <% end %>
+</div>
