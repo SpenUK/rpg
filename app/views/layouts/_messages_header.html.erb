@@ -1,0 +1,12 @@
+<div class="header messages_header">
+	<div class="container">
+
+		<li><p><%= link_to "#{current_char.received_battle_requests.length if current_char.received_battle_requests.length > 0 } Battle Requests", battle_requests_path %></p></li>
+    <li><p><%= link_to "#{current_char.received_messages.length if current_char.received_messages.length > 0 } Messages", messages_path %></p></li>
+
+
+
+
+
+	</div>
+</div>

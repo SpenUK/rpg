@@ -1,7 +1,20 @@
 <div class="header user_admin_header">
-	<h2>All of da content for da user settings and tings</h2>
-	<h2>All of da content for da user settings and tings</h2>
-	<h2>All of da content for da user settings and tings</h2>
-	<h2>All of da content for da user settings and tings</h2>
-	<h2>All of da content for da user settings and tings</h2>
+  <div class="container">
+	<ul class="nav character_nav">
+
+            <% if current_char %>
+              
+              <li><p><%= link_to current_char.name, character_path(current_char.id) %></p></li>
+            <% elsif current_user.characters.length > 0 %>
+              <li><p><%= link_to "Select Character", user_path(current_user.id)%></p></li>
+            <% else %>
+              <li><p><%= link_to "Create Character", new_character_path %></p></li>
+            <% end %>
+              <li><p><%= link_to current_user.email, edit_user_path(current_user.id) %>
+              </p></li>
+              <li>
+               <%= link_to "Sign out", :logout, method: :post %>
+              </li>
+          </ul>
+  </div>
 </div>

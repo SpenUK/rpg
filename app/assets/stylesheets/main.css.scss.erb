@@ -49,8 +49,42 @@ ul { list-style: none; }
 }
 
 // Header Styles
-.user_admin_header {
+.user_admin_header, .messages_header, .user_fix, .messages_fix {
+	height: 300px;
 	display: none;
+}
+
+.header_fix {
+	height: 50px;
+}
+
+.header_icon {
+	opacity: 0.6;
+
+	display: inline-block;
+	float: left;
+	margin: 0px 5px;
+	position: relative;
+	height: 30px;
+	width: 30px;
+	text-align: center;
+}
+
+.header_icon:hover {
+	opacity: 0.8;
+}
+
+.settings_block {
+ background: url(<%= asset_path "cog.png" %>);
+}
+
+.messages_block {
+	background: url(<%= asset_path "messages.png"%>);
+}
+
+.messages_block p {
+	// position:absolute;
+	color: red;
 }
 
 .header {
@@ -62,10 +96,6 @@ ul { list-style: none; }
 
 .main_header {
 	height: $header_height;
-}
-
-.header-fix {
-	height: 50px;
 }
 
 .navbar {
@@ -81,7 +111,7 @@ ul { list-style: none; }
 	top: 0px;
 	left: 0px;
 	z-index: 1000;
-	background: rgba(100,210,200,1);
+	background: $color_header;
 }
 
 .header ul {
@@ -135,7 +165,7 @@ ul { list-style: none; }
 }
 
 .page_wrap {
-	padding-top: 60px;
+	padding-top: 10px;
 	min-height: 100%;
 	position: relative;
 	/*background: rgba(0,0,100,0.2);*/
@@ -150,6 +180,15 @@ ul { list-style: none; }
 .content {
 	margin-bottom: 10px;
 	margin-top: 200px;
+}
+
+.header_stripe {
+	position: absolute;
+	width: 100%;
+	height:3px;
+	background-color: black;
+	bottom: 0;
+
 }
 
 // listing styles
