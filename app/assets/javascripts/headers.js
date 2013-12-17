@@ -23,6 +23,8 @@ $(document).ready(function(){
       	$('.messages_fix').hide(200);
       	$('.messages_header').hide(200);
       	$('.header_icon').css('opacity', 0.6);
+
+      	return false;
       } else if (targetData == "messages") {
       	var target = $('.messages_header');
       	target.toggle(200);
@@ -30,6 +32,8 @@ $(document).ready(function(){
       	$('.user_fix').hide(200);
       	$('.user_admin_header').hide(200);
       	$('.header_icon').css('opacity', 0.6);
+
+      	return false;
       };
 
       // if ($(this).css('opacity') == 0.8) {
@@ -38,7 +42,7 @@ $(document).ready(function(){
       // 		$(this).css('opacity', 0.6);
       // };
 
-        return false;
+        
     });  
 
 		$('.message_summary').on("click", function(){

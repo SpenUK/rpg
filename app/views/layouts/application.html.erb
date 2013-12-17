@@ -8,9 +8,10 @@
 </head>
 <body>
 
-<div id="lightbox" data-content="<% if @splash %>splash<% end %>">
+<div id="lightbox" data-content="<%= @splash if @splash %>">
 <div class="lightbox_dim"></div>
-  <%= (render partial: 'layouts/splash') if @splash %>
+  <%= (render partial: 'layouts/splash') if @splash == "login" %>
+  <%= (render partial: 'layouts/world_splash') if @splash == "world" %>
 </div>
 
 <%= render partial: 'layouts/header' %>

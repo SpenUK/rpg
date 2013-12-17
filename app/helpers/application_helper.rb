@@ -20,6 +20,14 @@ module ApplicationHelper
     end
   end
 
+  def current_location
+    if current_char
+      current_char.last_location_id
+    else
+      false
+    end
+  end
+
   def all_messages
     messages =[]
 

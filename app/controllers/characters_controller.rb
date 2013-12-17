@@ -27,7 +27,9 @@ class CharactersController < ApplicationController
         stat_dex: 4 + rand(2), 
         stat_luck: 4 + rand(2), 
         stat_int: 4 + rand(2),
-        battle_status: 'available'
+        battle_status: 'available',
+        gold: 50,
+        last_location_id: 0
         )
 
       if current_user.selected_character

@@ -19,6 +19,7 @@ FightyTest::Application.routes.draw do
 
 
   get 'inventory' => 'inventory#index'
+  get 'worldmap' => 'areas#index'
 
 
   post 'attack/:id' => 'battles#attack', as: :attack

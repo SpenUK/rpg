@@ -8,7 +8,7 @@
       <div class="header_stripe"></div>
 
       <div class="container">
-        <a href="<%= root_path %>"><div class="logo"><h2>SomeGame</h2></div></a>
+        <a href="<%= root_path %>"><div class="logo"><h2>SomeGame <%=  %></h2></div></a>
 
         <div class="navbar">
 
@@ -17,6 +17,20 @@
             <% if current_user %>
 
               <li><p><%= link_to "Battle!", battle_path(battle_session.battle.id) if battle_session %></p></li>
+
+              <li>
+                <%= link_to worldmap_path do %>
+              <div class="map_block header_icon" data-expansion="none">
+              </div>
+                <% end %>
+              </li>
+
+              <li>
+                <%= link_to inventory_path do %>
+              <div class="inventory_block header_icon" data-expansion="none">
+              </div>
+                <% end %>
+              </li>
     
               <li>
               <div class="messages_block header_icon" data-expansion="messages">

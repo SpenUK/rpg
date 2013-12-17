@@ -15,6 +15,9 @@ class Message < ActiveRecord::Base
 		message_type.gsub(/_/, ' ')
 	end
 
+	def display_time
+	end
+
 	def sender_name
 	end
 

@@ -18,7 +18,7 @@
 					<div class="message_panel <%= message.target_id == current_char.id ? "received" : "sent" %> battle_req" >
 
 						<div class="message_summary">
-							<strong>Battle Request!</strong> from: <strong> <%= message.sender.name %></strong>
+							<strong>Battle Request! </strong><%= message.sender.id == current_char.id ? "to:" : "from:" %><strong> <%= message.sender.id == current_char.id ? message.target.name : message.sender.name %></strong><span class="time_ago"> <%= "#{time_ago_in_words(message.created_at).capitalize} Ago" %></span>
 						</div>
 						<div class="message_body">
 						
@@ -40,7 +40,7 @@
 
 					<div class="message_panel <%= message.target_id == current_char.id ? "received" : "sent" %> private" >
 						<div class="message_summary">
-							<strong><%= message.title %></strong> from: <strong> <%= message.sender.name %></strong>
+							<strong><%= message.title %> </strong><%= message.sender.id == current_char.id ? "to:" : "from:" %><strong> <%= message.sender.id == current_char.id ? message.receiver.name : message.sender.name %></strong>
 						</div>
 						<div class="message_body">
 							<p><%= message.body %></p>
