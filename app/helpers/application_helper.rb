@@ -20,6 +20,25 @@ module ApplicationHelper
     end
   end
 
+  def all_messages
+    messages =[]
+
+    current_char.sent_messages.each do |msg|
+      messages << msg
+    end
+    current_char.received_messages.each do |msg|
+      messages << msg
+    end
+    current_char.sent_battle_requests.each do |msg|
+      messages << msg
+    end
+    current_char.received_battle_requests.each do |msg|
+      messages << msg
+    end
+
+    messages.sort!{|a,b|b.updated_at <=> a.updated_at}
+  end
+
   def current_message_count
     msg = current_char.received_messages.length
     br = current_char.received_battle_requests.length

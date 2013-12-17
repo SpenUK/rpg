@@ -1,7 +1,7 @@
   <div class="header_wrap">
 
-    <%= render partial: 'layouts/user_admin_header' %>
-    <%= render partial: 'layouts/messages_header' %>
+    <%= render partial: 'layouts/user_admin_header' if current_user %>
+    <%= render partial: 'layouts/messages_header' if current_user %>
 
     <div class="header main_header">
 

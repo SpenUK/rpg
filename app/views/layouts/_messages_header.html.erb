@@ -1,12 +1,57 @@
 <div class="header messages_header">
 	<div class="container">
 
-		<li><p><%= link_to "#{current_char.received_battle_requests.length if current_char.received_battle_requests.length > 0 } Battle Requests", battle_requests_path %></p></li>
-    <li><p><%= link_to "#{current_char.received_messages.length if current_char.received_messages.length > 0 } Messages", messages_path %></p></li>
+		<div class="message_filter">
+			<ul>
+				<li><a href="#" class="filter_sent">Sent</a></li>
+        <li><a href="#" class="filter_received">Received</a></li>
+        <li><a href="#" class="filter_battles">Battle Requests</a></li>
+        <li><a href="#" class="filter_private">Private Messages</a></li>
+			</ul>
+		</div>
+
+		<div class="messages_panel">
+			<% all_messages.each do |message| %>
+
+				<% if message.is_a?(BattleRequest) %>
+
+					<div class="message_panel <%= message.target_id == current_char.id ? "received" : "sent" %> battle_req" >
+
+						<div class="message_summary">
+							<strong>Battle Request!</strong> from: <strong> <%= message.sender.name %></strong>
+						</div>
+						<div class="message_body">
+						
+							<p><%= message.message %></p>
+
+							<%= link_to battle_accept_path(message.id), method: :post do %> 
+									<div class="accept_request">Accept</div>
+							<% end %>
+
+              <%= link_to battle_decline_path(message.id), method: :post do %>
+                 	<div class="decline_request">Decline</div>
+							<% end %>
+						
+						</div>
+
+					</div>
+
+				<% elsif message.is_a?(Message) %>
+
+					<div class="message_panel <%= message.target_id == current_char.id ? "received" : "sent" %> private" >
+						<div class="message_summary">
+							<strong><%= message.title %></strong> from: <strong> <%= message.sender.name %></strong>
+						</div>
+						<div class="message_body">
+							<p><%= message.body %></p>
+						</div>
+
+					</div>
 
 
-
-
+				<% end %>
+			<% end %>
+		</div>
 
 	</div>
 </div>

@@ -5,10 +5,12 @@ $font_stack: "ubuntu", sans-serif;
 $color_header: rgba(60,60,60,1);
 $color_bg: rgba(220,80,80,1);
 $color_shadow: rgba(0,0,0,0.7);
+$color_light_shadow: rgba(255,255,255,0.7);
 
 $color_alert: rgba(180,100,100,0.7);
 $color_notice: rgba(100,180,100,0.7);
 $color_message: rgba(160,160,100,0.7);
+$color_off_white: rgba(255,252,240,1);
 
 $color_font_1: rgba(100,210,200,1);
 
@@ -50,7 +52,7 @@ ul { list-style: none; }
 
 // Header Styles
 .user_admin_header, .messages_header, .user_fix, .messages_fix {
-	height: 300px;
+	height: 230px;
 	display: none;
 }
 
@@ -188,8 +190,171 @@ ul { list-style: none; }
 	height:3px;
 	background-color: black;
 	bottom: 0;
+}
+
+.character_display_panel, .character_options_panel, .user_options_panel, .messages_panel, .message_filter{
+	display: inline-block;
+	position: relative;
+	vertical-align: top;
+	margin-top: 10px;
+}
+
+.user_options_panel {
+
+	float: right;
+
+	a {
+		color: black;
+	}
+
+	ul {
+	width: 200px;
+	
+		li {
+			background: $color_light_shadow;
+			border: 2px solid $color_shadow;
+			padding:5px 10px;
+
+		}
+
+		li:first-child {
+			margin-top: 0px;
+		}
+
+		li:hover {
+			background: rgba(220,220,220,1);
+		}
+	}
+}
+
+// character panel styles
+
+.character_display_panel {
+
+	background-color: $color_light_shadow;
+	padding: 5px 10px 10px 10px;
+	margin-right: 10px;
+
+	.avatar_display {
+		margin-top: 4px;
+		height: 160px;
+		width: 160px;
+		background-color: rgba(255,180,180,0.8);
+	}
+
+	h3 {
+		color: $color_header;
+	}
+
+	.selection_p {
+		color: $color_bg;
+	}
+}
+
+.character_options_panel {
+
+	background-color: $color_light_shadow;
+	padding: 5px 10px 10px 10px;
+	margin-right: 10px;
+
+
+	h3 {
+		color: $color_header;
+	}
+
+	.selection_p {
+		color: $color_bg;
+	}
+}
+
+
+// messages
+
+.message_filter {
+	float:left;
+	margin-right: 10px;
+	width: 180px;
+
+	ul {
+	width: 180px;
+	color: black;
+
+		a {
+			color: black;			
+		}
+	
+		li {
+			background: $color_light_shadow;
+			border: 2px solid $color_shadow;
+			padding:5px 10px;
+		}
+
+		li:first-child {
+			margin-top: 0px;
+		}
+
+		li:hover {
+			background: rgba(220,220,220,1);
+		}
+	}
+}
+
+.messages_panel {
+	padding: 5px 5px 5px 5px;
+	overflow-y: scroll;
+	width: 770px;
+	margin-right: 10px;
+	float: right;
+	height: 210px;
+
+	background-color: $color_light_shadow;
+
+	.message_panel {
+		
+		background-color: rgba(220,220,220,1);
+		margin-bottom:5px;
+		border: 2px solid $color_font_1;
+
+		.message_summary {
+			height: 20px;
+			line-height: 20px;
+			padding: 10px 10px 10px 10px;
+		}
+		.message_body {
+			display: none;
+			padding: 10px 10px 10px 10px;
+			margin: 5px 10px 10px 10px;
+			background-color: white;
+		}
+	}
+
+	.battle_req {
+		border: 2px solid red;	
+	}
+
+	.sent {
+		display: none;
+	}
+
+	.received {
+	}
 
 }
+
+.accept_request, .decline_request {
+	padding: 10px;
+	color: white;
+}
+
+.accept_request {
+	background-color: rgba(120,215,100,1)
+}
+
+.decline_request {
+	background-color: rgba(255,100,100,1)
+}
+
+
 
 // listing styles
 
@@ -200,6 +365,7 @@ ul { list-style: none; }
 	margin: 10px 0px;
 	border-radius: 10px;
 	position: relative
+
 }
 
 .arrow {
@@ -261,3 +427,21 @@ display: inline-block;}
 	background: $color_header;
 	bottom: 0px;
 }
+
+// link button
+
+
+
+// scroll styles
+
+::-webkit-scrollbar {
+		width: 15px; }
+	::-webkit-scrollbar-track {
+		background-color: rgba(0,0,0,0.5); }
+	::-webkit-scrollbar-thumb {
+		background-color: rgba(100,210,200,0.4);}
+	::-webkit-scrollbar-thumb:hover {
+		background-color: rgba(100,210,200,0.5);}
+	::-webkit-scrollbar-thumb:active {
+		background-color: rgba(100,210,200,0.7);}
+
