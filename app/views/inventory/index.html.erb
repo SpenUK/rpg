@@ -1,12 +1,19 @@
+
 <div class="container">
 
-	<p><%= link_to "Add Random item", add_consumable_path, method: :post %></p>
+		<p><%# link_to "Add Random item", add_consumable_path, method: :post %></p>
 
-	<% current_char.consumables.each do |item| %>
-		<div class="item_card">
-			<h3><%= link_to item.title, consume_path(item.id), method: :post %></h3>
-			<p><%= item.description %></p>
-		</div>
-	<% end %>
-
+	<div class="inventory_container">
+	
+		<% current_char.consumables.each do |item| %>
+			<div class="item_card" data-category="consumable">
+				<h3><%= item.title %></h3>
+				<%= link_to image_tag(item.image_url), consume_path(item.id), method: :post %>
+				<div class="item_description">
+					<p><%= item.description %></p>
+				</div>
+			</div>
+		<% end %>
+	
+	</div>
 </div>

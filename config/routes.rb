@@ -19,7 +19,14 @@ FightyTest::Application.routes.draw do
 
 
   get 'inventory' => 'inventory#index'
-  get 'worldmap' => 'areas#index'
+  get 'explore' => 'areas#index'
+
+  # areas
+
+  # vendors / inns
+
+  get 'vendors/:id' => 'vendors#show', as: :vendor
+  get 'inns/:id' => 'inns#show', as: :inn
 
 
   post 'attack/:id' => 'battles#attack', as: :attack

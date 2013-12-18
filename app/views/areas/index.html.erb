@@ -1,1 +1,26 @@
-<div class="container"></div>
+<div class="container">
+
+	<div class="map_container" style="background-image: url(<%= asset_path @area.background_image %>)" id="<%= @area.name.gsub(' ', '_')%>" data-area="<%= @area.name.gsub(' ', '_')%>">
+
+		<% @area.area_objects.each do |obj|%>
+			<div class="area_object" style="top: <%= "#{obj.y_position}px" %>; left: <%= "#{obj.x_position}px" %>;">
+
+				<%= link_to (image_tag obj.image_url), obj.link_path %>
+			</div>
+		<% end %>
+	</div>
+
+	<div class ="area_links">
+		<ul>
+			<% if false %>
+				<%# @area.places.each do |place| %>
+					<li>
+					<%# link_to place.title, "#" %>
+					</li>
+				<%# end %>
+			<% end %>
+		</ul>
+	</div>
+
+
+</div>

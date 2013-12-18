@@ -11,16 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131217033415) do
+ActiveRecord::Schema.define(version: 20131218000923) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "area_objects", force: true do |t|
+    t.string   "title"
+    t.integer  "area_id"
+    t.integer  "x_position"
+    t.integer  "y_position"
+    t.string   "image_url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "link_path"
+  end
 
   create_table "areas", force: true do |t|
     t.string   "name"
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "background_image"
   end
 
   create_table "attack_characters", force: true do |t|
@@ -119,12 +131,40 @@ ActiveRecord::Schema.define(version: 20131217033415) do
     t.integer  "rarity"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "image_url"
+  end
+
+  create_table "consumables_vendors", force: true do |t|
+    t.integer "consumable_id"
+    t.integer "vendor_id"
   end
 
   create_table "fakebattles", force: true do |t|
     t.integer  "challenger_id"
     t.integer  "defender_id"
     t.integer  "winner_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "inns", force: true do |t|
+    t.string   "name"
+    t.integer  "cost"
+    t.integer  "area_id"
+    t.integer  "hp_regen"
+    t.integer  "mp_regen"
+    t.string   "keeper_image"
+    t.string   "greeting"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "item_instances", force: true do |t|
+    t.string   "category"
+    t.integer  "item_id"
+    t.integer  "owner_id"
+    t.integer  "owner_type"
+    t.integer  "condition"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -161,6 +201,14 @@ ActiveRecord::Schema.define(version: 20131217033415) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "selected_character_id"
+  end
+
+  create_table "vendors", force: true do |t|
+    t.string   "name"
+    t.integer  "area_id"
+    t.string   "owner_image"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

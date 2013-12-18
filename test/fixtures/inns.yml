@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  cost: 1
+  area_id: 1
+  hp_regen: 1
+  mp_regen: 1
+  keeper_image: MyString
+  greeting: MyString
+
+two:
+  name: MyString
+  cost: 1
+  area_id: 1
+  hp_regen: 1
+  mp_regen: 1
+  keeper_image: MyString
+  greeting: MyString

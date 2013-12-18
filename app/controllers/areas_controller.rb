@@ -9,6 +9,12 @@ class AreasController < ApplicationController
 		else
 			redirect_to :root, alert: "Could not find your location"
 		end
+
+		if current_location != @area.id
+			@current = Character.find(current_char.id)
+			@current.last_location_id = @area.id
+			@current.save
+		end
 		
 	end
 

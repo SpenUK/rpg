@@ -25,6 +25,8 @@ class Character < ActiveRecord::Base
   has_and_belongs_to_many :attacks
   has_and_belongs_to_many :consumables
 
+  has_many :item_instances, as: :owner
+
   has_one :battle_session
 
   # ----------------------- 
