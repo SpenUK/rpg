@@ -1,9 +1,12 @@
-class Vendor < ActiveRecord::Base
+class Item < ActiveRecord::Base
 
 	# --------------------------------------------------
 
-		has_many :items, as: :owner
+		belongs_to :owner, polymorphic: true
+
+		belongs_to :subclass, polymorphic: true
 
 	# --------------------------------------------------
+
 
 end

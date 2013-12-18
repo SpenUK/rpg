@@ -560,22 +560,51 @@ display: inline-block;}
 
 // inventory / items styles
 
-.item_card {
-	width: 160px;
-	height: 180px;
-	margin: 5px;
-	background-color: white;
-	padding:10px;
-	text-align: center;
-	display: inline-block;
-	vertical-align: top;
-	postion: relative;
+.inventory_container {
+
+	background-color: $color_light_shadow;
+
+	.item_card {
+		width: 160px;
+		height: 180px;
+		margin: 5px;
+		background-color: white;
+		padding:10px;
+		text-align: center;
+		display: inline-block;
+		vertical-align: top;
+		postion: relative;
+		
+		.item_description {
+			background-color: rgba(220,220,220,1);
+			height:45px;
+			padding: 5px;
+			overflow: auto;
+
+		}
+	}
+}
+
+// character styles
+
+.character_container {
+
+	background_color: $color_light_shadow;
+	position: relative;
 	
-	.item_description {
-		background-color: rgba(220,220,220,1);
-		height:45px;
-		padding: 5px;
-		overflow: auto;
+
+	.avatar_display {
+		margin-top: 4px;
+		height: 220px;
+		width: 220px;
+		background-color: rgba(100,100,100,0.8);
+		display: inline-block;
+		vertical-align: top;
+	}
+
+	.stats_table {
+		display: inline-block;
+		vertical-align: top;
 
 	}
 }

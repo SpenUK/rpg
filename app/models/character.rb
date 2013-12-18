@@ -23,17 +23,14 @@ class Character < ActiveRecord::Base
   has_many :def_battles, :class_name => "Battle", foreign_key: "defender_id"
 
   has_and_belongs_to_many :attacks
-  has_and_belongs_to_many :consumables
-
-  has_many :item_instances, as: :owner
 
   has_one :battle_session
 
-  # ----------------------- 
-    # has_many :battles #Keys > challenger, defender
-    # has_many :battle_comments
-    # has_many :moves
-  # -----------------------
+  # --------------------------------------------------
+
+    has_many :items, as: :owner
+
+  # --------------------------------------------------
 
 
 

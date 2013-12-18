@@ -1,9 +1,11 @@
-class Vendor < ActiveRecord::Base
+class Potion < ActiveRecord::Base
 
 	# --------------------------------------------------
 
-		has_many :items, as: :owner
+		has_many :items, as: :subclass
 
 	# --------------------------------------------------
+
+
 
 end

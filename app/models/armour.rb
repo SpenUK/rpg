@@ -1,8 +1,8 @@
-class Vendor < ActiveRecord::Base
+class Armour < ActiveRecord::Base
 
 	# --------------------------------------------------
 
-		has_many :items, as: :owner
+		has_many :items, as: :subclass
 
 	# --------------------------------------------------
 
