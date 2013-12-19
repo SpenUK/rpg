@@ -1,6 +1,7 @@
 class VendorsController < ApplicationController
 
 	def show
+		@splash = "store"
 		@vendor = Vendor.find(params[:id])
 		if @vendor.area_id == current_location
 			

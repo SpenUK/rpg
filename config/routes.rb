@@ -19,13 +19,29 @@ FightyTest::Application.routes.draw do
 
 
   get 'inventory' => 'inventory#index'
-  get 'explore' => 'areas#index'
+  
 
   # areas
+  get 'explore' => 'areas#index'
+  # ---------------
 
   # vendors / inns
 
-  get 'vendors/:id' => 'vendors#show', as: :vendor
+  get 'items/:id' => 'items#show', as: :item
+  post 'items/:id' => 'items#consume', as: :consume
+  delete 'items/:id' => 'items#destroy', as: :discard
+
+  resources :vendors do
+    resources :items do
+      get :purchase
+    end
+  end
+
+
+
+  # ---------------
+
+  # get 'vendors/:id' => 'vendors#show', as: :vendor
   get 'inns/:id' => 'inns#show', as: :inn
 
 
@@ -35,11 +51,7 @@ FightyTest::Application.routes.draw do
   get 'battle_request/:id' => 'battle_requests#new', as: :request_battle
 
   post 'accept_battle_request/:id' => 'battles#create', as: :battle_accept
-  post 'decline_battle_request/:id' => 'battle_requests#decline', as: :battle_decline
-
-  post 'add_consumable' => 'consumables#add', as: :add_consumable
-  post 'consume/:id' => 'consumables#consume', as: :consume
-
+  post 'decline_battle_request/:id' => 'battle_requests#decline', as: :battle_decline  
   post 'select_character/:id' => 'users#select_character', as: :select_character
 
 

@@ -1,0 +1,84 @@
+
+
+	<div class="item_container">
+		<div class="item_constraint">
+
+			<% if @item_ref.owner_type %>
+
+					<div class="item_details">
+						<h2 id="item_title"><%= @item.name %></h2>
+
+						<div id="item_image_holder"><%= image_tag(@item.image_url) %></div>
+
+						<p id="item_description"><%= @item.description %></p>
+					</div><!--
+					--><div class="item_stats">
+						
+						<% if @item_ref.subclass_type == "Consumable" %>
+						<h2 id="item_title">Effects </h2>
+
+						<h5> <%= "Restores #{@item.hp_regen} HP" if @item.hp_regen > 0 %></h5>
+						<h5> <%= "Restores #{@item.mp_regen} MP" if @item.mp_regen > 0 %></h5>
+							
+
+						<% elsif @item_ref.subclass_type == "Armour" %>
+						<h2 id="item_title">Stats </h2>
+
+						<h5> <%= "Defence: #{@item.base_def}" if @item.base_def > 0 %></h5>
+						
+
+						<% elsif @item_ref.subclass_type == "Weapon" %>
+						<h2 id="item_title">Stats </h2>
+
+						<h5> <%= "Attack: #{@item.base_dmg}" if @item.base_dmg > 0 %></h5>
+
+				    <% else %>
+
+							<p>No stats to show</p>
+
+						<% end %>
+
+					</div>
+
+
+
+					<% if @item_ref.owner_type == "Character" %>
+
+						<% if @item_ref.subclass_type == ("Weapon" || "Armour") %>
+
+							<%= link_to "#" do %>							
+								<div class="action_button" id="equip"> Equip </div> 
+							<% end %>
+
+						<% elsif @item_ref.subclass_type == "Consumable" %>
+
+							<%= link_to consume_path(@item_ref.id), method: :post do %>							
+								<div class="action_button" id="consume"> Consume </div>
+							<% end %>
+
+						<% end %>
+
+
+						<%= link_to discard_path(@item_ref.id), method: :delete, confirm: "Discard #{@item.name}?" do %>
+							<div class="action_button" id="discard"> Discard </div>
+						<% end %>
+
+
+					<% elsif @item_ref.owner_type == "Vendor" %>
+
+						<%= link_to vendor_item_purchase_path(vendor_id: @item_ref.owner_id, item_id: @item_ref.id), class: "purchase_link" do %>
+							<div class="action_button" id="buy">
+								Buy
+							</div>
+						<% end %>
+
+					<% end %>
+
+			<% else %>
+				<h2>Couldn't find item</h2>
+			<% end %>
+
+		</div>
+	</div>
+
+

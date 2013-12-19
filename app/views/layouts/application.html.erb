@@ -12,6 +12,8 @@
 <div class="lightbox_dim"></div>
   <%= (render partial: 'layouts/splash') if @splash == "login" %>
   <%= (render partial: 'layouts/world_splash') if @splash == "world" %>
+  <%= (render partial: 'layouts/inventory_splash') if @splash == "inventory" %>
+  <%= (render partial: 'layouts/store_splash') if @splash == "store" %>
 </div>
 
 <%= render partial: 'layouts/header' %>

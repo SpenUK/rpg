@@ -16,6 +16,10 @@
               
             <% if current_user %>
 
+              <% if current_char %>
+                <p class="balance"><%= current_char.gold %></p>
+              <% end %>
+
               <li><p><%= link_to "Battle!", battle_path(battle_session.battle.id) if battle_session %></p></li>
 
               <li>
@@ -42,7 +46,6 @@
               <div class="settings_block header_icon" data-expansion="user">
               </div>
               </li>
-
              
               
             <% else !current_user %>
@@ -55,6 +58,7 @@
       </div>
     </div>
   </div>
+
 </div>
 <div class="header_fix"></div>
   <div class="messages_fix"></div>

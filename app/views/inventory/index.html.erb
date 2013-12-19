@@ -7,11 +7,14 @@
 		<% item = i.subclass %>
 
 			<div class="item_card" data-category="<%= i.subclass_type.downcase %>">
-				<h3><%= item.name %></h3>
-				<%= link_to image_tag(item.image_url), "#" %>
-				<div class="item_description">
-					<p><%= item.description %></p>
+				<div class="item_front">
+					<h3><%= item.name %></h3>
+					<%= link_to image_tag(item.image_url), item_path(i.id) , data: {name: item.name, type: i.subclass_type.downcase, image: item.image_url, desc: item.description}, class: "item_image" %>
+					<div class="item_description">
+						<p><%= item.description %></p>
+					</div>
 				</div>
+
 			</div>
 		<% end %>
 	
