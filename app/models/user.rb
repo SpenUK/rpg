@@ -1,7 +1,6 @@
 class User < ActiveRecord::Base
 	authenticates_with_sorcery!
 
-
   validates :password, length: { in: 6..128 }, on: :create
   validates :password, length: { in: 6..128 }, on: :update
 

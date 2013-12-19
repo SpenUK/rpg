@@ -50,6 +50,8 @@ FightyTest::Application.routes.draw do
 
   get 'battle_request/:id' => 'battle_requests#new', as: :request_battle
 
+  get 'hunt/1' => 'battles#create', as: :hunt
+
   post 'accept_battle_request/:id' => 'battles#create', as: :battle_accept
   post 'decline_battle_request/:id' => 'battle_requests#decline', as: :battle_decline  
   post 'select_character/:id' => 'users#select_character', as: :select_character

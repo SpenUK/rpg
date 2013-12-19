@@ -1,6 +1,6 @@
 <div class="header messages_header">
 	<div class="container">
-
+		<% if current_char %>
 		<div class="message_filter">
 			<ul>
 				<li><a href="#" class="filter_sent">Sent</a></li>
@@ -52,6 +52,6 @@
 				<% end %>
 			<% end %>
 		</div>
-
+	<% end %>
 	</div>
 </div>

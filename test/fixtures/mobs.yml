@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  species_type: MyString
+  species_id: 1
+  level: 1
+  current_hp: 1
+  current_mp: 1
+
+two:
+  species_type: MyString
+  species_id: 1
+  level: 1
+  current_hp: 1
+  current_mp: 1

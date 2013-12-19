@@ -20,7 +20,9 @@
                 <p class="balance"><%= current_char.gold %></p>
               <% end %>
 
-              <li><p><%= link_to "Battle!", battle_path(battle_session.battle.id) if battle_session %></p></li>
+              <% if current_char && battle_session %>
+                <li><p><%= link_to "Battle!", battle_path(battle_session.battle.id)%></p></li>
+              <% end %>
 
               <li>
                 <%= link_to explore_path do %>
@@ -38,7 +40,9 @@
     
               <li>
               <div class="messages_block header_icon" data-expansion="messages">
-                <p><%= "#{current_message_count if current_message_count > 0 }" %><p>
+                <% if current_char %>
+                  <p><%= "#{current_message_count if current_message_count > 0 }" %><p>
+                <% end %>
               </div>
               </li>
 

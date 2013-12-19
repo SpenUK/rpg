@@ -43,6 +43,12 @@ class CharactersController < ApplicationController
         @character.attacks << Attack.find_by(title: 'punch')
         @character.attacks << Attack.find_by(title: 'kick')
 
+        @character.items.create( subclass_id: 1, subclass_type: "Weapon")
+        @character.items.create( subclass_id: 1, subclass_type: "Consumable")
+        @character.items.create( subclass_id: 2, subclass_type: "Consumable")
+
+
+
         current_user.characters << @character
 
         redirect_to user_path(current_user.id), message: "Character Created!"

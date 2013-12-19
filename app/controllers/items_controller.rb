@@ -21,7 +21,11 @@ class ItemsController < ApplicationController
 			@item.owner_type = "Transaction"
 			@item.save
 
-			if @character.gold > @item.subclass.base_price
+			if @character.gold >= @item.subclass.base_price
+
+				@character.gold = @character.gold - @item.subclass.base_price
+				@character.save
+
 				@item.owner_id = @character.id
 				@item.owner_type = "Character"
 
@@ -52,7 +56,9 @@ class ItemsController < ApplicationController
 	def consume
 		@item = Item.find(params[:id])
 
-		if @item.owner == current_char
+		if battle_session
+			redirect_to :inventory, alert: "Whoops! You can't use that while you have a battle in session!"
+		elsif @item.owner == current_char
 			
 			@character = Character.find(current_char.id)
 

@@ -18,22 +18,49 @@ class BattlesController < ApplicationController
 		current_char.id == @defender.id ? (@player1 = @defender; @player2 = @challenger) : (@player2 = @defender; @player1 = @challenger)
 	end
 
+	# def create
+
+	# 	@battle_request = BattleRequest.find(params[:id])
+
+	# 		@challenger_id = @battle_request.sender_id
+	# 		@defender_id = @battle_request.target_id
+	# 		@challenger_type = "Character"
+	# 		@defender_type = "Character"
+
+	# 		if (Character.find(@challenger_id).current_hp == 0) or (Character.find(@defender_id).current_hp == 0)
+	# 			redirect_to :root, notice: "Either your opponent or yourself is not ready to join a battle"
+	# 		elsif current_char.battle_session
+	# 			redirect_to :root, notice: "You already have a battle in session" 
+	# 		else
+	# 			new_battle = Battle.create(challenger_id: @challenger_id, defender_id: @defender_id, challenger_type: "Character", defender_type: "Character" , status: @target_id )
+	# 			BattleSession.create(battle_id: new_battle.id, character_id: new_battle.challenger_id)
+	# 		 	BattleSession.create(battle_id: new_battle.id, character_id: new_battle.defender_id)
+	# 			@battle_request.destroy
+
+	# 			redirect_to battle_path(new_battle.id)
+	# 		end
+	# end
+
 	def create
 
-		@battle_request = BattleRequest.find(params[:id])
+			@challenger = Character.find(current_char.id)
+			@opponent = Mob.find(1)
 
-		# @number_of_battles = current_char.all_battles.length 
+			@challenger_id = @opponent.id
+			@defender_id = @challenger.id
+			@challenger_type = "Mob"
+			@defender_type = "Character"
 
-		if current_char.battle_session
-			redirect_to :root, notice: "You already have a battle in session" 
-		else
-			new_battle = Battle.create(challenger_id: @battle_request.sender_id , defender_id: @battle_request.target_id , status: @battle_request.target_id )
-			BattleSession.create(battle_id: new_battle.id, character_id: new_battle.challenger_id)
-		 	BattleSession.create(battle_id: new_battle.id, character_id: new_battle.defender_id)
-			@battle_request.destroy
+			if (@challenger.current_mp == 0) or (@opponent.current_mp == 0)
+				redirect_to :root, notice: "Either your opponent or yourself is not ready to join a battle"
+			elsif current_char.battle_session
+				redirect_to :root, notice: "You already have a battle in session" 
+			else
+				new_battle = Battle.create(challenger_id: @challenger_id, defender_id: @defender_id, challenger_type: @challenger_type, defender_type: @defender_type, status: @defender_id )
+				BattleSession.create(battle_id: new_battle.id, character_id: new_battle.defender_id)
 
-			redirect_to battle_path(new_battle.id)
-		end
+				redirect_to battle_path(new_battle.id)
+			end
 	end
 
 		def attack
@@ -69,7 +96,7 @@ class BattlesController < ApplicationController
 	    elsif battle_session.battle.status == "ended"
 	    	redirect_to :back, notice: "This battle has ended"
 	    else
-	    	redirect_to :back, notice: "It's not your turn yet"
+	    	redirect_to :back, notice: "It's not your turn yet" 
 	    end
     end
 
