@@ -67,6 +67,10 @@ include ApplicationHelper
 	  	  @target.save
 	  	  @current.save
 
+	  	  FightTurn.create( maker_id: @current.id ,maker_type: "Character", target_id: @target.id, target_type: "Mob", 
+		    									damage: @dmg, healed: nil, skill_used: @attack.name, skill_id: @attack.id, skill_type: "Attack", 
+		    									item_used: nil,item_used_id: nil,item_used_type: nil, critical: @critical, fight_type: "MobBattle", fight_id: @battle.id )
+
 	  	  change_battle_status(@battle)
 
 	  	  mob_random_move
@@ -94,7 +98,7 @@ include ApplicationHelper
     end
 
     def get_random_mob
-    	@monster = Monster.find(1)
+    	@monster = Monster.find(rand(Monster.all.length)+1)
 
     	@level = 2
     	@total_hp = @monster.max_hp + (@monster.hp_per_level * (@level -1))
@@ -106,7 +110,7 @@ include ApplicationHelper
 
     	mob = Mob.create(
     			species_type: "Monster", species_id: @monster.id , 
-    			level: @level, current_hp: @total_hp, current_mp: @total_mp, total_hp: @total_hp, total_mp: @total_mp,
+    			level: @level, current_hp: @total_hp, current_mp: @total_mp, max_hp: @total_hp, max_mp: @total_mp,
     			held_gold: @held_gold
     			)
     end
@@ -133,7 +137,7 @@ include ApplicationHelper
 					@attack = Attack.find_by(title: "struggle")
 				end
 
-				@current.current_mp -= @attack.mp_consumption
+				@current.current_mp = @current.current_mp - @attack.mp_consumption
 
 	    	base_dmg = @attack.base_dmg
 	    	dmg_range = @attack.dmg_range
@@ -145,6 +149,10 @@ include ApplicationHelper
 	    	@target.current_hp -= @dmg if @target.current_hp > 0
 
 		    @target.current_hp = 0 if @target.current_hp < 0
+
+		    FightTurn.create( maker_id: @current.id ,maker_type: "Mob", target_id: @target.id, target_type: "Character", 
+		    									damage: @dmg, healed: nil, skill_used: @attack.name, skill_id: @attack.id, skill_type: "Attack", 
+		    									item_used: nil,item_used_id: nil,item_used_type: nil, critical: @critical, fight_type: "MobBattle", fight_id: @battle.id  )
 
 	  	  @target.save
 	  	  @current.save

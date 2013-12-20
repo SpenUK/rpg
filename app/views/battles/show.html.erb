@@ -3,13 +3,8 @@
 	<h1>Battle!</h1><br>
 	<h3><%# @battle.outcome %></h3>
 
-	<div class="round_summary">
-		<% if params[:dmg].to_i > 0 %>
-			<%= "#{params[:dmg]}  #{'(Critical!)' if params[:cr]}" %>
-		<% end %>
-	</div>
-
 	<div class="arena">
+
 		<div class="foreground"></div>
 		<div class="arena_shadow"></div>
 		<div class="background"></div>
@@ -34,7 +29,7 @@
 		<div class="skills_panel">
 			<p><strong>Skills:</strong>| <% current_char.attacks.each do |att| %>
 				<%= link_to attack_url(att.id, ch: @player2.id), method: :post do %>
-					<%= att.title %>
+					<%= att.name %>
 				<% end %> | 
 			<% end %></p>
 		</div>
@@ -53,6 +48,15 @@
 		<% end %>
 		
 	</div>
+
+	<div class="turn_container">
+		<% @battle.turns.each do |turn| %>
+
+			<%= render "turn_display", turn: turn, current: @player1, opponent: @player2 %>
+
+		<% end %>
+	</div>
+
 
 
 

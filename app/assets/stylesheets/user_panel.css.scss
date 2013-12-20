@@ -1,0 +1,50 @@
+.user_panel {
+
+	$color_header: rgba(60,60,60,1);
+	$color_light_shadow: rgba(255,255,255,0.7);
+
+	background-color: $color_header;
+	padding: 20px;
+
+	display:inline-block;
+
+	.avatar_display, .character_level_details {
+		display: inline-block; vertical-align: top;
+	}
+
+	.avatar_display {
+		width: 200px;
+		height: 200px;
+		background: rgba(220,220,220,1);
+		margin-right: 20px;
+	}
+
+	.character_level_details, {
+		color: white;
+
+		h2, a {
+			color: rgba(220,80,80,1)
+		}
+
+
+
+		p, h2 {
+			margin:5px;
+		}
+
+		h2 {margin-top: 0px;}
+
+		.hp_tag { color: rgba(220,140,140,1);}
+		.mp_tag { color: rgba(160,200,255,1);}
+	}
+
+
+
+
+
+
+
+
+
+
+}

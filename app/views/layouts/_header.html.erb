@@ -30,6 +30,7 @@
                     
               <% end %>
 
+              <% if current_char %>
               <li>
                 <%= link_to explore_path do %>
               <div class="map_block header_icon" data-expansion="none">
@@ -37,12 +38,14 @@
                 <% end %>
               </li>
 
+
               <li>
                 <%= link_to inventory_path do %>
               <div class="inventory_block header_icon" data-expansion="none">
               </div>
                 <% end %>
               </li>
+              <% end %>
     
               <li>
               <div class="messages_block header_icon" data-expansion="messages">

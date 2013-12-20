@@ -1,5 +1,6 @@
 <div class="container">
 
+<% if @battles %>
 	<h2>Received</h2>
 	<% current_char.received_battle_requests.each do |req| %>
 
@@ -17,4 +18,6 @@
 		</div>
 
 	<% end %>
+
+<% end%>
 </div>

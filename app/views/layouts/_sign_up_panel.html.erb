@@ -1,0 +1,25 @@
+<div class="user_panel">
+
+	<div class="avatar_display">
+
+		<% if current_char %>
+  	 <%= image_tag current_char.avatar_url %>
+  	 
+  	<% elsif current_user.characters.length > 0 %>
+  	 	<p><strong>No Character Selected</strong></p>
+  	 	<%= link_to "Select A Character", "#" %>
+
+  	<% else %>
+
+  		<p><strong>You don't have any Characters</strong></p>
+  		<%= link_to "Create A Character" "#" %>
+
+  	<% end %>
+
+  </div>
+
+
+
+
+
+</div>

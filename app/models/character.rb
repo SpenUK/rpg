@@ -1,7 +1,6 @@
 class Character < ActiveRecord::Base
 
   validate :gender_check, on: :create
-  after_save :user_has_less_than_four
   validates :name, uniqueness: true
   validates :name, length: { in: 3..30 }, on: :create
 
@@ -25,8 +24,8 @@ class Character < ActiveRecord::Base
   has_many :sent_messages, :class_name => "Message", foreign_key: "sender_id"
   has_many :received_messages, :class_name => "Message", foreign_key: "target_id"
 
-  # has_many :off_battles, :class_name => "Battle", as: :defender
-  # has_many :def_battles, :class_name => "Battle", as: :challenger
+  has_many :sent_fight_turns, class_name: "FightTurn", as: :maker
+  has_many :received_fight_turns, class_name: "FightTurn", as: :target
 
   has_many :off_battles, :class_name => "Battle", foreign_key: "challenger_id"
   has_many :def_battles, :class_name => "Battle", foreign_key: "defender_id"

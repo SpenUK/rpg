@@ -121,7 +121,7 @@ ul { list-style: none; }
 	width: 100%;
 	top: 0px;
 	left: 0px;
-	z-index: 1000;
+	z-index: 10000;
 	background: $color_header;
 }
 
@@ -180,7 +180,8 @@ ul { list-style: none; }
 	padding-top: 10px;
 	min-height: 100%;
 	position: relative;
-	/*background: rgba(0,0,100,0.2);*/
+	background-image: url(<%= asset_path "shards_3.png" %>);
+	background-repeat:repeat-x;
 }
 
 .container {
@@ -719,6 +720,85 @@ display: inline-block;}
 	}
 }
 
+//arena styles
+
+.turn_container {
+	max-height: 300px;
+	overflow-y: auto;
+	margin: 20px;
+	background-color: $color_light_shadow;
+
+}
+
+.battle_turn{
+	border: 2px solid rgba(60,60,60,1);
+	min-height: 20px;
+	margin: 10px;
+	background-color: $color_light_shadow;
+	padding:20px;
+
+}
+
+// leaderboard
+
+	.leaderboard_intro {
+
+		padding: 20px;
+
+		background-color: $color_header;
+
+		h1 {
+			text-align: center;
+			color: white;
+		}
+	}
+
+	.leaderboard_entry, {
+
+
+		background-color: $color_header;
+		position: relative;
+		margin: 20px 40px;
+
+		.summary {
+			padding: 20px;
+
+
+		}
+
+		.avatar_thumb, .entry_details {
+			display: inline-block;
+			vertical-align: top;
+		}
+
+		.entry_details {
+			padding: 10px;
+			color: white;
+
+			.name {
+				color: $color_bg;
+			}
+
+			.exp {
+				color:$color_light_shadow;
+			}
+		}
+
+		.avatar_thumb {
+			height: 80px;
+			width: 80px;
+			overflow: hidden;
+			background-color: $color_light_shadow;
+
+
+			img {
+				margin: -38px -60px;
+			}
+		}
+
+
+
+	}
 
 // scroll styles
 

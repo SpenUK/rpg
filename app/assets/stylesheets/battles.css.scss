@@ -2,13 +2,127 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.hud_panel {
+
+	$hp_total: rgba(180,50,50,0.4);
+	$hp_current: rgba(180,50,50,1);
+	$mp_total: rgba(50,180,200,0.4);
+	$mp_current: rgba(50,180,200,1);
+	$just_visable: rgba(255,255,255,0.1);
+	$bar_height: 30px;
+
+	overflow: hidden;
+	height: 70px;
+	left:0; right:0;
+	// background-color: rgba(255,255,255,0.1);
+	z-index: 400;
+	position: absolute;
+	top: 0;
+	display: inline-block;
+	padding: 10px;
+
+	.player_1_hud {
+
+		background-color: $just_visable;
+		padding:10px;
+
+		display: inline-block;
+
+		h4 {z-index: 380;
+				 	line-height: $bar_height; 
+				 	left: 10px; 
+				 	color: rgba(40,40,40,0.8);
+				 }
+			h4, .hp_bar, .mp_bar { position: absolute; top:0; }
+
+		.hp_container_bar {
+			width: 450px;
+			background-color: $hp_total;
+			height: $bar_height;
+			overflow: hidden;
+
+			position:relative;
+
+			.hp_bar {
+				background-color: $hp_current;
+				height: $bar_height;
+				left: 0;
+			}
+
+		}
+
+		.mp_container_bar {
+			width: 450px;
+			background-color: $mp_total;
+			height: $bar_height;
+
+			position:relative;
+
+			.mp_bar {
+				background-color: $mp_current;
+				height: $bar_height;
+				left: 0;
+			}
+
+		}
+
+	}
+
+	.player_2_hud {
+
+		float: right;
+		display: inline-block;
+
+		background-color: $just_visable;
+		padding:10px;
+
+		h4 {z-index: 480;
+				 	line-height: $bar_height; 
+				 	right: 10px; 
+				 	color: rgba(40,40,40,0.8);
+				 }
+			h4, .hp_bar, .mp_bar { position: absolute; top:0; }
+
+		.hp_container_bar {
+			width: 450px;
+			background-color: $hp_total;
+			height: $bar_height;
+
+			position: relative;
+
+			.hp_bar {
+				background-color: $hp_current;
+				height: $bar_height;
+				right: 0;
+			}
+
+		}
+
+		.mp_container_bar {
+			background-color: $mp_total;
+			height: $bar_height;
+
+
+			position:relative;
+
+			.mp_bar {
+				width: 161px;
+				background-color: $mp_current;
+				height: $bar_height;
+				right: 0;
+			}
+
+		}
+
+	}
+}
+
+
 .player {
 	height: 200px;
 	width: 200px;
-	background-color: rgba(220,240,250,0.6);
-	border: 4px solid gray;
 	display: inline-block;
-	z-index: 1000;
+	z-index: 390;
 	position: absolute;
 	bottom: 100px;
 	text-align: center;
@@ -46,7 +160,7 @@
 	bottom: 0;
 	position: absolute;
 	background-image: url(foreground1.png);
-	z-index: 1040;
+	z-index: 550;
 }
 
 .arena_shadow {
@@ -61,15 +175,15 @@
 }
 
 .skills_panel {
-	width: 300px;
+	width: 280px;
 	bottom: 10px;
-	left: 345px;
-	background-color: rgba(250,250,200,1);
-	border: 4px solid gray;
-	z-index: 1400;
+	left: 330px;
+	background-color: rgba(255,255,255,0.7);
+	border: 1px solid gray;
+	z-index: 560;
 	position: absolute;
 	text-align: center;
-	border-radius: 10px;
+	padding: 20px;
 }
 
 .arena {
@@ -82,12 +196,13 @@
 }
 
 .outcome {
-	width: 400px;
-	height: 400px;
+	width: 300px;
+	height: 320px;
 	background-color: rgba(255,255,255,0.9);
 	border: 4px solid gray;
+	padding:20px;
 	border-radius: 15px;
-	z-index: 1500;
+	z-index: 400;
 	position: relative;
 	margin: auto;
 	top: 20px;
@@ -96,12 +211,25 @@
 		text-align: center;
 	}
 
+	a {
+		div {
+		padding: 10px 20px;
+		background-color: rgba(120,230,120,1);
+		display: inline-block;
+		margin: auto;
+		position:relative;
+		}
+		color: rgba(255,255,255,0.9);
+	}
+
 	.button {
 		height:30px;
 		width: 100px;
 		margin: auto;
 		position: relative;
 	}
+
+
 
 }
 

@@ -2,39 +2,36 @@
 
 	<h1>Battle!</h1><br>
 	<h3><%# @battle.outcome %></h3>
-
-	<div class="round_summary">
-		<% if params[:dmg].to_i > 0 %>
-			<%= "#{params[:dmg]}  #{'(Critical!)' if params[:cr]}" %>
-		<% end %>
-	</div>
+	
 
 	<div class="arena">
 		<div class="foreground"></div>
 		<div class="arena_shadow"></div>
 		<div class="background"></div>
 		<div class="far-background"></div>
+
+		<%= render "hud_panel" %>
+
+		<div class="round_summary">
+			<% if params[:dmg].to_i > 0 %>
+				<%= "#{params[:dmg]}  #{'(Critical!)' if params[:cr]}" %>
+			<% end %>
+		</div>
 	
 
 		<div class= 'player player_1' data-char="<%= @player1.id %>">
-					<h2><%= @player1.name %></h2>
-
-					<h4><%= "#{@player1.current_hp}/#{@player1.max_hp}" %></h4>
-					<h4><%= "#{@player1.current_mp}/#{@player1.max_mp}" %></h4>
+					<%= image_tag @defender.avatar_url %>
 
 		</div>
 
 		<div class= 'player player_2' data-char="<%= @player2.id %>">
-					<h2><%= @player2.species.name %></h2>
-
-						<h4><%= "#{@player2.current_hp}/#{@player2.total_hp}" %></h4>
-						<h4><%= "#{@player2.current_mp}/#{@player2.total_mp}" %></h4>
+					<%= image_tag @challenger.species.avatar_url %>
 		</div>
 
 		<div class="skills_panel">
 			<p><strong>Skills:</strong>| <% current_char.attacks.each do |att| %>
 				<%= link_to mob_attack_url(att.id, ch: @player2.id), method: :post do %>
-					<%= att.title %>
+					<%= att.name %>
 				<% end %> | 
 			<% end %></p>
 		</div>
@@ -54,6 +51,13 @@
 		
 	</div>
 
+	<div class="turn_container">
+		<% @battle.turns.each do |turn| %>
+
+			<%= render "turn_display", turn: turn, current: @player1, opponent: @player2 %>
+
+		<% end %>
+	</div>
 
 
 

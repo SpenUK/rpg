@@ -34,6 +34,8 @@ class ApplicationController < ActionController::Base
 
     Armour.create(name: "Shiney Helmet", description: "ooOOoo shiney!", base_def: 10, def_range: 6) unless Armour.find_by(name: "Shiney Helmet")
     Weapon.create(name: "Tiny Sword", description: "its all about how you use it", base_price: 320, base_dmg: 10, dmg_range: 6) unless Weapon.find_by(name: "Tiny Sword")
+    Weapon.create(name: "Steel Sword", description: "A sturdy Steel Sword, good for dicing carrots", base_price: 1120, base_dmg: 15, dmg_range: 10, image_url: "items/sword_2.png") unless Weapon.find_by(name: "Steel Sword")
+    Weapon.create(name: "Carrot Sword", description: "Is it a sword? no. no it's a carrot.", base_price: 999999, base_dmg: 25, dmg_range: 40, image_url: "items/carrot_sword.png") unless Weapon.find_by(name: "Carrot Sword")
     Weapon.create(name: "Rusty Sword", description: "Old, useless and rusty", base_price: 120, base_dmg: 4, dmg_range: 3) unless Weapon.find_by(name: "Rusty Sword")
     Vendor.create(name: 'General Store', area_id: 1, owner_image: "owner_placeholder.png" ) unless Vendor.find_by(name: 'General Store')
 
@@ -50,6 +52,15 @@ class ApplicationController < ActionController::Base
     # -----------------------------------------------------
     
     Item.create(owner_id: 1, owner_type: "Vendor", subclass_id: 2, subclass_type: "Weapon")
+    Item.create(owner_id: 1, owner_type: "Vendor", subclass_id: 1, subclass_type: "Consumable")
+    Item.create(owner_id: 1, owner_type: "Vendor", subclass_id: 1, subclass_type: "Consumable")
+    Item.create(owner_id: 1, owner_type: "Vendor", subclass_id: 2, subclass_type: "Consumable")
+    Item.create(owner_id: 1, owner_type: "Vendor", subclass_id: 3, subclass_type: "Consumable")
+    Item.create(owner_id: 1, owner_type: "Vendor", subclass_id: 2, subclass_type: "Consumable")
+    Item.create(owner_id: 1, owner_type: "Vendor", subclass_id: 3, subclass_type: "Consumable")
+    Item.create(owner_id: 1, owner_type: "Vendor", subclass_id: 4, subclass_type: "Weapon")
+    Item.create(owner_id: 1, owner_type: "Vendor", subclass_id: 1, subclass_type: "Consumable")
+
 
     # ------------------------------------------------------
 

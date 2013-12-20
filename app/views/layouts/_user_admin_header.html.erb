@@ -1,48 +1,22 @@
 <div class="header user_admin_header">
   <div class="container">
 
-        <div class="character_display_panel">
-
-          <h3><%= current_char ? current_char.name : "No Character Selected" %></h3>
-          <% if current_user.characters.length < 1 %>
-            <p><%= link_to "Create New", new_character_path, {class: "selection_p"} %></p>
-          <% else %>  
-            <p><%= link_to "Select character", root_path, {class: "selection_p"} %></p>
-          <% end %>
-
-          <div class="avatar_display">
-            character avatar goes here
-          </div>
-
-        </div><!--
-
-
-        --><div class="character_options_panel">
-      <% if current_char %>
-          <h3>Character options</h3>
-
-          <p> <%= current_char.current_hp %>/<strong><%= current_char.max_hp %></strong></p>
-
-          <p> <%= current_char.current_mp %>/<strong><%= current_char.max_mp %></strong></p>
-      <% end %>
-
-        </div><!--
+        <%= render "/layouts/user_panel" %><!--
 
 
         --><div class="user_options_panel">
           <ul>
 
-            <li><a href="#">Link</a></li>
-            <li><a href="#">Link</a></li>
-            <li><a href="#">Link</a></li>
-            <li><a href="#">Link</a></li>
-            <%= link_to edit_user_path(current_user.id) do %><li>Edit Profile</li><% end %>
+            <li><a href="#">Edit Character</a></li>
+            <li><a href="#">Skills</a></li>
+            <li><a href="#">Stats</a></li>
+            <li><a href="#">Battle History</a></li>
+            <%= link_to edit_user_path(current_user.id) do %><li>Edit User Settings</li><% end %>
             <%= link_to :logout, method: :post do %><li>Logout</li><% end %>
 
 
           </ul>
         </div>
-
 
   </div>
 </div>

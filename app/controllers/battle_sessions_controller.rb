@@ -17,7 +17,7 @@ class BattleSessionsController < ApplicationController
 
 		@battle_session.destroy
 
-		redirect_to :root, notice: "Winner: #{@battle_session.fight.challenger.id} Character: #{@battle_session.fight.defender.id}"
+		redirect_to :root
 	end
 
 	private

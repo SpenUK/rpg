@@ -1,0 +1,43 @@
+<div class="user_panel">
+
+  <% if !current_char %>
+
+    <div class="avatar_display">
+      <%= image_tag "characters/charasmall_blank.png" %>
+    </div>
+      <p><strong>You don't have any Characters!</strong></p>
+      <p> <%= link_to "Create New Character", new_character_path, {class: "selection_p"} %></p>
+
+
+  <% else %>
+
+	  <div class="avatar_display">
+  	 <%= image_tag current_char.avatar_url %>   
+    </div><!--
+    --><div class="character_level_details">
+
+      <h2><%= current_char.name %></h2>
+      <p><%= link_to "(Select Different)", root_path, {class: "selection_p"} %></p>
+
+      <p>Class: Beginner</p>
+      <p>Level: <%= current_char.level %></p>
+
+      <p> HP: <span class="hp_tag"><strong><%= current_char.current_hp %></strong>/<%= current_char.max_hp %></span></p>
+
+      <p> MP: <span class="mp_tag"><strong><%= current_char.current_mp %></strong>/<%= current_char.max_mp %></span></p>
+
+      <p>Exp: <%= current_char.exp %></p>
+      <p>Next Level: <%= level_exp(current_char.level) - current_char.exp %></p>
+
+
+    </div>
+  	<% end %>
+
+
+  
+
+
+
+
+
+</div>

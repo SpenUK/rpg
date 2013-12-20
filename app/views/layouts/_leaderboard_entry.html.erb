@@ -1,0 +1,30 @@
+<div class="container">
+	<div class="leaderboard_entry">
+		<div class="summary">
+
+			<div class="avatar_thumb">
+				<%= image_tag character.avatar_url %>   
+			</div>
+
+			<div class="entry_details">
+
+				<h3><span class="name"> <%= character.name %> </span></h3>
+				  Level: <%= character.level %>
+				Exp: <%= character.exp %> / <span class="exp"><%= level_exp(character.level) %></span><h3>
+
+			</div>
+
+			<div class="leader_actions">
+
+				<%= link_to (image_tag "battle_icon.png"), "#" %>
+
+				<%= link_to (image_tag  "messages.png"), "#" %>
+
+			</div>
+
+
+
+
+		</div>
+	</div>
+</div>

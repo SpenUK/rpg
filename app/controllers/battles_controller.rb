@@ -5,7 +5,14 @@ class BattlesController < ApplicationController
 	end
 
 	def index
-		@battles = current_char.all_battles
+
+		if battle_session
+			@battles = false
+			@battle = battle_session.fight
+		else
+			@battle = false
+			@battles = current_char.all_battles
+		end
 	end
 
 	def show

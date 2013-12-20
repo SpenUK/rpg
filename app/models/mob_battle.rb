@@ -7,6 +7,9 @@ class MobBattle < ActiveRecord::Base
   belongs_to :challenger, :class_name => 'Mob', :foreign_key => 'challenger_id'
   belongs_to :defender, :class_name => 'Character', :foreign_key => 'defender_id'
   has_one :battle_session
+
+  has_many :turns, class_name: 'FightTurn', as: :fight
+  
 # -----------------------
 
 	def winner

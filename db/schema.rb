@@ -11,13 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131219203145) do
+ActiveRecord::Schema.define(version: 20131220070534) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "area_objects", force: true do |t|
-    t.string   "title"
+    t.string   "name"
     t.integer  "area_id"
     t.integer  "x_position"
     t.integer  "y_position"
@@ -55,7 +55,7 @@ ActiveRecord::Schema.define(version: 20131219203145) do
   end
 
   create_table "attacks", force: true do |t|
-    t.string   "title"
+    t.string   "name"
     t.boolean  "melee"
     t.boolean  "physical"
     t.string   "elemental"
@@ -129,6 +129,7 @@ ActiveRecord::Schema.define(version: 20131219203145) do
     t.integer  "last_location_id", default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "avatar_url"
   end
 
   create_table "characters_users", force: true do |t|
@@ -171,6 +172,9 @@ ActiveRecord::Schema.define(version: 20131219203145) do
     t.string   "item_used_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "fight_id"
+    t.string   "fight_type"
+    t.boolean  "critical"
   end
 
   create_table "inns", force: true do |t|
@@ -224,8 +228,8 @@ ActiveRecord::Schema.define(version: 20131219203145) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "held_gold"
-    t.integer  "total_hp"
-    t.integer  "total_mp"
+    t.integer  "max_hp"
+    t.integer  "max_mp"
   end
 
   create_table "monsters", force: true do |t|
@@ -244,6 +248,7 @@ ActiveRecord::Schema.define(version: 20131219203145) do
     t.integer  "base_attack"
     t.integer  "defense_per_level"
     t.integer  "attack_per_level"
+    t.string   "avatar_url"
   end
 
   create_table "users", force: true do |t|

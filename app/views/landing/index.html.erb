@@ -1,0 +1,26 @@
+<div class="container">
+
+	<div class="leaderboard_intro">
+
+		<h1>Leaderboard</h1>
+
+	</div>
+
+
+
+	<div class="leader_board_entry_container">
+
+		<div class="leader_board">
+
+			<% @top_20.each do |char| %>
+
+				<%= render "/layouts/leaderboard_entry", character: char %>				
+
+			<% end %>
+
+		</div>
+
+	</div>
+
+
+</div>

@@ -1,3 +1,7 @@
+<div class="container">
+
+<h2>Create Character</h2>
+
 <%= form_for @character do |f|%>
 	<% if @character.errors.any? %>
 		<div id="errors"><ul>
@@ -23,3 +27,5 @@
 		<%= f.submit %>
 	</div>
 <% end %>
+
+</div>

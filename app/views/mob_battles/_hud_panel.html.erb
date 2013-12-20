@@ -1,0 +1,33 @@
+<div class="hud_panel">
+
+	<div class="player_1_hud">
+
+		<div class="hp_container_bar">
+			<h4 class="hp_mp_stat"><%= @player1.current_hp %></h4>
+			<div class= "hp_bar" style="width: <%= ((@player1.current_hp ) * 100) / @player1.max_hp %>%;"></div>
+		</div>
+
+		<div class="mp_container_bar">
+			<h4 class="hp_mp_stat"><%= @player1.current_mp %></h4>
+			<div class= "mp_bar" style="width: <%= ((@player1.current_mp ) * 100) / @player1.max_mp %>%;"></div>
+		</div>
+
+
+	</div>
+
+	<div class="player_2_hud">
+
+		<div class="hp_container_bar">
+			<h4 class="hp_mp_stat"><%= @player2.current_hp %></h4>
+			<div class= "hp_bar" style="width: <%= ((@player2.current_hp ) * 100) / @player2.max_hp %>%;"></div>
+		</div>
+
+		<div class="mp_container_bar">
+			<h4 class="hp_mp_stat"><%= @player2.current_mp %></h4>
+			<div class= "mp_bar" style="width: <%= ((@player2.current_mp ) * 100) / @player2.max_mp %>%;"></div>
+		</div>
+
+
+	</div>
+
+</div>
