@@ -1,5 +1,17 @@
 <div class="container">
+	<div class="inn_container">
 
-	<%= @inn.area_id%>
+		<div class="inn_details">
+			<h2><%= @inn.name%></h2>
+			<hr>
+			<p><%= @inn.greeting %></p>
 
+			<%= link_to sleep_path(@inn.id), method: :post do %>
+			<div class="inn_button">
+				Sleep</div>
+				<% end %>
+
+		</div>
+
+	</div>
 </div>

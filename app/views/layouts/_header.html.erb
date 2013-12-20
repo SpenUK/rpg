@@ -21,7 +21,13 @@
               <% end %>
 
               <% if current_char && battle_session %>
-                <li><p><%= link_to "Battle!", battle_path(battle_session.battle.id)%></p></li>
+
+                <% if battle_session.fight_type == "Battle" %>
+                  <li><p><%= link_to "Battle!", battle_path(battle_session.fight.id)%></p></li>
+                <% elsif battle_session.fight_type == "MobBattle" %>
+                  <li><p><%= link_to "Battle!", mob_battle_path(battle_session.fight.id) %></p></li>
+                <% end %>
+                    
               <% end %>
 
               <li>

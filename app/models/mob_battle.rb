@@ -1,8 +1,10 @@
-class Battle < ActiveRecord::Base
+class MobBattle < ActiveRecord::Base
+
+
 
 # -----------------------
 
-  belongs_to :challenger, :class_name => 'Character', :foreign_key => 'challenger_id'
+  belongs_to :challenger, :class_name => 'Mob', :foreign_key => 'challenger_id'
   belongs_to :defender, :class_name => 'Character', :foreign_key => 'defender_id'
   has_one :battle_session
 # -----------------------
@@ -22,10 +24,12 @@ class Battle < ActiveRecord::Base
   def outcome
   	if winner.length > 1
   		"Tie!"
-  	elsif winner.length == 1
+  	elsif winner.length == 1 && winner.first.is_a?(Character)
   		"#{winner.first.name} Wins!"
+  	elsif winner.length == 1 && winner.first.is_a?(Mob)
+  		"#{winner.first.species.name} Wins!"
   	else
-  		nil
+  		"#{winner.id}"
   	end	
   end
 

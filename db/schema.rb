@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131219065759) do
+ActiveRecord::Schema.define(version: 20131219203145) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,28 +71,33 @@ ActiveRecord::Schema.define(version: 20131219065759) do
     t.integer "character_id"
   end
 
+  create_table "attacks_monsters", force: true do |t|
+    t.integer "attack_id"
+    t.integer "monster_id"
+  end
+
   create_table "battle_requests", force: true do |t|
     t.integer  "target_id"
     t.string   "message"
-    t.integer  "wager",      default: 0
+    t.integer  "wager",       default: 0
     t.integer  "sender_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "sender_type", default: "Character"
   end
 
   create_table "battle_sessions", force: true do |t|
-    t.integer  "battle_id"
+    t.integer  "fight_id"
     t.integer  "character_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "fight_type",   default: "Battle"
   end
 
   create_table "battles", force: true do |t|
     t.datetime "timeout"
     t.integer  "challenger_id"
-    t.string   "challenger_type"
     t.integer  "defender_id"
-    t.string   "defender_type"
     t.string   "status"
     t.integer  "winner_id"
     t.datetime "created_at"
@@ -151,6 +156,23 @@ ActiveRecord::Schema.define(version: 20131219065759) do
     t.datetime "updated_at"
   end
 
+  create_table "fight_turns", force: true do |t|
+    t.integer  "maker_id"
+    t.string   "maker_type"
+    t.integer  "target_id"
+    t.string   "target_type"
+    t.integer  "damage"
+    t.integer  "healed"
+    t.string   "skill_used"
+    t.integer  "skill_id"
+    t.string   "skill_type"
+    t.string   "item_used"
+    t.integer  "item_used_id"
+    t.string   "item_used_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "inns", force: true do |t|
     t.string   "name"
     t.integer  "cost",         default: 1000
@@ -185,6 +207,14 @@ ActiveRecord::Schema.define(version: 20131219065759) do
     t.datetime "updated_at"
   end
 
+  create_table "mob_battles", force: true do |t|
+    t.integer  "challenger_id"
+    t.integer  "defender_id"
+    t.string   "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "mobs", force: true do |t|
     t.string   "species_type"
     t.integer  "species_id"
@@ -193,6 +223,9 @@ ActiveRecord::Schema.define(version: 20131219065759) do
     t.integer  "current_mp",   default: 10
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "held_gold"
+    t.integer  "total_hp"
+    t.integer  "total_mp"
   end
 
   create_table "monsters", force: true do |t|

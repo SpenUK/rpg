@@ -1,0 +1,2 @@
+module MobBattlesHelper
+end

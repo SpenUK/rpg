@@ -14,6 +14,7 @@ FightyTest::Application.routes.draw do
   root 'characters#index'
   resources :characters
   resources :battles, only: [:show, :index]
+  resources :mob_battles, only: [:show, :index]
   resources :battle_requests
   resources :battle_sessions
 
@@ -43,14 +44,16 @@ FightyTest::Application.routes.draw do
 
   # get 'vendors/:id' => 'vendors#show', as: :vendor
   get 'inns/:id' => 'inns#show', as: :inn
+  post 'inns/:id' => 'inns#sleep', as: :sleep
 
 
   post 'attack/:id' => 'battles#attack', as: :attack
+    post 'mob_attack/:id' => 'mob_battles#attack', as: :mob_attack
   get 'reset' => 'characters#reset', as: :reset
 
   get 'battle_request/:id' => 'battle_requests#new', as: :request_battle
 
-  get 'hunt/1' => 'battles#create', as: :hunt
+  get 'hunt/1' => 'mob_battles#create', as: :hunt
 
   post 'accept_battle_request/:id' => 'battles#create', as: :battle_accept
   post 'decline_battle_request/:id' => 'battle_requests#decline', as: :battle_decline  

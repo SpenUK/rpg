@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  maker_id: 1
+  maker_type: MyString
+  target_id: 1
+  target_type: MyString
+  damage: 1
+  healed: 1
+  skill_used: MyString
+  skill_id: 1
+  skill_type: MyString
+  item_used: MyString
+  item_used_id: 1
+  item_used_type: MyString
+
+two:
+  maker_id: 1
+  maker_type: MyString
+  target_id: 1
+  target_type: MyString
+  damage: 1
+  healed: 1
+  skill_used: MyString
+  skill_id: 1
+  skill_type: MyString
+  item_used: MyString
+  item_used_id: 1
+  item_used_type: MyString

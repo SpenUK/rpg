@@ -22,6 +22,11 @@ class ApplicationController < ActionController::Base
     Attack.create(title: 'poison', melee: true, elemental: 'poison', physical: true, base_dmg: 10, dmg_range: 6, mp_consumption: 0 ) unless Attack.find_by(title: 'poison')
     Attack.create(title: 'slash', melee: true, elemental: 'normal', physical: true, base_dmg: 12, dmg_range: 8, mp_consumption: 0 ) unless Attack.find_by(title: 'slash')
     Attack.create(title: 'power_slash', melee: true, elemental: 'normal', physical: true, base_dmg: 14, dmg_range: 12, mp_consumption: 10 ) unless Attack.find_by(title: 'power_slash')
+    Attack.create(title: 'struggle', melee: true, elemental: 'normal', physical: true, base_dmg: 2, dmg_range: 8, mp_consumption: 0 ) unless Attack.find_by(title: 'struggle')
+
+    Attack.create(title: 'Bite', melee: true, elemental: 'normal', physical: true, base_dmg: 10, dmg_range: 6, mp_consumption: 0 ) unless Attack.find_by(title: 'Bite')
+    Attack.create(title: 'Stomp', melee: true, elemental: 'normal', physical: true, base_dmg: 8, dmg_range: 8, mp_consumption: 0 ) unless Attack.find_by(title: 'Stomp')
+    Attack.create(title: 'Slam', melee: true, elemental: 'normal', physical: true, base_dmg: 10, dmg_range: 10, mp_consumption: 20 ) unless Attack.find_by(title: 'Slam')
 
     Consumable.create(name: 'Green Apple', description: "A tasty Green Apple", hp_regen: 15, mp_regen: 0, base_price: 20, rarity: 200, image_url: "items/green_apple.png" ) unless Consumable.find_by(name: 'Green Apple')
     Consumable.create(name: 'Red Apple', description: "A tasty Red Apple", hp_regen: 25, mp_regen: 0, base_price: 40, rarity: 280, image_url: "items/red_apple.png" ) unless Consumable.find_by(name: 'Red Apple')

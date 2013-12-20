@@ -61,4 +61,25 @@ module ApplicationHelper
       nil
     end
 	end
+
+  def level_up_check(level, current_xp)
+    if current_xp >= level_exp(level)
+      current_xp - level_exp(level)
+    else
+      nil
+    end
+  end
+
+  def level_exp(level)
+
+  increment = 9.2
+
+  x = (((level * increment) * (level * increment)) * 0.2) + 50
+
+  x.floor
+
+  end
 end
+
+
+
