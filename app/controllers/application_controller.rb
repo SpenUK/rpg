@@ -46,7 +46,8 @@ class ApplicationController < ActionController::Base
       AreaObject.create(title: "General Store", area_id: 1, x_position: 450, y_position: 400, image_url: "shop_1.png", link_path: "vendors/1") unless AreaObject.find_by(title: "General Store")
       AreaObject.create(title: "Dark Woods", area_id: 1, x_position: 290, y_position: 200, image_url: "home.png", link_path: "hunt/1") unless AreaObject.find_by(title: "Dark Woods")
 
-    Monster.create(name: "Bush Pig", max_hp: 50, max_mp: 0, base_exp: 20, exp_per_level: 10, base_gold: 40, gold_per_level: 10, hp_per_level: 20, mp_per_level: 20, base_attack: 20, attack_per_level: 10, base_defense: 25, defense_per_level: 10) unless Monster.find_by(name: "Bush Pig")
+    Monster.create(name: "Brown Hog", max_hp: 50, max_mp: 0, base_exp: 20, exp_per_level: 10, base_gold: 40, gold_per_level: 10, hp_per_level: 10, mp_per_level: 10, base_attack: 16, attack_per_level: 9, base_defense: 20, defense_per_level: 10) unless Monster.find_by(name: "Brown Hog")
+    Monster.create(name: "Red Hog", max_hp: 50, max_mp: 0, base_exp: 20, exp_per_level: 10, base_gold: 40, gold_per_level: 10, hp_per_level: 20, mp_per_level: 20, base_attack: 20, attack_per_level: 10, base_defense: 25, defense_per_level: 10) unless Monster.find_by(name: "Red Hog")
     Monster.create(name: "Small Spider", max_hp: 40, max_mp: 40, base_exp: 25, exp_per_level: 10, base_gold: 30, gold_per_level: 15, hp_per_level: 15, mp_per_level: 20, base_attack: 30, attack_per_level: 15, base_defense: 15, defense_per_level: 15) unless Monster.find_by(name: "Small Spider")
 
     # -----------------------------------------------------

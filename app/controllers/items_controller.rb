@@ -5,8 +5,13 @@ class ItemsController < ApplicationController
 		@item = @item_ref.subclass
 
 		respond_to do |format|
-       format.html { render :layout => false }
-       format.js { render :layout => false }
+       format.html do 
+       	if request.xhr?
+	       	render :layout => false
+	      end
+       end
+       format.json { render :layout => false }
+       format.js { }
   	end
 	end
 

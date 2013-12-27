@@ -62,9 +62,15 @@ module ApplicationHelper
     end
 	end
 
-  def level_up_check(level, current_xp)
+  def level_up_check(character)
+
+    current_xp = character.exp
+    level = character.level
+
     if current_xp >= level_exp(level)
-      current_xp - level_exp(level)
+      exp_remainder = current_xp - level_exp(level)
+
+      level_up(character, exp_remainder)
     else
       nil
     end
@@ -77,6 +83,27 @@ module ApplicationHelper
   x = (((level * increment) * (level * increment)) * 0.2) + 50
 
   x.floor
+
+  end
+
+  def level_up(char, exp_remainder)
+
+    char.level = char.level + 1
+    char.exp = exp_remainder
+    char.stats_to_spend = char.stats_to_spend + 5
+
+    random_chance = (rand(2500) - char.stat_luck)
+    random_hp_mp = random_chance <= 0 ? random_chance.abs : 0
+
+    hp_gain = (12 + (char.stat_strength) * 0.25).to_i + char.level + (rand(char.level + char.stat_luck) * 0.2).to_i + random_hp_mp
+    mp_gain = (12 + (char.stat_int) * 0.5).to_i + char.level + (rand(char.level + char.stat_luck) * 0.2).to_i + random_hp_mp
+    
+    char.max_hp = char.max_hp + hp_gain
+    char.max_mp = char.max_mp + mp_gain
+
+    char.save
+
+    level_up_check(char)
 
   end
 end

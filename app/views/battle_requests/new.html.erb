@@ -1,14 +1,16 @@
-<%= form_for @battle_request do |f| %>
-	<div class="field">
-		<%= f.label :wager %>
-		<%= f.number_field :wager %>
-	</div>
-	<div class="field">
-		<%= f.label :message %>
-		<%= f.text_field :message %>
-	</div>
-		<%= f.hidden_field :target_id, :value => @target.id %>
-	<div class="action">
-		<%= f.submit %>
-	</div>
-<% end %>
+<div class="container">
+	<%= form_for @battle_request do |f| %>
+		<div class="field">
+			<%= f.label :wager %>
+			<%= f.number_field :wager %>
+		</div>
+		<div class="field">
+			<%= f.label :message %>
+			<%= f.text_field :message %>
+		</div>
+			<%= f.hidden_field :target_id, :value => @target.id %>
+		<div class="action">
+			<%= f.submit %>
+		</div>
+	<% end %>
+</div>

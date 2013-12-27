@@ -18,7 +18,7 @@ class CharactersController < ApplicationController
       @character.assign_attributes(
 
         level: 1,
-        exp: 0;
+        exp: 0,
 
         max_hp: 100,
         max_mp: 50,
@@ -31,7 +31,8 @@ class CharactersController < ApplicationController
         battle_status: 'available',
         gold: 50,
         last_location_id: 0,
-        avatar_url: "charasmall.png"
+        avatar_url: "characters/charasmall.png",
+        stats_to_spend: 0
         )
 
       if current_user.selected_character
@@ -45,7 +46,7 @@ class CharactersController < ApplicationController
         @character.attacks << Attack.find_by(name: 'punch')
         @character.attacks << Attack.find_by(name: 'kick')
 
-        @character.items.create( subclass_id: 1, subclass_type: "Weapon")
+        @character.items.create( subclass_id: 2, subclass_type: "Weapon")
         @character.items.create( subclass_id: 1, subclass_type: "Consumable")
         @character.items.create( subclass_id: 2, subclass_type: "Consumable")
 

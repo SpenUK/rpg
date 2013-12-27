@@ -10,7 +10,7 @@
 		<div class="background"></div>
 		<div class="far-background"></div>
 
-		<%= render "hud_panel" %>
+		<%= render "layouts/hud_panel" %>
 
 		<div class="round_summary">
 			<% if params[:dmg].to_i > 0 %>
@@ -52,9 +52,9 @@
 	</div>
 
 	<div class="turn_container">
-		<% @battle.turns.each do |turn| %>
+		<% @battle.turns.reverse.each do |turn| %>
 
-			<%= render "turn_display", turn: turn, current: @player1, opponent: @player2 %>
+			<%= render "layouts/turn_display", turn: turn, current: @player1, opponent: @player2 %>
 
 		<% end %>
 	</div>

@@ -14,13 +14,15 @@
 
 			</div>
 
+			<% if !current_char %>
+
+
+			<% elsif character.id != current_char.id %>
 			<div class="leader_actions">
-
-				<%= link_to (image_tag "battle_icon.png"), "#" %>
-
-				<%= link_to (image_tag  "messages.png"), "#" %>
-
+				<%= link_to (image_tag "battle_icon.png", type: "Send Battle Request"), request_battle_path(character.id) %>
+				<%= link_to (image_tag  "messages.png", type: "Send Message"), "#" %>
 			</div>
+			<% end %>
 
 
 

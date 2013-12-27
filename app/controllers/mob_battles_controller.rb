@@ -73,7 +73,11 @@ include ApplicationHelper
 
 	  	  change_battle_status(@battle)
 
+	  	  if battle_session.fight.status == @battle.challenger.id.to_s
+	  	  	
+	  	  end
 	  	  mob_random_move
+
 
 	    	redirect_to mob_battle_path(@battle.id, cr: @critical, p: @target.id, d: 1, dmg: @dmg, att: @attack)
 	    elsif battle_session.fight.status == "ended"
@@ -100,7 +104,7 @@ include ApplicationHelper
     def get_random_mob
     	@monster = Monster.find(rand(Monster.all.length)+1)
 
-    	@level = 2
+    	@level = rand() > 0.7 ? 2 : 1
     	@total_hp = @monster.max_hp + (@monster.hp_per_level * (@level -1))
     	@total_mp = @monster.max_mp + (@monster.mp_per_level * (@level -1))
 
@@ -125,16 +129,21 @@ include ApplicationHelper
 				selection_counter = 0
 
 				while not_enough_mp && selection_counter < 50
-					@attack = @current.species.attacks[rand(2)]
+
+					@attacks = @current.species.attacks.all
+					@attacks == "bah" ? goose : 1
+					@attack = @attacks[rand(@attacks.length)]
 					selection_counter += 1
 
-					if @attack.mp_consumption < @current.current_mp
+					if @attacks.length == 0
+						@attack = Attack.find_by(name: "struggle")
+					elsif @attack.mp_consumption < @current.current_mp
 						not_enough_mp = false
 					end
 				end
 
 				if selection_counter >= 50
-					@attack = Attack.find_by(title: "struggle")
+					@attack = Attack.find_by(name: "struggle")
 				end
 
 				@current.current_mp = @current.current_mp - @attack.mp_consumption

@@ -73,6 +73,10 @@ class BattlesController < ApplicationController
 	  	  @target.save
 	  	  @current.save
 
+	  	  FightTurn.create( maker_id: @current.id ,maker_type: "Character", target_id: @target.id, target_type: "Character", 
+		    									damage: @dmg, healed: nil, skill_used: @attack.name, skill_id: @attack.id, skill_type: "Attack", 
+		    									item_used: nil,item_used_id: nil,item_used_type: nil, critical: @critical, fight_type: "Battle", fight_id: @battle.id )
+
 	  	  change_battle_status(@battle)
 
 	    	redirect_to battle_path(@battle.id, cr: @critical, p: @target.id, d: 1, dmg: @dmg, att: @attack)

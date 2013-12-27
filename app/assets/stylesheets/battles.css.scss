@@ -134,6 +134,9 @@
 }
 .player_2 {
 	right: 140px;
+	img {
+		-webkit-transform: scaleX(-1);
+	}
 }
 
 .background {
@@ -232,5 +235,7 @@
 
 
 }
+
+
 
 

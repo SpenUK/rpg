@@ -1,3 +1,4 @@
+
 // Common Variables
 
 $font_stack: "ubuntu", sans-serif;
@@ -212,6 +213,8 @@ ul { list-style: none; }
 
 .user_options_panel {
 
+	padding: 10px;
+
 	float: right;
 
 	a {
@@ -373,12 +376,16 @@ ul { list-style: none; }
 
 // listing styles
 
+.battles_container {
+	overflow-y: auto;
+	max-height: 800;
+}
+
 .battle_listing_panel {
-	width: 100%;
-	min-height: 60px;
-	background: $color_panel_body;
+	padding: 20px;
+	min-height: 40px;
+	background: $color_header;
 	margin: 10px 0px;
-	border-radius: 10px;
 	position: relative
 
 }
@@ -580,6 +587,7 @@ display: inline-block;}
 	background-color: rgba(220,230,255,1);
 	margin: auto;
 	position: relative;
+	margin-top: 10px;
 }
 
 .area_object {
@@ -626,6 +634,9 @@ display: inline-block;}
 }
 
 .inventory_container {
+
+	margin: 5px 15px;
+	padding: 2px;
 
 	background-color: $color_light_shadow;
 
@@ -741,7 +752,7 @@ display: inline-block;}
 
 // leaderboard
 
-	.leaderboard_intro {
+	.leaderboard_intro, .inventory_intro {
 
 		padding: 20px;
 
@@ -753,6 +764,8 @@ display: inline-block;}
 		}
 	}
 
+	.inventory_intro { margin-bottom: 15px;}
+
 	.leaderboard_entry, {
 
 
@@ -762,6 +775,21 @@ display: inline-block;}
 
 		.summary {
 			padding: 20px;
+
+			.leader_actions {
+
+				height: 20px;
+				float: right;
+
+				img {
+					margin: 25px 5px;
+					opacity: 0.6;
+				}
+
+				img:hover {
+					opacity: 0.8;
+				}
+			}
 
 
 		}
@@ -796,9 +824,65 @@ display: inline-block;}
 			}
 		}
 
+	}
 
+.stats_update_panel {
+
+	background-color: $color_header;
+	display: inline-block;
+	vertical-align:top;
+
+
+
+	.stats_table {
+
+		background-color: $color_light_shadow;
+		padding: 3px;
+		display: inline-block;
+
+		h3 { 
+			color: $color_bg; 
+			// text-align: center;
+			margin: 5px;
+		}
+
+		table {
+			font-size:1.1em;
+
+			td {
+				background-color: $color_light_shadow;
+				padding: 2px 5px;
+			}
+
+			th {
+				background-color: rgba(225,225,225,0.9);
+				padding: 2px 5px;
+			}
+
+
+
+		}
+
+		.transp {
+			background-color: rgba(0,0,0,0);
+
+			img {
+				opacity: 0.8;
+			}
+
+			img:hover {
+				opacity: 1;
+			}
+
+		}
 
 	}
+}
+
+
+
+
+
 
 // scroll styles
 

@@ -1,0 +1,72 @@
+<div class="stats_update_panel">
+	<% if current_char.stats_to_spend > 0 %>
+
+    <div class="stats_table">
+      <table>
+        <tbody>
+            <tr>
+              <th>Level :</td>
+              <td><%= current_char.level %></td>
+              
+            </tr>
+        </tbody><tbody>
+            <tr>
+              <th>HP :</td>
+              <td><%= "#{current_char.current_hp}/#{current_char.max_hp}" %></td>
+              
+            </tr>
+        </tbody><tbody>
+            <tr>
+              <th>MP :</td>
+              <td><%= "#{current_char.current_mp}/#{current_char.max_mp}" %></td>
+              
+            </tr>
+        </tbody><tbody>
+            <tr>
+              <th>Strength :</td>
+              <td><%= current_char.stat_strength %></td>
+              <% if current_char.stats_to_spend > 0 %>
+              <td class="transp"><%= link_to (image_tag "plusicon.png", data: {stat: "strength"}), "#" %></td>
+              <td class="transp"><%= link_to (image_tag "minusicon.png", data: {stat: "strength"}), "#" %></td>
+              <% end %>
+            </tr>
+        </tbody><tbody>
+            <tr>
+              <th>Dex :</td>
+              <td><%= current_char.stat_dex %></td>
+              <% if current_char.stats_to_spend > 0 %>
+              <td class="transp"><%= link_to (image_tag "plusicon.png", data: {stat: "dex"}), "#" %></td>
+              <td class="transp"><%= link_to (image_tag "minusicon.png", data: {stat: "dex"}), "#" %></td>
+              <% end %>
+            </tr>
+        </tbody><tbody>
+            <tr>
+              <th>Luck :</td>
+              <td><%= current_char.stat_luck %></td>
+              <% if current_char.stats_to_spend > 0 %>
+              <td class="transp"><%= link_to (image_tag "plusicon.png", data: {stat: "luck"}), "#" %></td>
+              <td class="transp"><%= link_to (image_tag "minusicon.png", data: {stat: "luck"}), "#" %></td>
+              <% end %>
+            </tr>
+        </tbody><tbody>
+            <tr>
+              <th>Int :</td>
+              <td><%= current_char.stat_int %></td>
+              <% if current_char.stats_to_spend > 0 %>
+              <td class="transp"><%= link_to (image_tag "plusicon.png", data: {stat: "int"}), "#" %></td>
+              <td class="transp"><%= link_to (image_tag "minusicon.png", data: {stat: "int"}), "#" %></td>
+              <% end %>
+            </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+  <% else %>
+
+
+
+	 
+  <% end %>
+
+</div>

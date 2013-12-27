@@ -42,7 +42,7 @@ $(document).ready(function(){
 		$.ajax({
 			url: linky, 
 			type: "GET",
-			datatype : 'text json',
+			datatype : 'js',
 			async: false,
 			success: function(response){
 				response_html = response;

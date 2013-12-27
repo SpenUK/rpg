@@ -11,7 +11,7 @@ class BattleSessionsController < ApplicationController
 		if @battle_session.fight_type == "MobBattle"
 			get_mob_rewards(MobBattle.find(@battle_session.fight_id))
 		elsif @battle_session.fight_type == "Battle"
-			get_rewards(Battle.find(@battle_session.fight_id))
+			
 		end
 
 
@@ -44,11 +44,11 @@ class BattleSessionsController < ApplicationController
 
 				@character.update_attributes(gold: @updated_gold, exp: @updated_exp)
 
-				extra_exp = level_up_check(@character.level, @character.exp)
+				level_up_check(@character)
 					
-				if extra_exp
-					@character.update_attributes(level: (@character.level + 1), exp: extra_exp)
-				end
+				# if extra_exp
+				# 	level_up(@character, extra_exp)
+				# end
 
 			else
 				@character.gold -= (@character.gold / 20).to_i

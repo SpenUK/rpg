@@ -12,17 +12,16 @@
 
 	<div class="inventory_container">
 		<% @vendor.items.each do |i| %>
-		<% item = i.subclass %>
+		<% item = i.subclass %> 
 
-				<div class="item_card" data-category="<%= i.subclass_type.downcase %>" >
+				 <div class="item_card" data-category="<%= i.subclass_type.downcase %>" >
 					<h3><%= item.name %></h3>
 					<%= link_to image_tag(item.image_url), item_path(i.id) , data: {name: item.name, type: i.subclass_type.downcase, image: item.image_url, desc: item.description}, class: "item_image" %>
 					<%= link_to vendor_item_purchase_path(vendor_id:@vendor.id, item_id: i.id), class: "purchase_link" do %>
 						<div class="buy_item">
 							<p><%= "$#{item.base_price}" %></p>
 							<p>Buy</p>
-						</div>
-					<% end %>
+						</div><% end %>
 
 				</div>
 		<% end %>

@@ -10,7 +10,6 @@ class MessagesController < ApplicationController
   end
 
   def new
-    @message
   end
 
   def create

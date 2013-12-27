@@ -24,7 +24,10 @@
 
 		<div class="mp_container_bar">
 			<h4 class="hp_mp_stat"><%= @player2.current_mp %></h4>
+			<% if @player2.max_mp > 0 %>
 			<div class= "mp_bar" style="width: <%= ((@player2.current_mp ) * 100) / @player2.max_mp %>%;"></div>
+			<% end %>
+
 		</div>
 
 

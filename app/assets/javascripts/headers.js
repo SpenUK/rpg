@@ -12,11 +12,31 @@ $(document).ready(function(){
 		
 	}
 
+	function showStatsInHeader(){
+
+
+		var linky = self.attr('href');
+		$.ajax({
+			url: linky, 
+			type: "GET",
+			datatype : 'text json',
+			async: false,
+			success: function(response){
+				response_html = response;
+			}
+
+		});
+
+
+
+	}
+    
 		$('.header_icon').on("click", function(){
    
       var targetData = $(this).data('expansion');
 
       if (targetData == "user") {
+
       	var target = $('.user_admin_header');
       	target.toggle(200);
       	$('.user_fix').toggle(200);
