@@ -1,6 +1,6 @@
 class AddtypeToWeaponsAndConsumables < ActiveRecord::Migration
   def change
-  	create_table :skills, force: true do |t|
+  	create_table :skills, do |t|
     t.integer  :subclass_id,   default: 1
     t.integer  :owner_id,      default: 999
     t.string   :owner_type,    default: "Monster"
@@ -12,7 +12,6 @@ class AddtypeToWeaponsAndConsumables < ActiveRecord::Migration
 
   	add_column :weapons, :type, :string
   	add_column :consumables, :type, :string
-  	add_column , :type, :string
 
   end
 end

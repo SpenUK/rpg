@@ -51,6 +51,11 @@
       </table>
       <%= link_to "Battle!",  request_battle_path(@character.id) %>
     </div>
+
+    <% @skills.each do |skill| %>
+      <p><%= "Skill id: #{skill.id}, Skill level: #{skill.level}" %></p>
+    <% end %>
+
     
   </div>
 </div>

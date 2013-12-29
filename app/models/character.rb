@@ -34,6 +34,8 @@ class Character < ActiveRecord::Base
 
   has_and_belongs_to_many :attacks
 
+  has_many :skills
+
   has_one :battle_session
 
   # --------------------------------------------------
@@ -51,6 +53,22 @@ class Character < ActiveRecord::Base
 
   def exp_to_next_level
 
+  end
+
+  def total_physical_defense
+    40
+  end
+
+  def total_physical_attack
+    (stat_strength * 1) + (stat_dex * 0.2) + ( 12 )#weapon_attack 
+  end
+
+  def total_elemental_defense
+    40 + (stat_int * 1)
+  end
+
+  def total_elemental_attack
+    (stat_int * 1)
   end
 
 end

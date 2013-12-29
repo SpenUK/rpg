@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  effect_reference: 1
+  mp_consumption: 1
+
+two:
+  title: MyString
+  effect_reference: 1
+  mp_consumption: 1

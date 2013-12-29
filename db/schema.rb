@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131220181718) do
+ActiveRecord::Schema.define(version: 20131229065200) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -109,6 +109,14 @@ ActiveRecord::Schema.define(version: 20131220181718) do
     t.integer "user_id"
   end
 
+  create_table "buffs", force: true do |t|
+    t.string   "title"
+    t.integer  "effect_reference"
+    t.integer  "mp_consumption"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "characters", force: true do |t|
     t.string   "name"
     t.integer  "user_id"
@@ -148,6 +156,7 @@ ActiveRecord::Schema.define(version: 20131220181718) do
     t.string   "image_url",   default: "/items/placeholder.png"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "type"
   end
 
   create_table "fakebattles", force: true do |t|
@@ -252,6 +261,14 @@ ActiveRecord::Schema.define(version: 20131220181718) do
     t.string   "avatar_url"
   end
 
+  create_table "skills", force: true do |t|
+    t.integer  "character_id"
+    t.integer  "skill_id"
+    t.integer  "level"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", force: true do |t|
     t.string   "email",                 null: false
     t.string   "crypted_password"
@@ -279,6 +296,7 @@ ActiveRecord::Schema.define(version: 20131220181718) do
     t.integer  "rarity",      default: 99999
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "type"
   end
 
 end
