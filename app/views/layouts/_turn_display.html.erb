@@ -2,15 +2,13 @@
 
 <% if turn.maker == @player1 %>
 <div class="battle_turn defense_turn">
-	<p> You hit <%= @player2.is_a?(Character) ? @player2.name : @player2.species.name %> with <%= turn.skill_used %> for
-	<%= turn.damage %> damage!
-	<%= "(Critical!)" if turn.critical %>
+	<p> 
+		<%= turn.display_message(:maker) %>
 	</p>
 <% else %>
 <div class="battle_turn offense_turn">
-	<p> <%= @player2.is_a?(Character) ? @player2.name : @player2.species.name %> hit you with <%= turn.skill_used %> for
-	<%= turn.damage %> damage!
-	<%= "(Critical!)" if turn.critical %>
+	<p>
+		<%= turn.display_message(:target) %>
 	</p>
 <% end %>
 

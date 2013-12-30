@@ -92,15 +92,22 @@ class BattlesController < ApplicationController
 							end
 
 							def test_way_2
+
 								@battle = Battle.find(battle_session.fight.id)
 
 								@target = Character.find(params[:ch])
 
 								@current = Character.find(current_char.id)
 
-								@attack = Skill.process_skill( 2, 10, @current, @target, battle_session.fight.id)
+								if @target.id != @battle.defender_id && @target.id != @battle.challenger_id
+									redirect_to :back, notice: "Nice try! but you can't target this character!"
+								else
+									@attack = Skill.process_skill( 4, 10, @current, @target, battle_session.fight.id)
 
-					  	  # change_battle_status(@battle)
+					  	  	# change_battle_status(@battle)
+
+					  	  	redirect_to battle_path(@battle.id)
+					  		end
 							end
 
 							# -----	Old inflexible way------------------
@@ -140,7 +147,7 @@ class BattlesController < ApplicationController
 
 				  	  test_way_2
 
-	    	redirect_to battle_path(@battle.id)
+	    	
 	    elsif battle_session.fight.status == "ended"
 	    	redirect_to :back, notice: "This battle has ended"
 	    else

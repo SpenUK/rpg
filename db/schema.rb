@@ -172,19 +172,11 @@ ActiveRecord::Schema.define(version: 20131229065200) do
     t.string   "maker_type"
     t.integer  "target_id"
     t.string   "target_type"
-    t.integer  "damage"
-    t.integer  "healed"
-    t.string   "skill_used"
-    t.integer  "skill_id"
-    t.string   "skill_type"
-    t.string   "item_used"
-    t.integer  "item_used_id"
-    t.string   "item_used_type"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "fight_id"
     t.string   "fight_type"
-    t.boolean  "critical"
+    t.text     "serialized_object"
   end
 
   create_table "inns", force: true do |t|

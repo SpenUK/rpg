@@ -28,14 +28,34 @@ class Skill < ActiveRecord::Base
 				dmg_range: 6,
 				mp_consumption: 0
 				},
+		#--------- Buff skills -----------
+				{
+				type: 'Buff',
+				name: 'Focus',
+				turns: 3,
+				defense_up: 0,
+				attack_up: 100,
+				mp_consumption: 0
+				},
 
+
+		#--------- Support skills -------- 
 				{
 				type: 'Support',
 				name: 'Heal',
 				hp_regen: 20,
 				mp_regen: 0,
 				mp_consumption: 10
+				},
+
+				{
+				type: 'Support',
+				name: 'meditate',
+				hp_regen: 0,
+				mp_regen: 10,
+				mp_consumption: 0
 				}
+
 
 		]
 
@@ -43,8 +63,12 @@ class Skill < ActiveRecord::Base
 
 	end
 
-	class Attack
+	class Skill
+		include ActiveModel::Serialization
+		
+	end
 
+	class Attack < Skill
 		attr_accessor :name, :mp_consumption, :dmg, :critical, :message_format
 		def initialize(name, base_dmg, dmg_range, mp_consumption, skill_level)
 				@name = name
@@ -57,8 +81,30 @@ class Skill < ActiveRecord::Base
   			@dmg = (@dmg * 1.8).round if @critical
 		end
 
-  	@message_format = "<caster> attacked <target> with <skill> for <dmg> damage!"
+		def attributes
+			{'type' => 'Support', 'name' => @name ,'level' => @level, 'damage' => @dmg, 'critical' => @critical}
+		end
 
+  	@message_format = "<caster> attacked <target> with #{@name} for #{@dmg} damage! #{ '(Critial!)' if @critical }"
+	end
+
+	class Support < Skill
+		attr_accessor :name, :mp_consumption, :added_hp, :added_mp, :message_format 
+		def initialize(name, hp_regen, mp_regen, mp_consumption, skill_level)
+				@name = name
+				@level = skill_level
+				@mp_consumption = mp_consumption || 0
+				@added_hp = hp_regen 
+				@added_mp = mp_regen 
+				@mp_consumption = mp_consumption
+
+		end
+
+		def attributes
+			{'type' => 'Support', 'name' => @name, 'added_hp' => @added_hp, 'added_mp' => @added_mp}
+		end
+
+		@message_format = "<caster> used <skill>!"
 	end
 
 	def self.process_skill(index, skill_level, caster, target, battle_id)
@@ -75,19 +121,33 @@ class Skill < ActiveRecord::Base
 			target.current_hp -= skill.dmg if target.current_hp > 0
 			target.current_hp = 0 if target.current_hp < 0
 
-			target.save
-			caster.save
+		elsif skill[:type] =='Buff'
 
+		elsif skill[:type] =='Support'
 
-		elsif skill.type =='Buff'
+			skill = Support.new(skill[:name], skill[:hp_regen], skill[:mp_regen], skill[:mp_consumption], skill_level)
 
-		elsif skill.type =='Support'
+			caster.current_mp -= skill.mp_consumption
+
+			caster.current_hp += skill.added_hp
+			caster.current_hp = caster.max_hp if caster.current_hp > caster.max_hp
+
+			caster.current_mp += skill.added_mp
+			caster.current_mp = caster.max_mp if caster.current_mp > caster.max_mp
+
 
 		end
 
-		FightTurn.create( maker_id: caster.id ,maker_type: "Character", target_id: target.id, target_type: "Character", 
-						    									damage: skill.dmg, healed: nil, skill_used: skill.name, skill_id: 1, skill_type: type, 
-						    									item_used: nil,item_used_id: nil,item_used_type: nil, critical: skill.critical, fight_type: "Battle", fight_id: battle_id )
+		target.save
+		caster.save
+
+		skill_hash = skill.attributes
+
+FightTurn.create( maker_id: caster.id, maker_type: "Character", 
+									target_id: target.id, target_type: "Character", 
+									fight_type: "Battle", fight_id: battle_id, 
+									serialized_object: skill_hash.to_json
+									)
 
 
 		return skill
