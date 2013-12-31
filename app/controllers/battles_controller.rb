@@ -21,6 +21,7 @@ class BattlesController < ApplicationController
 
 			@defender = Character.find(@battle.defender_id)
 			@challenger = Character.find(@battle.challenger_id)
+			@skills = current_char.skills
 
 		current_char.id == @defender.id ? (@player1 = @defender; @player2 = @challenger) : (@player2 = @defender; @player1 = @challenger)
 	end
@@ -51,108 +52,65 @@ class BattlesController < ApplicationController
 
 			if battle_session.fight.status == current_char.id.to_s #checks that it is the current users turn.
 
-				# should allow for a choice of skill (attack/buff/heal etc.) or item use (consumables)
+				@skill = Skill.find(params[:id])
 				# should accept agression level and adjust attack outcomes, ignoring for item use and other skill types
 
-							def test_way # using module instead 
-								@battle = Battle.find(battle_session.fight.id)
+						@battle = Battle.find(battle_session.fight.id)
+						@target = Character.find(params[:ch])
+						@current = Character.find(current_char.id)
 
+						if @target.id != @battle.defender_id && @target.id != @battle.challenger_id
+							redirect_to :back, notice: "Nice try! but you can't target this character!"
+						else
+							@attack = Skill.process_skill( @skill.skill_id, @skill.level, @current, @target, battle_session.fight.id)
 
-								
-								@attack = get_skill(1)
+							if @attack == "NotEnoughMP"
+								redirect_to battle_path(@battle.id), notice: "Not enough MP"
+							else
+			  	  	# change_battle_status(@battle)
 
-								@target = Character.find(params[:ch]) == (@battle.defender || @battle.challenger) ? Character.find(params[:ch]) : nil
-
-								@current = Character.find(current_char.id)
-
-								
-
-								@current.current_mp -= @attack.mp_consumption
-
-					    	base_dmg = @attack.base_dmg
-					    	dmg_range = @attack.dmg_range
-
-					    	@critical = true if rand > 0.8
-					    	@dmg = (base_dmg + rand(dmg_range))
-					    	@dmg = (@dmg * 1.8).round if @critical
-
-					    	@target.current_hp -= @dmg if @target.current_hp > 0
-
-						    @target.current_hp = 0 if @target.current_hp < 0
-
-					  	  @target.save
-					  	  @current.save
-
-					  	  FightTurn.create( maker_id: @current.id ,maker_type: "Character", target_id: @target.id, target_type: "Character", 
-						    									damage: @dmg, healed: nil, skill_used: @attack.name, skill_id: @attack.id, skill_type: "Attack", 
-						    									item_used: nil,item_used_id: nil,item_used_type: nil, critical: @critical, fight_type: "Battle", fight_id: @battle.id )
-
-					  	  change_battle_status(@battle)
-
-							end
-
-							def test_way_2
-
-								@battle = Battle.find(battle_session.fight.id)
-
-								@target = Character.find(params[:ch])
-
-								@current = Character.find(current_char.id)
-
-								if @target.id != @battle.defender_id && @target.id != @battle.challenger_id
-									redirect_to :back, notice: "Nice try! but you can't target this character!"
-								else
-									@attack = Skill.process_skill( 4, 10, @current, @target, battle_session.fight.id)
-
-					  	  	# change_battle_status(@battle)
-
-					  	  	redirect_to battle_path(@battle.id)
-					  		end
-							end
-
-							# -----	Old inflexible way------------------
-							def oldway
-								@attack = Attack.find(params[:id])
-
-								@target = Character.find(params[:ch])
-
-								@current = Character.find(current_char.id)
-
-								@battle = Battle.find(battle_session.fight.id)
-
-								@current.current_mp -= @attack.mp_consumption
-
-					    	base_dmg = @attack.base_dmg
-					    	dmg_range = @attack.dmg_range
-
-					    	@critical = true if rand > 0.8
-					    	@dmg = (base_dmg + rand(dmg_range))
-					    	@dmg = (@dmg * 1.8).round if @critical
-
-					    	@target.current_hp -= @dmg if @target.current_hp > 0
-
-						    @target.current_hp = 0 if @target.current_hp < 0
-
-					  	  @target.save
-					  	  @current.save
-
-					  	  FightTurn.create( maker_id: @current.id ,maker_type: "Character", target_id: @target.id, target_type: "Character", 
-						    									damage: @dmg, healed: nil, skill_used: @attack.name, skill_id: @attack.id, skill_type: "Attack", 
-						    									item_used: nil,item_used_id: nil,item_used_type: nil, critical: @critical, fight_type: "Battle", fight_id: @battle.id )
-
-					  	  change_battle_status(@battle)
-					  	end
-
-				  	  # -----------------------------------------------------
-
-				  	  test_way_2
-
+			  	  	redirect_to battle_path(@battle.id)
+			  	  	end
+			  		end
 	    	
 	    elsif battle_session.fight.status == "ended"
 	    	redirect_to :back, notice: "This battle has ended"
 	    else
 	    	redirect_to :back, notice: "It's not your turn yet" 
 	    end
+    end
+
+    def use_item
+
+    	if battle_session.fight.status == current_char.id.to_s #checks that it is the current users turn.
+
+				@skill = Skill.find(params[:id])
+				# should accept agression level and adjust attack outcomes, ignoring for item use and other skill types
+
+						@battle = Battle.find(battle_session.fight.id)
+						@target = Character.find(params[:ch])
+						@current = Character.find(current_char.id)
+
+						if @target.id != @battle.defender_id && @target.id != @battle.challenger_id
+							redirect_to :back, notice: "Nice try! but you can't target this character!"
+						else
+							@attack = Skill.process_skill( @skill.skill_id, @skill.level, @current, @target, battle_session.fight.id)
+
+							if @attack == "NotEnoughMP"
+								redirect_to battle_path(@battle.id), notice: "Not enough MP"
+							else
+			  	  	# change_battle_status(@battle)
+
+			  	  	redirect_to battle_path(@battle.id)
+			  	  	end
+			  		end
+	    	
+	    elsif battle_session.fight.status == "ended"
+	    	redirect_to :back, notice: "This battle has ended"
+	    else
+	    	redirect_to :back, notice: "It's not your turn yet" 
+	    end
+
     end
 
 

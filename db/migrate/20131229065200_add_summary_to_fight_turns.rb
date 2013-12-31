@@ -3,6 +3,8 @@ class AddSummaryToFightTurns < ActiveRecord::Migration
 
 
   	add_column :fight_turns, :serialized_object, :text
+    add_column :fight_turns, :maker_name, :string
+    add_column :fight_turns, :target_name, :string
 
   	remove_column :fight_turns, :damage, :integer
   	remove_column :fight_turns, :healed, :integer
@@ -13,6 +15,8 @@ class AddSummaryToFightTurns < ActiveRecord::Migration
   	remove_column :fight_turns, :item_used_id, :integer
   	remove_column :fight_turns, :item_used_type, :string
   	remove_column :fight_turns, :critical, :boolean
+
+    add_column :skills, :name, :string
 
   end
 end

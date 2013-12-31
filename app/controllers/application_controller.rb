@@ -39,6 +39,8 @@ class ApplicationController < ActionController::Base
     Weapon.create(name: "Rusty Sword", description: "Old, useless and rusty", base_price: 120, base_dmg: 4, dmg_range: 3) unless Weapon.find_by(name: "Rusty Sword")
     Vendor.create(name: 'General Store', area_id: 1, owner_image: "owner_placeholder.png" ) unless Vendor.find_by(name: 'General Store')
 
+    
+
     Inn.create(name: 'Home', area_id: 1, keeper_image: "owner_placeholder.png", greeting: "Home sweet home, why not take a nap?", hp_regen: 40, mp_regen: 0, cost: 0) unless Inn.find_by(name: 'Home')
 
     Area.create(name: 'HomeTown', description: "Surrounded by mountains lies your hometown, there's not a lot to do around here!", background_image: "hometown_background.png") unless Area.find_by(name: 'HomeTown')

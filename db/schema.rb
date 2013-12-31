@@ -177,6 +177,8 @@ ActiveRecord::Schema.define(version: 20131229065200) do
     t.integer  "fight_id"
     t.string   "fight_type"
     t.text     "serialized_object"
+    t.string   "maker_name"
+    t.string   "target_name"
   end
 
   create_table "inns", force: true do |t|
@@ -259,6 +261,7 @@ ActiveRecord::Schema.define(version: 20131229065200) do
     t.integer  "level"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name"
   end
 
   create_table "users", force: true do |t|

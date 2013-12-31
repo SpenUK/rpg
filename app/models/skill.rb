@@ -5,9 +5,13 @@ class Skill < ActiveRecord::Base
 
 	def self.get_skill index
 		skills = [
+
+				{ type: 'none', name: 'none' },
+
 				{
 				type: 'Attack',
 				name: 'Punch',
+				elemental: 'normal',
 				base_dmg: 6,
 				dmg_range: 2,
 				mp_consumption: 0
@@ -16,19 +20,20 @@ class Skill < ActiveRecord::Base
 				{
 				type: 'Attack',
 				name: 'Kick',
-				base_dmg: 4,
-				dmg_range: 6,
+				elemental: 'normal',
+				base_dmg: 5,
+				dmg_range: 7,
 				mp_consumption: 0
 				},
 
 				{
 				type: 'Attack',
 				name: 'Slash',
-				base_dmg: 10,
-				dmg_range: 6,
+				elemental: 'normal',
+				base_dmg: 14,
+				dmg_range: 8,
 				mp_consumption: 0
 				},
-		#--------- Buff skills -----------
 				{
 				type: 'Buff',
 				name: 'Focus',
@@ -38,14 +43,15 @@ class Skill < ActiveRecord::Base
 				mp_consumption: 0
 				},
 
-
-		#--------- Support skills -------- 
-				{
+				{ 
 				type: 'Support',
 				name: 'Heal',
 				hp_regen: 20,
 				mp_regen: 0,
-				mp_consumption: 10
+				hp_per_level: 4,
+				mp_per_level: 0,
+				mp_consumption: 10,
+				consumption_per_level: 1
 				},
 
 				{
@@ -53,7 +59,10 @@ class Skill < ActiveRecord::Base
 				name: 'meditate',
 				hp_regen: 0,
 				mp_regen: 10,
-				mp_consumption: 0
+				hp_per_level: 0,
+				mp_per_level: 2,
+				mp_consumption: 0,
+				consumption_per_level: 0
 				}
 
 
@@ -73,7 +82,7 @@ class Skill < ActiveRecord::Base
 		def initialize(name, base_dmg, dmg_range, mp_consumption, skill_level)
 				@name = name
 				@level = skill_level
-				@base_dmg = base_dmg * (0.5 + (skill_level / 10)) || 2
+				@base_dmg = (base_dmg * (0.5 + (skill_level / 10))).round || 2
 				@dmg_range = dmg_range || 2
 				@mp_consumption = mp_consumption || 0
 				@critical = true if rand > 0.8
@@ -82,7 +91,7 @@ class Skill < ActiveRecord::Base
 		end
 
 		def attributes
-			{'type' => 'Support', 'name' => @name ,'level' => @level, 'damage' => @dmg, 'critical' => @critical}
+			{'type' => 'Attack', 'name' => @name ,'level' => @level, 'damage' => @dmg, 'critical' => @critical}
 		end
 
   	@message_format = "<caster> attacked <target> with #{@name} for #{@dmg} damage! #{ '(Critial!)' if @critical }"
@@ -100,6 +109,7 @@ class Skill < ActiveRecord::Base
 
 		end
 
+
 		def attributes
 			{'type' => 'Support', 'name' => @name, 'added_hp' => @added_hp, 'added_mp' => @added_mp}
 		end
@@ -112,42 +122,53 @@ class Skill < ActiveRecord::Base
 		skill = get_skill(index)
 		type = skill[:type]
 
+
 		if skill[:type] == 'Attack'
 
-			skill = Attack.new( skill[:name], skill[:base_dmg], skill[:dmg_range], skill[:mp_consumption], skill_level)
+			new_skill = Attack.new( skill[:name], skill[:base_dmg], skill[:dmg_range], skill[:mp_consumption], skill_level)
 
-			caster.current_mp -= skill.mp_consumption
+			if caster.current_mp < new_skill.mp_consumption
+				skill = "NotEnoughMP"
+			else
+				caster.current_mp -= new_skill.mp_consumption
 
-			target.current_hp -= skill.dmg if target.current_hp > 0
-			target.current_hp = 0 if target.current_hp < 0
+				target.current_hp -= new_skill.dmg if target.current_hp > 0
+				target.current_hp = 0 if target.current_hp < 0
+			end
 
 		elsif skill[:type] =='Buff'
 
 		elsif skill[:type] =='Support'
 
-			skill = Support.new(skill[:name], skill[:hp_regen], skill[:mp_regen], skill[:mp_consumption], skill_level)
+			new_skill = Support.new(skill[:name], skill[:hp_regen], skill[:mp_regen], skill[:mp_consumption], skill_level)
 
-			caster.current_mp -= skill.mp_consumption
+			if caster.current_mp < new_skill.mp_consumption
+				skill = "NotEnoughMP"
+			else
+				caster.current_mp -= new_skill.mp_consumption
 
-			caster.current_hp += skill.added_hp
-			caster.current_hp = caster.max_hp if caster.current_hp > caster.max_hp
+				caster.current_hp += new_skill.added_hp
+				caster.current_hp = caster.max_hp if caster.current_hp > caster.max_hp
 
-			caster.current_mp += skill.added_mp
-			caster.current_mp = caster.max_mp if caster.current_mp > caster.max_mp
-
+				caster.current_mp += new_skill.added_mp
+				caster.current_mp = caster.max_mp if caster.current_mp > caster.max_mp
+			end
 
 		end
 
-		target.save
-		caster.save
+		if skill != "NotEnoughMP"
 
-		skill_hash = skill.attributes
+			target.save
+			caster.save
+			
+			skill_hash = new_skill.attributes
 
-FightTurn.create( maker_id: caster.id, maker_type: "Character", 
-									target_id: target.id, target_type: "Character", 
+			FightTurn.create( maker_id: caster.id, maker_type: "Character", maker_name: caster.name,
+									target_id: target.id, target_type: "Character", target_name: target.name,
 									fight_type: "Battle", fight_id: battle_id, 
 									serialized_object: skill_hash.to_json
 									)
+		end
 
 
 		return skill
