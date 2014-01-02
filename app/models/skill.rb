@@ -1,7 +1,11 @@
 class Skill < ActiveRecord::Base
-	include CharacterSkills
+	include ActiveModel::Serialization
 
 	has_many :characters
+
+
+
+
 
 	def self.get_skill index
 		skills = [
@@ -72,15 +76,11 @@ class Skill < ActiveRecord::Base
 
 	end
 
-	class Skill
-		include ActiveModel::Serialization
-		
-	end
-
 	class Attack < Skill
-		attr_accessor :name, :mp_consumption, :dmg, :critical, :message_format
-		def initialize(name, base_dmg, dmg_range, mp_consumption, skill_level)
+		attr_accessor :name, :type, :mp_consumption, :dmg, :critical, :message_format
+		def initialize(name, type, base_dmg, dmg_range, mp_consumption, skill_level)
 				@name = name
+				@type = type
 				@level = skill_level
 				@base_dmg = (base_dmg * (0.5 + (skill_level / 10))).round || 2
 				@dmg_range = dmg_range || 2
@@ -98,9 +98,10 @@ class Skill < ActiveRecord::Base
 	end
 
 	class Support < Skill
-		attr_accessor :name, :mp_consumption, :added_hp, :added_mp, :message_format 
-		def initialize(name, hp_regen, mp_regen, mp_consumption, skill_level)
+		attr_accessor :name, :type, :mp_consumption, :added_hp, :added_mp, :message_format 
+		def initialize(name, type, hp_regen, mp_regen, mp_consumption, skill_level)
 				@name = name
+				@type = type
 				@level = skill_level
 				@mp_consumption = mp_consumption || 0
 				@added_hp = hp_regen 
@@ -125,7 +126,7 @@ class Skill < ActiveRecord::Base
 
 		if skill[:type] == 'Attack'
 
-			new_skill = Attack.new( skill[:name], skill[:base_dmg], skill[:dmg_range], skill[:mp_consumption], skill_level)
+			new_skill = Attack.new( skill[:name], skill[:type], skill[:base_dmg], skill[:dmg_range], skill[:mp_consumption], skill_level)
 
 			if caster.current_mp < new_skill.mp_consumption
 				skill = "NotEnoughMP"
@@ -140,7 +141,7 @@ class Skill < ActiveRecord::Base
 
 		elsif skill[:type] =='Support'
 
-			new_skill = Support.new(skill[:name], skill[:hp_regen], skill[:mp_regen], skill[:mp_consumption], skill_level)
+			new_skill = Support.new(skill[:name], skill[:type], skill[:hp_regen], skill[:mp_regen], skill[:mp_consumption], skill_level)
 
 			if caster.current_mp < new_skill.mp_consumption
 				skill = "NotEnoughMP"

@@ -2,7 +2,8 @@ class ItemsController < ApplicationController
 
 	def show
 		@item_ref = Item.find(params[:id])
-		@item = @item_ref.subclass
+		# @item = Item.build_item(@item_ref.id, @item_ref.subclass_id, @item_ref.subclass_type)
+		@item = @item_ref.build_item
 
 		respond_to do |format|
        format.html do 
@@ -15,32 +16,48 @@ class ItemsController < ApplicationController
   	end
 	end
 
+	# def show
+	# 	@item_ref = Item.find(params[:id])
+	# 	@item = @item_ref.subclass
+
+	# 	respond_to do |format|
+ #       format.html do 
+ #       	if request.xhr?
+	#        	render :layout => false
+	#       end
+ #       end
+ #       format.json { render :layout => false }
+ #       format.js { }
+ #  	end
+	# end
+
 	def purchase
 
 		@character = Character.find(current_char.id)
 		
 		@vendor = Vendor.find(params[:vendor_id])
-		@item = Item.find(params[:item_id])
+		@item_ref = Item.find(params[:item_id])
+		@item = Item.build_item(@item_ref.id, @item_ref.subclass_id, @item_ref.subclass_type)
 
 		if @item.owner_type == "Vendor"
 			@item.owner_type = "Transaction"
 			@item.save
 
-			if @character.gold >= @item.subclass.base_price
+			if @character.gold >= @item.base_price
 
-				@character.gold = @character.gold - @item.subclass.base_price
+				@character.gold = @character.gold - @item.base_price
 				@character.save
 
 				@item.owner_id = @character.id
 				@item.owner_type = "Character"
 
 				@item.save
-				redirect_to :inventory, notice: "Purchased #{@item.subclass.name}!"
+				redirect_to :inventory, notice: "Purchased #{@item.name}!"
 			else
 				@item.owner_type = "Vendor"
 				@item.save
 
-				redirect_to vendor_path(@vendor.id), notice: "Looks like you can't afford #{@item.subclass.name}!"
+				redirect_to vendor_path(@vendor.id), notice: "Looks like you can't afford #{@item.name}!"
 			end
 		else
 			redirect_to vendor_path(@vendor.id), notice: "It looks like this item isn't for sale!"
@@ -48,11 +65,12 @@ class ItemsController < ApplicationController
 	end
 
 	def destroy
-		@item = Item.find(params[:id])
+		@item_ref = Item.find(params[:id])
+		@item = Item.build_item(@item_ref.id, @item_ref.subclass_id, @item_ref.subclass_type)
 
 		if @item.owner == current_char
 			@item.destroy
-			redirect_to :inventory, notice: "Discarded #{@item.subclass.name}!"
+			redirect_to :inventory, notice: "Discarded #{@item.name}!"
 		else
 			redirect_to :inventory, notice: "Whoops! You can't discard an item that's not yours!"
 		end

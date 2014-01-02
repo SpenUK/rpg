@@ -11,13 +11,12 @@
 
 		
 	
-		<% current_char.items.each do |i| %>
-		<% item = i.subclass %>
+		<% @items.each do |item| %>
 
-			<div class="item_card" data-category="<%= i.subclass_type.downcase %>">
+			<div class="item_card" data-category="<%= item.type.downcase %>">
 				<div class="item_front">
 					<h3><%= item.name %></h3>
-					<%= link_to image_tag(item.image_url), item_path(i.id) , data: {name: item.name, type: i.subclass_type.downcase, image: item.image_url, desc: item.description}, class: "item_image" %>
+					<%= link_to image_tag(item.image_url), item_path(item.id) , data: {name: item.name, type: item.type.downcase, image: item.image_url, desc: item.description}, class: "item_image" %>
 					<div class="item_description">
 						<p><%= item.description %></p>
 					</div>

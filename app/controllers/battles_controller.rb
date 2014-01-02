@@ -84,7 +84,7 @@ class BattlesController < ApplicationController
 
     	if battle_session.fight.status == current_char.id.to_s #checks that it is the current users turn.
 
-				@skill = Skill.find(params[:id])
+				@item = Item.find(params[:id])
 				# should accept agression level and adjust attack outcomes, ignoring for item use and other skill types
 
 						@battle = Battle.find(battle_session.fight.id)
@@ -92,9 +92,9 @@ class BattlesController < ApplicationController
 						@current = Character.find(current_char.id)
 
 						if @target.id != @battle.defender_id && @target.id != @battle.challenger_id
-							redirect_to :back, notice: "Nice try! but you can't target this character!"
+							redirect_to :back, notice: "Nice try! but this character is not part of this battle!"
 						else
-							@attack = Skill.process_skill( @skill.skill_id, @skill.level, @current, @target, battle_session.fight.id)
+							@attack = Item.process_item( @item.id, @current, @target, battle_session.fight.id)
 
 							if @attack == "NotEnoughMP"
 								redirect_to battle_path(@battle.id), notice: "Not enough MP"

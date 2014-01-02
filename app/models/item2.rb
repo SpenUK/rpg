@@ -1,21 +1,19 @@
-class Item < ActiveRecord::Base
-	include ActiveModel::Serialization
+class Item
+	# include ActiveModel::Serialization
 
 	# --------------------------------------------------
 
-		belongs_to :owner, polymorphic: true
-		belongs_to :subclass, polymorphic: true
+		# belongs_to :owner, polymorphic: true
+		# belongs_to :subclass, polymorphic: true
 
 	# --------------------------------------------------
 
-	class Itembase
-	end
+	class Equipable < Item
 
-
-	class Equipable < Itembase
 	end
 
 	class Hat < Equipable
+
 	end
 
 	class Top < Equipable
@@ -23,75 +21,64 @@ class Item < ActiveRecord::Base
 	end
 
 	class Bottom < Equipable
+	
 	end
 
 	class Shoes < Equipable
+
 	end
 
 	class Weapon < Equipable
 
-		attr_accessor :name, :description, :base_dmg, :dmg_range, :base_price, :rarity, :image_url, :type, :id
+		attr_accessor :name, :description, :base_price, :rarity, :image_url, :type
+		def initialize( name, description, base_dmg, dmg_range, base_price, image_url, rarity, type)
 
-		def initialize( name, description, base_dmg, dmg_range, base_price, image_url, rarity, type, id
-			)
-			@name = name
-			@description = description
-			@base_dmg = base_dmg
-			@dmg_range = dmg_range
-			@base_price = base_price
-			@image_url = image_url
-			@rarity = rarity
-			@type = type
-			@id = id
 		end
 
 	end
 
 	#---------------------
 
-	class Consumable
+	class Consumable < Item
 
-		attr_accessor :name, :description, :base_price, :rarity, :image_url, :type, :hp_regen, :mp_regen, :id
-
-		def initialize( name, description, hp_regen, mp_regen, base_price, rarity, image_url, type, id
-			)
+		attr_accessor :name, :description, :base_price, :rarity, :image_url, :type
+		def initialize( name, description, hp_regen, mp_regen, base_price, rarity, image_url, type)
 			@name = name
 			@description = description
-			@hp_regen = hp_regen
-			@mp_regen = mp_regen
-			@image_url = image_url
-			@rarity = rarity
-			@type = type
-			@id = id
 		end
 
 	end
 
 	class Food < Consumable
+
 	end
 
 	class MP_HP_Potion < Consumable #---------------------
+
 	end
 
 	class AttackPotion < Consumable
+
 	end
 
-	class BuffPotion < Consumable
+	class BuffPotion
+
 	end
 
-	def build_item
-		@type = subclass_type
-		@index = subclass_id
+	def self.build_item id, type
 
-		if @type == 'Consumable'
-			@item = self.class.get_consumable(@index)
-			@new_item = Consumable.new(@item[:name], @item[:description], @item[:hp_regen], @item[:mp_regen], @item[:base_price], @item[:rarity], @item[:image_url], @item[:type], id)
+		if type == 'Consumable'
 
-		elsif @type == 'Weapon'
-			@item = self.class.get_weapon(index)
-			@new_item = Weapon.new(@item[:name], @item[:description], @item[:base_dmg], @item[:dmg_range], @item[:base_price], @item[:image_url], @item[:rarity], @item[:type], id )
+			item = get_consumable(id)
+			new_item = Consumable.new(item[:name], item[:description], item[:hp_regen], item[:mp_regen], item[:base_price], item[:rarity], item[:image_url], item[:type])
+
+		elsif type == 'Weapon'
+			item = get_weapon(id)
+			new_item = Weapon.new(item[:name], item[:description], item[:base_dmg], item[:dmg_range], item[:base_price], item[:image_url], item[:rarity], item[:type])
 
 		end
+
+
 	end
 
 
@@ -332,7 +319,7 @@ class Item < ActiveRecord::Base
 				mp_regen: 15,
 				base_price: 40,
 				rarity: 15,
-				image_url: 'items/old_cheese.png'
+				image_url: 'items/green_apple.png'
 				},
 
 				{
@@ -470,7 +457,6 @@ class Item < ActiveRecord::Base
 				{
 				type: 'Sword',
 				name: 'Tiny Sword',
-				description: "Blah",
 				elemental: 'normal',
 				base_dmg: 10,
 				dmg_range: 6,
@@ -482,7 +468,6 @@ class Item < ActiveRecord::Base
 				{
 				type: 'Sword',
 				name: 'Steel Sword',
-				description: "A sword with a strong, shiny blade.",
 				elemental: 'normal',
 				base_dmg: 20,
 				dmg_range: 10,
@@ -494,7 +479,6 @@ class Item < ActiveRecord::Base
 				{
 				type: 'Sword',
 				name: 'Rusty Sword',
-				description: "This sword has seen better days.",
 				elemental: 'normal',
 				base_dmg: 8,
 				dmg_range: 3,
@@ -535,3 +519,9 @@ class Item < ActiveRecord::Base
 
 
 end
+
+item = Item.build_item 2, 'Consumable'
+
+puts item
+puts
+puts item.inspect

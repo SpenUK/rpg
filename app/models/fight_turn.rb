@@ -41,7 +41,7 @@ class FightTurn < ActiveRecord::Base
 
 		elsif subject == :target
 			
-			"object.inspect"
+			object.inspect
 
 		end
 
