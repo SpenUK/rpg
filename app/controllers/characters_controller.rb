@@ -5,7 +5,8 @@ class CharactersController < ApplicationController
 
   def show
     @character = Character.find(params[:id])
-    @skills = @character.skills
+    @skills = []
+    @character.skills.each {|skill| @skills << skill.build_skill}
   end
 
   def new

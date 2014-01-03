@@ -36,6 +36,9 @@ include ApplicationHelper
 				new_battle = MobBattle.create(challenger_id: @challenger_id, defender_id: @defender_id, status: @defender_id )
 				BattleSession.create(fight_id: new_battle.id, fight_type: "MobBattle", character_id: new_battle.defender_id)
 
+				@opponent.mob_battle_id = new_battle.id
+				@opponent.save
+
 				redirect_to mob_battle_path(new_battle.id)
 			end
 	end
@@ -43,43 +46,29 @@ include ApplicationHelper
 		def attack
 
 			if battle_session.fight.status == current_char.id.to_s
-				@attack = Attack.find(params[:id])
-
-				@target = Mob.find(params[:ch])
-
-				@current = Character.find(current_char.id)
+				@skill = Skill.find(params[:id])
 
 				@battle = MobBattle.find(battle_session.fight.id)
+				@target = Mob.find(params[:ch])
+				@current = Character.find(current_char.id)
 
-				@current.current_mp -= @attack.mp_consumption
+				if @target.id != @battle.defender_id && @target.id != @battle.challenger_id
+					redirect_to :back, notice: "Nice try! but you can't target this character!"
+				else
+					@attack = Skill.process_skill( @skill.skill_id, @skill.level, @current, @target, battle_session.fight.id, battle_session.fight_type)
 
-	    	base_dmg = @attack.base_dmg
-	    	dmg_range = @attack.dmg_range
+					if @attack == "NotEnoughMP"
+						redirect_to mob_battle_path(@battle.id), notice: "Not enough MP"
+					else
+	  	  	change_battle_status(@battle)
 
-	    	@critical = true if rand > 0.8
-	    	@dmg = (base_dmg + rand(dmg_range))
-	    	@dmg = (@dmg * 1.8).round if @critical
+	  	  	mob_random_move
 
-	    	@target.current_hp -= @dmg if @target.current_hp > 0
+	  	  	redirect_to mob_battle_path(@battle.id)
+	  	  	end
 
-		    @target.current_hp = 0 if @target.current_hp < 0
-
-	  	  @target.save
-	  	  @current.save
-
-	  	  FightTurn.create( maker_id: @current.id ,maker_type: "Character", target_id: @target.id, target_type: "Mob", 
-		    									damage: @dmg, healed: nil, skill_used: @attack.name, skill_id: @attack.id, skill_type: "Attack", 
-		    									item_used: nil,item_used_id: nil,item_used_type: nil, critical: @critical, fight_type: "MobBattle", fight_id: @battle.id )
-
-	  	  change_battle_status(@battle)
-
-	  	  if battle_session.fight.status == @battle.challenger.id.to_s
-	  	  	
 	  	  end
-	  	  mob_random_move
 
-
-	    	redirect_to mob_battle_path(@battle.id, cr: @critical, p: @target.id, d: 1, dmg: @dmg, att: @attack)
 	    elsif battle_session.fight.status == "ended"
 	    	redirect_to :back, notice: "This battle has ended"
 	    else
@@ -115,7 +104,7 @@ include ApplicationHelper
     	mob = Mob.create(
     			species_type: "Monster", species_id: @monster.id , 
     			level: @level, current_hp: @total_hp, current_mp: @total_mp, max_hp: @total_hp, max_mp: @total_mp,
-    			held_gold: @held_gold
+    			held_gold: @held_gold, mob_battle_id: 0
     			)
     end
 
@@ -125,46 +114,7 @@ include ApplicationHelper
 
 				@target = Character.find(current_char.id)
 
-				not_enough_mp = true
-				selection_counter = 0
-
-				while not_enough_mp && selection_counter < 50
-
-					@attacks = @current.species.attacks.all
-					@attacks == "bah" ? goose : 1
-					@attack = @attacks[rand(@attacks.length)]
-					selection_counter += 1
-
-					if @attacks.length == 0
-						@attack = Attack.find_by(name: "struggle")
-					elsif @attack.mp_consumption < @current.current_mp
-						not_enough_mp = false
-					end
-				end
-
-				if selection_counter >= 50
-					@attack = Attack.find_by(name: "struggle")
-				end
-
-				@current.current_mp = @current.current_mp - @attack.mp_consumption
-
-	    	base_dmg = @attack.base_dmg
-	    	dmg_range = @attack.dmg_range
-
-	    	@critical = true if rand > 0.8
-	    	@dmg = (base_dmg + rand(dmg_range))
-	    	@dmg = (@dmg * 1.8).round if @critical
-
-	    	@target.current_hp -= @dmg if @target.current_hp > 0
-
-		    @target.current_hp = 0 if @target.current_hp < 0
-
-		    FightTurn.create( maker_id: @current.id ,maker_type: "Mob", target_id: @target.id, target_type: "Character", 
-		    									damage: @dmg, healed: nil, skill_used: @attack.name, skill_id: @attack.id, skill_type: "Attack", 
-		    									item_used: nil,item_used_id: nil,item_used_type: nil, critical: @critical, fight_type: "MobBattle", fight_id: @battle.id  )
-
-	  	  @target.save
-	  	  @current.save
+				@current.use_random_skill(@target)
 
     	change_battle_status(@battle)
     end

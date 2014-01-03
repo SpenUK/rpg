@@ -29,9 +29,9 @@
 		</div>
 
 		<div class="skills_panel">
-			<p><strong>Skills:</strong>| <% current_char.attacks.each do |att| %>
-				<%= link_to mob_attack_url(att.id, ch: @player2.id), method: :post do %>
-					<%= att.name %>
+			<p><strong>Skills:</strong>| <% current_char.skills.each do |skill| %>
+				<%= link_to mob_attack_url(skill.id, ch: @player2.id), method: :post do %>
+					<%= skill.name %>
 				<% end %> | 
 			<% end %></p>
 		</div>

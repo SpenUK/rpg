@@ -62,12 +62,12 @@ class BattlesController < ApplicationController
 						if @target.id != @battle.defender_id && @target.id != @battle.challenger_id
 							redirect_to :back, notice: "Nice try! but you can't target this character!"
 						else
-							@attack = Skill.process_skill( @skill.skill_id, @skill.level, @current, @target, battle_session.fight.id)
+							@attack = Skill.process_skill( @skill.skill_id, @skill.level, @current, @target, battle_session.fight.id, battle_session.fight_type)
 
 							if @attack == "NotEnoughMP"
 								redirect_to battle_path(@battle.id), notice: "Not enough MP"
 							else
-			  	  	# change_battle_status(@battle)
+			  	  	change_battle_status(@battle)
 
 			  	  	redirect_to battle_path(@battle.id)
 			  	  	end

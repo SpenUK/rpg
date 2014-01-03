@@ -17,6 +17,7 @@ class AddSummaryToFightTurns < ActiveRecord::Migration
   	remove_column :fight_turns, :critical, :boolean
 
     add_column :skills, :name, :string
+    add_column :mobs, :mob_battle_id, :integer
 
   end
 end

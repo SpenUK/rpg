@@ -14,7 +14,7 @@ $(document).ready(function(){
 
 		$("#lightbox").css({ display: "block" });
 		$("#lightbox").animate({top:0}, speed);
-		$(".lightbox_dim").animate({opacity:0.8}, speed);
+		$(".lightbox_dim").animate({opacity:0.9}, speed);
 	}
 
 	$("#lightbox").css({ top: -1000 });

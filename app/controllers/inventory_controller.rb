@@ -6,7 +6,7 @@ class InventoryController < ApplicationController
 		@items = []
 
 		current_char.items.each do |item|
-			@items << Item.build_item(item.id, item.subclass_id, item.subclass_type)
+			@items << item.build_item
 		end
 
 

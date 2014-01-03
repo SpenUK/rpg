@@ -11,7 +11,6 @@ class Item < ActiveRecord::Base
 	class Itembase
 	end
 
-
 	class Equipable < Itembase
 	end
 
@@ -31,7 +30,6 @@ class Item < ActiveRecord::Base
 	class Weapon < Equipable
 
 		attr_accessor :name, :description, :base_dmg, :dmg_range, :base_price, :rarity, :image_url, :type, :id
-
 		def initialize( name, description, base_dmg, dmg_range, base_price, image_url, rarity, type, id
 			)
 			@name = name
@@ -52,17 +50,21 @@ class Item < ActiveRecord::Base
 	class Consumable
 
 		attr_accessor :name, :description, :base_price, :rarity, :image_url, :type, :hp_regen, :mp_regen, :id
-
 		def initialize( name, description, hp_regen, mp_regen, base_price, rarity, image_url, type, id
 			)
 			@name = name
 			@description = description
 			@hp_regen = hp_regen
 			@mp_regen = mp_regen
+			@base_price = base_price
 			@image_url = image_url
 			@rarity = rarity
 			@type = type
 			@id = id
+		end
+
+		def attributes
+			{'type' => 'Consumable', 'name' => @name, 'hp_regen' => @hp_regen, 'mp_regen' => @mp_regen}
 		end
 
 	end
@@ -88,14 +90,11 @@ class Item < ActiveRecord::Base
 			@new_item = Consumable.new(@item[:name], @item[:description], @item[:hp_regen], @item[:mp_regen], @item[:base_price], @item[:rarity], @item[:image_url], @item[:type], id)
 
 		elsif @type == 'Weapon'
-			@item = self.class.get_weapon(index)
+			@item = self.class.get_weapon(@index)
 			@new_item = Weapon.new(@item[:name], @item[:description], @item[:base_dmg], @item[:dmg_range], @item[:base_price], @item[:image_url], @item[:rarity], @item[:type], id )
 
 		end
 	end
-
-
-
 
 	def self.get_item index
 		items = [

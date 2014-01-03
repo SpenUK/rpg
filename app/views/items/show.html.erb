@@ -1,4 +1,7 @@
-
+<% if @light_box_layout != true %>
+	<div class="container">
+		<%= @item.inspect %>
+<% end %>
 
 	<div class="item_container">
 		<div class="item_constraint">
@@ -84,3 +87,6 @@
 	</div>
 
 
+<% if @light_box_layout != true  %>
+	</div>
+<% end %>

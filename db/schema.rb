@@ -226,14 +226,15 @@ ActiveRecord::Schema.define(version: 20131229065200) do
   create_table "mobs", force: true do |t|
     t.string   "species_type"
     t.integer  "species_id"
-    t.integer  "level",        default: 1
-    t.integer  "current_hp",   default: 10
-    t.integer  "current_mp",   default: 10
+    t.integer  "level",         default: 1
+    t.integer  "current_hp",    default: 10
+    t.integer  "current_mp",    default: 10
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "held_gold"
     t.integer  "max_hp"
     t.integer  "max_mp"
+    t.integer  "mob_battle_id"
   end
 
   create_table "monsters", force: true do |t|

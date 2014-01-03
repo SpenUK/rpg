@@ -39,6 +39,9 @@ FightyTest::Application.routes.draw do
   end
 
 
+  get 'mobs/:id' => 'mobs#show'
+
+
 
   # ---------------
 

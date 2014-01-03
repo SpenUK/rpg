@@ -6,20 +6,17 @@ class FightTurn < ActiveRecord::Base
 
 	def display_message(subject)
 
-		object = JSON.parse(serialized_object)
+		@s_o = serialized_object
+
+		object = JSON.parse(@s_o)
 
 		if subject == :maker
 			
 			if object["type"] == "Attack"
 
-				object.inspect
-
 				"You attacked #{target_name} with #{object['name']} for #{object['damage']} damage"
 
-				
 			elsif object["type"] == "Support"
-
-				# object.inspect
 
 				"You used #{object["name"]} and gained #{ object["added_hp"].to_s + ' HP' if object["added_hp"] > 0 }#{ ' and ' if object['added_hp'] > 0 && object['added_mp'] > 0} #{ object['added_mp'].to_s + ' MP' if object['added_mp'] > 0}"
 
@@ -41,8 +38,29 @@ class FightTurn < ActiveRecord::Base
 
 		elsif subject == :target
 			
-			object.inspect
+			if object["type"] == "Attack"
 
+				"#{maker_name} attacked you with #{object['name']} for #{object['damage']} damage" #.html_safe
+
+			elsif object["type"] == "Support"
+
+				"You used #{object["name"]} and gained #{ object["added_hp"].to_s + ' HP' if object["added_hp"] > 0 }#{ ' and ' if object['added_hp'] > 0 && object['added_mp'] > 0} #{ object['added_mp'].to_s + ' MP' if object['added_mp'] > 0}"
+
+			elsif object["type"] == "Buff"
+				object.inspect
+
+			elsif object["type"] == "Consumable"
+				object.inspect
+
+				"You used #{object['name']} and gained #{ object['added_hp'].to_s + ' HP' if object['added_hp'] > 0 }#{ ' and ' if object['added_hp'] > 0 && object['added_mp'] > 0} #{ object['added_mp'].to_s + ' MP' if object['added_mp'] > 0}"
+
+			elsif object["type"] == "AttackPotion"
+				object.inspect
+
+			elsif object["type"] == "BuffPotion"
+				object.inspect
+
+			end
 		end
 
 	end

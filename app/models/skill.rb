@@ -3,12 +3,28 @@ class Skill < ActiveRecord::Base
 
 	has_many :characters
 
+	def build_skill
+		@index = skill_id
+		@type = skill_type
 
+		skill = 
 
+		skill = self.class.get_skill(@index)
+		@type = skill[:type]
 
+		if @type == 'Attack'
+			@new_skill = Attack.new( skill[:name], skill[:type], skill[:base_dmg], skill[:dmg_range], skill[:mp_consumption], level)
+
+		elsif @type == 'Buff'
+			@new_skill = Buff.new(skill[:name], skill[:type], skill[:turns], skill[:defense_up], skill[:attack_up], skill[:mp_consumption], level)
+
+		elsif @type == 'Support'
+			@new_skill = Support.new(skill[:name], skill[:type], skill[:hp_regen], skill[:mp_regen], skill[:mp_consumption], level)
+		end
+	end
 
 	def self.get_skill index
-		skills = [
+		attacks = [
 
 				{ type: 'none', name: 'none' },
 
@@ -38,13 +54,23 @@ class Skill < ActiveRecord::Base
 				dmg_range: 8,
 				mp_consumption: 0
 				},
+
 				{
 				type: 'Buff',
 				name: 'Focus',
 				turns: 3,
 				defense_up: 0,
 				attack_up: 100,
-				mp_consumption: 0
+				mp_consumption: 10
+				},
+
+				{
+				type: 'Buff',
+				name: 'Solid Stance',
+				turns: 3,
+				defense_up: 100,
+				attack_up: 0,
+				mp_consumption: 10
 				},
 
 				{ 
@@ -68,12 +94,103 @@ class Skill < ActiveRecord::Base
 				mp_consumption: 0,
 				consumption_per_level: 0
 				}
-
-
 		]
 
-		skill = skills[index]
+		attack = attacks[index]
+	end
 
+	def self.get_attack index
+		attacks = [
+
+				{ type: 'none', name: 'none' },
+
+				{
+				type: 'Attack',
+				name: 'Punch',
+				elemental: 'normal',
+				base_dmg: 6,
+				dmg_range: 2,
+				mp_consumption: 0
+				},
+
+				{
+				type: 'Attack',
+				name: 'Kick',
+				elemental: 'normal',
+				base_dmg: 5,
+				dmg_range: 7,
+				mp_consumption: 0
+				},
+
+				{
+				type: 'Attack',
+				name: 'Slash',
+				elemental: 'normal',
+				base_dmg: 14,
+				dmg_range: 8,
+				mp_consumption: 0
+				}
+		]
+
+		attack = attacks[index]
+	end
+
+	def self.get_buff index
+		buffs = [
+
+				{ type: 'none', name: 'none' },
+
+				{
+				type: 'Buff',
+				name: 'Focus',
+				turns: 3,
+				defense_up: 0,
+				attack_up: 100,
+				mp_consumption: 10
+				},
+
+				{
+				type: 'Buff',
+				name: 'Solid Stance',
+				turns: 3,
+				defense_up: 100,
+				attack_up: 0,
+				mp_consumption: 10
+				}
+		]
+
+		buff = buffs[index]
+	end
+
+	def self.get_support index
+		supports = [
+
+				{ type: 'none', name: 'none' },
+
+				{ 
+				type: 'Support',
+				name: 'Heal',
+				hp_regen: 20,
+				mp_regen: 0,
+				hp_per_level: 4,
+				mp_per_level: 0,
+				mp_consumption: 10,
+				consumption_per_level: 1
+				},
+
+				{
+				type: 'Support',
+				name: 'meditate',
+				hp_regen: 0,
+				mp_regen: 10,
+				hp_per_level: 0,
+				mp_per_level: 2,
+				mp_consumption: 0,
+				consumption_per_level: 0
+				}
+		]
+
+		support = supports[index]
 	end
 
 	class Attack < Skill
@@ -93,8 +210,25 @@ class Skill < ActiveRecord::Base
 		def attributes
 			{'type' => 'Attack', 'name' => @name ,'level' => @level, 'damage' => @dmg, 'critical' => @critical}
 		end
+	end
 
-  	@message_format = "<caster> attacked <target> with #{@name} for #{@dmg} damage! #{ '(Critial!)' if @critical }"
+	class Buff < Skill
+		attr_accessor :name, :type, :mp_consumption, :dmg, :critical, :message_format
+		def initialize(name, type, turns, defense_up, attack_up, mp_consumption, skill_level)
+
+				@name = name
+				@type = type
+				@level = skill_level
+				@turns = turns
+				@defense_up = defense_up
+				@attack_up = attack_up
+				@mp_consumption = mp_consumption || 0
+
+		end
+
+		def attributes
+			{'type' => 'Buff', 'name' => @name ,'level' => @level, 'damage' => @dmg, 'critical' => @critical}
+		end
 	end
 
 	class Support < Skill
@@ -110,15 +244,12 @@ class Skill < ActiveRecord::Base
 
 		end
 
-
 		def attributes
 			{'type' => 'Support', 'name' => @name, 'added_hp' => @added_hp, 'added_mp' => @added_mp}
 		end
-
-		@message_format = "<caster> used <skill>!"
 	end
 
-	def self.process_skill(index, skill_level, caster, target, battle_id)
+	def self.process_skill(index, skill_level, caster, target, battle_id, battle_type)
 
 		skill = get_skill(index)
 		type = skill[:type]
@@ -138,6 +269,8 @@ class Skill < ActiveRecord::Base
 			end
 
 		elsif skill[:type] =='Buff'
+
+			new_skill = Buff.new(skill[:name], skill[:type], skill[:turns], skill[:defense_up], skill[:attack_up], skill[:mp_consumption], skill_level)
 
 		elsif skill[:type] =='Support'
 
@@ -164,9 +297,24 @@ class Skill < ActiveRecord::Base
 			
 			skill_hash = new_skill.attributes
 
-			FightTurn.create( maker_id: caster.id, maker_type: "Character", maker_name: caster.name,
-									target_id: target.id, target_type: "Character", target_name: target.name,
-									fight_type: "Battle", fight_id: battle_id, 
+			if defined? target.name
+				target_name = target.name
+			else 
+				target_name = target.species.name
+			end
+
+			if defined? caster.name
+				caster_name = caster.name
+			else 
+				caster_name = caster.species.name
+			end
+
+				target_type = target.is_a?(Character) ? "Character" : "Mob"
+				caster_type = caster.is_a?(Character) ? "Character" : "Mob"
+
+			FightTurn.create( maker_id: caster.id, maker_type: caster_type, maker_name: caster_name,
+									target_id: target.id, target_type: target_type, target_name: target_name,
+									fight_type: battle_type, fight_id: battle_id, 
 									serialized_object: skill_hash.to_json
 									)
 		end
