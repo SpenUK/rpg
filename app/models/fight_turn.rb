@@ -21,7 +21,7 @@ class FightTurn < ActiveRecord::Base
 				"You used #{object["name"]} and gained #{ object["added_hp"].to_s + ' HP' if object["added_hp"] > 0 }#{ ' and ' if object['added_hp'] > 0 && object['added_mp'] > 0} #{ object['added_mp'].to_s + ' MP' if object['added_mp'] > 0}"
 
 			elsif object["type"] == "Buff"
-				object.inspect
+				"You used #{object["name"]}, which was silly because buffs don't work yet!"
 
 			elsif object["type"] == "Consumable"
 				object.inspect
@@ -47,7 +47,7 @@ class FightTurn < ActiveRecord::Base
 				"You used #{object["name"]} and gained #{ object["added_hp"].to_s + ' HP' if object["added_hp"] > 0 }#{ ' and ' if object['added_hp'] > 0 && object['added_mp'] > 0} #{ object['added_mp'].to_s + ' MP' if object['added_mp'] > 0}"
 
 			elsif object["type"] == "Buff"
-				object.inspect
+				"#{maker_name} used #{object["name"]}, which was silly because buffs don't work yet!"
 
 			elsif object["type"] == "Consumable"
 				object.inspect

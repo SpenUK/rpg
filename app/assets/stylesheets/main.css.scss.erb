@@ -645,11 +645,12 @@ display: inline-block;}
 		height: 180px;
 		margin: 5px;
 		background-color: white;
-		padding:10px;
+		padding:5px;
 		text-align: center;
 		display: inline-block;
 		vertical-align: top;
 		postion: relative;
+		border: 5px solid white;
 
 		a {
 			color: black;
@@ -667,6 +668,18 @@ display: inline-block;}
 			background-color: rgba(160,220,160,1);
 		}
 	}
+
+	.equipped {
+		border: 5px solid rgba(100,210,200,1);
+	}
+}
+
+.draggable {
+	position: absolute;
+	height:100px;
+	width:100px;
+	z-index: 30000;
+	pointer-events: none;
 }
 
 // character styles
@@ -879,9 +892,50 @@ display: inline-block;}
 	}
 }
 
+.equipped_panel {
+
+	background-color: $color_header;
+	padding: 20px;
+
+	.equipped_items_container {
+
+		background-color: $color_light_shadow;
+		width: 425px;
+		height: 480px;
+		position: relative;
+
+		.held_items {
+			position: relative;
+			width: 100%;
+		}
+
+		.slot {
+			width:100px;
+			height: 100px;
+			border: 2px solid $color_shadow;
+			display: inline-block;
+			position: relative;
+
+
+			.slot_background, .item_holder {
+				height: 100px;
+				width: 100px;
+				line-height: 100px;
+				text-align: center;
+				color: $color_light_shadow;
+				position: absolute;
+				top: 0px;
+				display: inline-block;
+			}
+
+		}
+
+	}
 
 
 
+
+}
 
 
 // scroll styles

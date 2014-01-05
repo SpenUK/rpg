@@ -44,6 +44,31 @@ class Character < ActiveRecord::Base
 
   # --------------------------------------------------
 
+  #-------- Inventory ----------
+
+    has_one :hat, class_name: "Item", foreign_key: "hat_id"
+    has_one :top, class_name: "Item", foreign_key: "top_id"
+    has_one :bottom, class_name: "Item", foreign_key: "bottom_id"
+    has_one :left_hand, class_name: "Item", foreign_key: "left_hand_id"
+    has_one :right_hand, class_name: "Item", foreign_key: "right_hand_id"
+    has_one :shoes, class_name: "Item", foreign_key: "shoes_id"
+    has_one :held1, class_name: "Item", foreign_key: "held1_id"
+    has_one :held2, class_name: "Item", foreign_key: "held2_id"
+    has_one :hat, class_name: "Item", foreign_key: "hat_id"
+    has_one :weapon, class_name: "Item", foreign_key: "weapon_id"
+
+
+
+
+
+
+
+
+
+
+
+  #--------------------------
+
 
 
 
@@ -70,5 +95,74 @@ class Character < ActiveRecord::Base
   def total_elemental_attack
     (stat_int * 1)
   end
+
+
+  #------- inventory defs -------
+
+  def hat
+    (Item.find(1)).build_item
+  end
+
+  def top
+    (Item.find(1)).build_item
+  end
+
+  def bottoms
+    (Item.find(1)).build_item
+  end
+
+  def left_hand
+    (Item.find(1)).build_item
+  end
+
+  def right_hand
+    (Item.find(1)).build_item
+  end
+
+  def shoes
+    (Item.find(1)).build_item
+  end
+
+
+  def held1
+    (Item.find(1)).build_item
+  end
+
+  def held2
+    (Item.find(1)).build_item
+  end
+
+  def held3
+    (Item.find(1)).build_item
+  end
+
+  def held4
+    (Item.find(1)).build_item
+  end
+
+  def held5
+    (Item.find(1)).build_item
+  end
+
+  def held6
+    (Item.find(1)).build_item
+  end
+
+  def held7
+    (Item.find(1)).build_item
+  end
+
+  def held8
+    (Item.find(1)).build_item
+  end
+
+
+  #------------------------------
+
+
+
+
+
+
 
 end

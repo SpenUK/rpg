@@ -2,8 +2,6 @@ class BattlesController < ApplicationController
 	include ApplicationHelper
 	include CharacterSkills
 
-	def new
-	end
 
 	def index
 

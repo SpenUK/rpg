@@ -12,10 +12,10 @@ class Mob < ActiveRecord::Base
 	def self.struggle
 		{
 				type: 'Attack',
-				name: 'Struggly',
+				name: 'Struggle',
 				elemental: 'normal',
-				base_dmg: 5,
-				dmg_range: 3,
+				base_dmg: 4,
+				dmg_range: 2,
 				mp_consumption: 0
 		}
 	end
@@ -54,7 +54,7 @@ class Mob < ActiveRecord::Base
 		]
 
 		attack = attacks[index]
-	end # 3
+	end 
 
 	def self.get_buff index
 		mob_skills = [
@@ -72,10 +72,10 @@ class Mob < ActiveRecord::Base
 		]
 
 		mob_skill = mob_skills[index]
-	end # 1
+	end 
 
 	def self.get_support index
-		support = [
+		supports = [
 
 				{ type: 'none', name: 'none' },
 
@@ -104,7 +104,7 @@ class Mob < ActiveRecord::Base
 		]
 
 		support = supports[index]
-	end # 2
+	end 
 
 	def build_skill type, index, skill_level
 
@@ -123,8 +123,10 @@ class Mob < ActiveRecord::Base
 			@skill = self.class.get_support(@index)
 			@new_skill = Support.new(@skill[:name], @skill[:type], @skill[:hp_regen], @skill[:mp_regen], @skill[:mp_consumption], skill_level)
 
-		else
-
+		elsif @type == 'Struggle'
+			@skill = self.class.struggle
+			@new_skill = Attack.new( @skill[:name], @skill[:type], @skill[:base_dmg], @skill[:dmg_range], @skill[:mp_consumption], skill_level)
+		
 		end
 
 		return @new_skill
@@ -137,49 +139,37 @@ class Mob < ActiveRecord::Base
 		@mob_skills = [
 			{ type: "Attack", index: 1, level: 1},
 			{ type: "Attack", index: 2, level: 1},
-			{ type: "Attack", index: 3, level: 1}
+			{ type: "Attack", index: 3, level: 1},
+			{ type: "Buff", index: 1, level: 1},
+			{ type: "Support", index: 1, level: 1}
 		]
 
-		@skill_attributes = @mob_skills[1]
+		not_enough_mp = true
+    selection_counter = 0
 
-		@skill = build_skill("Attack", 1, 2)
+    while not_enough_mp && selection_counter < 50
+
+        @skill_attributes = @mob_skills.sample
+				@skill = build_skill(@skill_attributes[:type], @skill_attributes[:index], @skill_attributes[:level])
+        selection_counter += 1
+
+        if @skill.mp_consumption < self.current_mp
+                not_enough_mp = false
+        end
+    end
+
+    if selection_counter >= 50
+        @skill = build_skill('Struggle', 1, self.level)
+    end
+		
 
 #------------------
 
-	if @skill.type == 'Attack'
-
-			if self.current_mp < @skill.mp_consumption
-				@skill = "NotEnoughMP"
-			else
-				self.current_mp -= @skill.mp_consumption
-
-				@target.current_hp -= @skill.dmg if @target.current_hp > 0
-				@target.current_hp = 0 if @target.current_hp < 0
-			end
-
-		elsif skill.type =='Buff'
-
-			if current_mp < @skill.mp_consumption
-				@skill = "NotEnoughMP"
-			else
-
-			end
-
-		elsif skill.type =='Support'
-
-			if self.current_mp < @skill.mp_consumption
-				@skill = "NotEnoughMP"
-			else
-				self.current_mp -= @skill.mp_consumption
-
-				self.current_hp += @skill.added_hp
-				self.current_hp = self.max_hp if self.current_hp > self.max_hp
-
-				self.current_mp += @skill.added_mp
-				self.current_mp = self.max_mp if self.current_mp > self.max_mp
-			end
-
-		end
+	if self.current_mp < @skill.mp_consumption
+		@skill = "NotEnoughMP"
+	else
+		@skill.process(self, @target)
+	end
 
 		if @skill != "NotEnoughMP"
 
@@ -204,7 +194,6 @@ class Mob < ActiveRecord::Base
 
 		return @skill
 
-
 #------------------
 
 
@@ -224,32 +213,37 @@ class Mob < ActiveRecord::Base
   			@dmg = (@dmg * 1.8).round if @critical
 		end
 
+		def process caster, target
+			caster.current_mp -= @mp_consumption
+
+			target.current_hp -= @dmg if target.current_hp > 0
+			target.current_hp = 0 if target.current_hp < 0
+		end
+
 		def attributes
 			{'type' => 'Attack', 'name' => @name ,'level' => @level, 'damage' => @dmg, 'critical' => @critical}
 		end
-
-  	@message_format = "<caster> attacked <target> with #{@name} for #{@dmg} damage! #{ '(Critial!)' if @critical }"
 	end
 
 	class Buff < Skill
 		attr_accessor :name, :type, :mp_consumption, :dmg, :critical, :message_format
-		def initialize(name, type, base_dmg, dmg_range, mp_consumption, skill_level)
+		def initialize(name, type, turns, defense_up, attack_up, mp_consumption, skill_level)
 				@name = name
 				@type = type
+				@turns = turns
 				@level = skill_level
-				@base_dmg = (base_dmg * (0.5 + (skill_level / 10))).round || 2
-				@dmg_range = dmg_range || 2
 				@mp_consumption = mp_consumption || 0
-				@critical = true if rand > 0.8
-  			@dmg = (@base_dmg + rand(@dmg_range))
-  			@dmg = (@dmg * 1.8).round if @critical
+				@defense_up = defense_up
+				@attack_up = attack_up
+		end
+
+		def process caster, target
+			caster.current_mp -= @mp_consumption
 		end
 
 		def attributes
-			{'type' => 'Attack', 'name' => @name ,'level' => @level, 'damage' => @dmg, 'critical' => @critical}
+			{'type' => 'Buff', 'name' => @name ,'level' => @level, 'damage' => @dmg, 'critical' => @critical}
 		end
-
-  	@message_format = "<caster> attacked <target> with #{@name} for #{@dmg} damage! #{ '(Critial!)' if @critical }"
 	end
 
 	class Support < Skill
@@ -262,15 +256,21 @@ class Mob < ActiveRecord::Base
 				@added_hp = hp_regen 
 				@added_mp = mp_regen 
 				@mp_consumption = mp_consumption
-
 		end
 
+		def process caster, target
+			caster.current_mp -= @mp_consumption
+
+			caster.current_hp += @added_hp
+			caster.current_hp = caster.max_hp if caster.current_hp > caster.max_hp
+
+			caster.current_mp += @added_mp
+			caster.current_mp = caster.max_mp if caster.current_mp > caster.max_mp
+		end
 
 		def attributes
 			{'type' => 'Support', 'name' => @name, 'added_hp' => @added_hp, 'added_mp' => @added_mp}
 		end
-
-		@message_format = "<caster> used <skill>!"
 	end
 
 

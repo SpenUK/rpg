@@ -5,9 +5,6 @@ class Skill < ActiveRecord::Base
 
 	def build_skill
 		@index = skill_id
-		@type = skill_type
-
-		skill = 
 
 		skill = self.class.get_skill(@index)
 		@type = skill[:type]
@@ -207,6 +204,13 @@ class Skill < ActiveRecord::Base
   			@dmg = (@dmg * 1.8).round if @critical
 		end
 
+		def process caster, target
+				caster.current_mp -= @mp_consumption
+
+				target.current_hp -= @dmg if target.current_hp > 0
+				target.current_hp = 0 if target.current_hp < 0
+		end
+
 		def attributes
 			{'type' => 'Attack', 'name' => @name ,'level' => @level, 'damage' => @dmg, 'critical' => @critical}
 		end
@@ -226,6 +230,10 @@ class Skill < ActiveRecord::Base
 
 		end
 
+		def process caster, target
+			caster.current_mp -= @mp_consumption
+		end
+
 		def attributes
 			{'type' => 'Buff', 'name' => @name ,'level' => @level, 'damage' => @dmg, 'critical' => @critical}
 		end
@@ -241,7 +249,16 @@ class Skill < ActiveRecord::Base
 				@added_hp = hp_regen 
 				@added_mp = mp_regen 
 				@mp_consumption = mp_consumption
+		end
 
+		def process caster, target
+				caster.current_mp -= new_skill.mp_consumption
+
+				caster.current_hp += new_skill.added_hp
+				caster.current_hp = caster.max_hp if caster.current_hp > caster.max_hp
+
+				caster.current_mp += new_skill.added_mp
+				caster.current_mp = caster.max_mp if caster.current_mp > caster.max_mp
 		end
 
 		def attributes
@@ -256,38 +273,20 @@ class Skill < ActiveRecord::Base
 
 
 		if skill[:type] == 'Attack'
-
 			new_skill = Attack.new( skill[:name], skill[:type], skill[:base_dmg], skill[:dmg_range], skill[:mp_consumption], skill_level)
 
-			if caster.current_mp < new_skill.mp_consumption
-				skill = "NotEnoughMP"
-			else
-				caster.current_mp -= new_skill.mp_consumption
-
-				target.current_hp -= new_skill.dmg if target.current_hp > 0
-				target.current_hp = 0 if target.current_hp < 0
-			end
-
 		elsif skill[:type] =='Buff'
-
 			new_skill = Buff.new(skill[:name], skill[:type], skill[:turns], skill[:defense_up], skill[:attack_up], skill[:mp_consumption], skill_level)
-
+		
 		elsif skill[:type] =='Support'
-
 			new_skill = Support.new(skill[:name], skill[:type], skill[:hp_regen], skill[:mp_regen], skill[:mp_consumption], skill_level)
 
-			if caster.current_mp < new_skill.mp_consumption
-				skill = "NotEnoughMP"
-			else
-				caster.current_mp -= new_skill.mp_consumption
+		end
 
-				caster.current_hp += new_skill.added_hp
-				caster.current_hp = caster.max_hp if caster.current_hp > caster.max_hp
-
-				caster.current_mp += new_skill.added_mp
-				caster.current_mp = caster.max_mp if caster.current_mp > caster.max_mp
-			end
-
+		if caster.current_mp < new_skill.mp_consumption
+			skill = "NotEnoughMP"
+		else
+			new_skill.process(caster, target)
 		end
 
 		if skill != "NotEnoughMP"

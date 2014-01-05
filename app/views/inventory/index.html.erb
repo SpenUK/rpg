@@ -1,5 +1,6 @@
 
 <div class="container">
+	<div class="draggable"></div>
 
 	<div class="inventory_intro">
 
@@ -7,16 +8,18 @@
 
 	</div>
 
+	<%= render partial: 'equipped_panel' %>
+
 	<div class="inventory_container">
 
 		
 	
 		<% @items.each do |item| %>
 
-			<div class="item_card" data-category="<%= item.type.downcase %>">
+			<div class="item_card <%= "equipped" %>" data-category="<%= item.type.downcase %>">
 				<div class="item_front">
 					<h3><%= item.name %></h3>
-					<%= link_to image_tag(item.image_url), item_path(item.id) , data: {name: item.name, type: item.type.downcase, image: item.image_url, desc: item.description}, class: "item_image" %>
+					<%= link_to image_tag(item.image_url, class: "item_image_tag"), item_path(item.id) , data: {name: item.name, type: item.type.downcase, image: item.image_url, desc: item.description}, class: "item_image" %>
 					<div class="item_description">
 						<p><%= item.description %></p>
 					</div>
