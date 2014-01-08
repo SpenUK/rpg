@@ -892,37 +892,66 @@ display: inline-block;}
 	}
 }
 
+.bound_to_viewport {
+	position: absolute;
+	top: 0px;
+	bottom:0px;
+	width: 100%;
+	overflow: hidden;
+}
+
+.no_select {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
 .equipped_panel {
 
 	background-color: $color_header;
-	padding: 20px;
+	padding: 10px;
+	position: absolute;
+	z-index: 20000;
+	border-radius: 20px;
+	border: 1px solid $color_shadow;
+		p {
+			color: white;
+			padding-bottom: 10px;
+			text-align: center;
+		}
+		hr { border: 1px dotted rgba(0,0,0,0.6); }
+
 
 	.equipped_items_container {
 
 		background-color: $color_light_shadow;
-		width: 425px;
-		height: 480px;
+		width: 336px;
+		padding: 5px;
 		position: relative;
+		border-radius: 10px;
 
 		.held_items {
 			position: relative;
+			margin-top: 10px;
 			width: 100%;
 		}
 
 		.slot {
-			width:100px;
-			height: 100px;
+			width:80px;
+			height: 80px;
 			border: 2px solid $color_shadow;
 			display: inline-block;
 			position: relative;
-
+			border-radius: 5px;
 
 			.slot_background, .item_holder {
-				height: 100px;
-				width: 100px;
-				line-height: 100px;
+				height: 80px;
+				width: 80px;
+				line-height: 80px;
 				text-align: center;
 				color: $color_light_shadow;
+				background-size: 80px 80px;
 				position: absolute;
 				top: 0px;
 				display: inline-block;

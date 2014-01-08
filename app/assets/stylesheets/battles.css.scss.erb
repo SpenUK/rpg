@@ -10,11 +10,11 @@
 	$mp_current: rgba(50,180,200,1);
 	$just_visable: rgba(255,255,255,0.1);
 	$bar_height: 30px;
+	
 
 	overflow: hidden;
 	height: 70px;
 	left:0; right:0;
-	// background-color: rgba(255,255,255,0.1);
 	z-index: 400;
 	position: absolute;
 	top: 0;
@@ -187,6 +187,167 @@
 	position: absolute;
 	text-align: center;
 	padding: 20px;
+}
+
+.options_panel {
+
+	font-weight: bold;
+	color: #777;
+
+	$c_button: white;
+	$c_button_shade: rgba(140,140,140,1);
+
+	$c_button_hover: rgba(245,245,230,1);
+	$c_button_on: rgba(50,180,200,1);
+	$c_button_hover_shade: rgba(130,130,70,1);
+	$c_button_on_shade: rgba(0,100,110,1);
+
+	$d_bar_height: 45px;
+
+	width: 640px;
+	bottom: 0;
+	left: 170px;
+	// background-color: rgba(255,255,255,0.7);
+	z-index: 560;
+	position: absolute;
+	text-align: center;
+	padding: 10px;
+
+	.attack_selection, .item_selection, .skill_dropdown, .aggression_dropdown, .go_button {
+		display:inline-block;
+		vertical-align: top;
+		text-align: center;
+		position: relative;
+		line-height: $d_bar_height;
+		height: $d_bar_height;
+		background-color: white;
+		border-radius: 5px;
+		-moz-box-shadow: 0px 4px rgba(140,140,140,1);
+		-webkit-box-shadow: 0px 4px rgba(140,140,140,1);
+		box-shadow: 0px 4px rgba(140,140,140,1);
+	}
+
+	.attack_selection:after {
+		content: "";
+		position: absolute;
+		opacity: 0.4;
+		top: 0; bottom: 0; left: 0; right: 0;
+		background-image: url(<%= asset_path "sword_icon.png" %>);
+	}
+
+	.item_selection:after {
+		content: "";
+		position: absolute;
+		opacity: 0.4;
+		top: 0; bottom: 0; left: 0; right: 0;
+		background-image: url(<%= asset_path "potion_icon.png" %>);
+	}
+
+	.skills_container, .items_container, .aggression_container {
+		display: none;
+
+	}
+
+
+	.go_button, .skill_dropdown, .aggression_dropdown {
+		margin-left: 10px;
+	}
+
+
+	.attack_selection, .item_selection {
+		width: $d_bar_height;
+	}
+
+	.off:hover {
+		background-color: $c_button_hover;
+		-moz-box-shadow: 0px 4px $c_button_hover_shade;
+		-webkit-box-shadow: 0px 4px $c_button_hover_shade;
+		box-shadow: 0px 4px $c_button_hover_shade;
+	}
+
+	.off:active, .on {
+		background-color: $c_button_on;
+		top: 3px;
+		-moz-box-shadow: 0px 1px $c_button_on_shade;
+		-webkit-box-shadow: 0px 1px $c_button_on_shade;
+		box-shadow: 0px 1px $c_button_on_shade;
+	}
+
+	.go_button { 
+		color: white;
+		font-size: 1.1em;
+		background-color: rgba(43,182,115,1);
+		width: 140px;
+		-moz-box-shadow: 0px 4px rgba(0,148,68,1);
+		-webkit-box-shadow: 0px 4px rgba(0,148,68,1);
+		box-shadow: 0px 4px rgba(0,148,68,1);
+	}
+
+	.go_button:active {
+		top: 3px;
+		-moz-box-shadow: 0px 1px rgba(0,148,68,1);
+		-webkit-box-shadow: 0px 1px rgba(0,148,68,1);
+		box-shadow: 0px 1px rgba(0,148,68,1);
+	}
+
+	//drop down specific
+
+	.skill_dropdown, .aggression_dropdown {
+		width: 180px;
+
+		.label {
+			width: 100%;
+			display: inline-block;
+		}
+
+		.skills_container, .items_container, .aggression_container {
+
+			width: 380px;
+			position: absolute;
+			bottom: 100%;
+			margin-bottom: 9px;
+
+			ul {
+				width: 395px;
+				
+				li {
+					width: 180px;
+					height: $d_bar_height;
+					background-color: white;
+					margin-top: 4px;
+					margin-bottom: 4px;
+					margin-right: 15px;
+					border-radius: 5px;
+					display: inline-block;
+					float: left;
+
+					-moz-box-shadow: 0px 4px rgba(140,140,140,1);
+					-webkit-box-shadow: 0px 4px rgba(140,140,140,1);
+					box-shadow: 0px 4px rgba(140,140,140,1);
+				}
+
+				li:active {
+					margin-top: 6px;
+					margin-bottom: 2px;
+					-moz-box-shadow: 0px 2px rgba(140,140,140,1);
+					-webkit-box-shadow: 0px 2px rgba(140,140,140,1);
+					box-shadow: 0px 2px rgba(140,140,140,1);
+				}
+
+			}
+		}
+	}
+
+		.skill_options li, .item_options li{
+			left:0; right: 0;
+			border-radius: inhert;
+		}
+
+		.skill_options li, .item_options li{
+			left: 0; right: 0;
+			height: $d_bar_height;
+			background-color: inherit;
+		}
 }
 
 .arena {

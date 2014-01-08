@@ -1,11 +1,10 @@
 $(document).ready(function(){
 
 	// scope variables ready for assignment through event listeners
-	var item = null;
-	var item_id = null;
-	var type = null;
-	var parent_card = null;
-	var target_holder = null;
+	var dragEquipped = false;
+	var ignoreDragEquipped = false;
+	var equippedPos = $('.equipped_panel').offset();
+	var y_offset, x_offset, item, item_id, type, parent_card, target_holder;
 	// var id_regex = /(\s)*(id.*?)(?=\s)/g; 
 	var id_regex = /(\b)id[1-9]+/g;
 
@@ -53,18 +52,51 @@ $(document).ready(function(){
 	// document wide mouse-up listener to clean slate the 'draggable' effects
 	$(document).on("mouseup", function(event){ 
 		$('.draggable').css('background-image', 'none');
+		$('.draggable').hide();
 		item = null;
+		dragEquipped = false;
+		ignoreDragEquipped = false;
+		$('body').removeClass('no_select');
 		$(window).unbind("mousemove");
 	});
 
-	// Keeps the 'draggable' div inline with the cursor(centered)
+	// Keeps the 'draggable' div inline with the cursor(centered) aswell as moving equipped div if it is being dragged
 	$(document).on("mousemove", function(event){
+		if (dragEquipped == true){
+			$('.equipped_panel').offset({top: currentMousePos.y - y_offset, left: currentMousePos.x - x_offset});
+			// no_select class disables highlighting whilst drag is process
+			$('body').addClass('no_select');
+			console.log(currentMousePos);
+		}
+
 		if (item != null) {
+			// no_select class disables highlighting whilst drag is process
 			$('.draggable').offset({top: currentMousePos.y - 50, left: currentMousePos.x - 50});
+			$('body').addClass('no_select');
 		} else {
 			$('.draggable').offset({top: 0, left: 0});
 		}
 	})
+
+	// start dragging of equipped panel relative to cursor 
+	$('.equipped_panel').on("mousedown", 1, function(event){
+		if (event.which == 1) {
+			if (ignoreDragEquipped == false){
+				$(window).mousemove(function(){
+					dragEquipped = true;
+					y_offset = (currentMousePos.y - $('.equipped_panel').offset().top);
+					x_offset = (currentMousePos.x - $('.equipped_panel').offset().left);
+				});
+			}
+		}
+	});
+
+	// blocks the drag of the equipped panel if body is dragged allowing drag to start only if border/header is clicked
+	$('.equipped_items_container').on("mousedown", 1, function(event){
+		if (event.which == 1) {
+			ignoreDragEquipped = true;
+		}
+	});
 
 	// set image on click, start drag effect on mouse move
 	$('.item_image_tag').on("mousedown", 1, function(event){
@@ -77,6 +109,7 @@ $(document).ready(function(){
 				parent_card = $(image).closest('.item_card');
 				type = $(item).data('type');
 				$('.draggable').css('background-image', 'url(' + image.src + ')');
+				$('.draggable').show();
 				$(window).unbind("mousemove");
 			});
 		}
@@ -101,9 +134,5 @@ $(document).ready(function(){
 
 			});
 	}
-	//----------------------------------------------
-	//--------- Draggable equip div ----------------
-
-
 
 });

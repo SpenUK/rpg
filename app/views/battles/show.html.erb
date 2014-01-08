@@ -1,9 +1,8 @@
 <div class="container">
 
 	<h1>Battle!</h1><br>
-	<h3><%# @battle.outcome %></h3>
 
-	<div class="arena">
+	<div class="arena no_select">
 
 		<div class="foreground"></div>
 		<div class="arena_shadow"></div>
@@ -22,12 +21,45 @@
 					<%= image_tag @player2.avatar_url %>
 		</div>
 
-		<div class="skills_panel">
-			<p><strong>Skills:</strong>| <% current_char.skills.each do |skill| %>
-				<%= link_to attack_url(skill.id, ch: @player2.id), method: :post do %>
-					<%= skill.name %>
-				<% end %> | 
-			<% end %></p>
+		<div class="options_panel">
+			
+			<div class="attack_selection off"></div>
+			<div class="item_selection off"></div>
+
+			<div class="skill_dropdown">
+    		<span class="label">Select Skill</span>
+    		<div class="skills_container">
+	    		<ul class="skill_options">
+		        <li data-id="32">Skill 1</li>
+		        <li data-id="45">Skill 2</li>
+		        <li data-id="10">Skill 3</li>
+		        <li data-id="30">Skill 4</li>
+		        <li data-id="8">Skill 5</li>
+	    		</ul>
+	    	</div>
+	    	<div class="items_container">
+	    		<ul class="item_options">
+		        <li data-id="32">Item 1</li>
+		        <li data-id="24">Item 2</li>
+		        <li data-id="12">Item 3</li>
+	    		</ul>
+    		</div>
+			</div>
+
+
+			<div class="aggression_dropdown">
+    		<span class="label">Select Style</span>
+    		<div class="aggression_container">
+	    		<ul class="aggression_options">
+		        <li>Aggression 1</li>
+		        <li>Aggression 2</li>
+		        <li>Aggression 3</li>
+	    		</ul>
+    	</div>
+			</div>
+
+			<div class="go_button">Go!</div>
+
 		</div>
 
 		<% if @battle.winner %>

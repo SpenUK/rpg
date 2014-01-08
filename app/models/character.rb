@@ -150,6 +150,10 @@ class Character < ActiveRecord::Base
     [hat_id, top_id, bottoms_id, right_hand_id, left_hand_id, shoes_id, held1_id, held2_id, held3_id, held4_id, held5_id, held6_id, held7_id, held8_id ]
   end
 
+  def equipped_consumable_ids
+    [held1_id, held2_id, held3_id, held4_id, held5_id, held6_id, held7_id, held8_id ]
+  end
+
 
   #------------------------------
 

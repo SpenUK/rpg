@@ -15,6 +15,7 @@ class BattlesController < ApplicationController
 	end
 
 	def show
+
 		@battle = Battle.find(params[:id])
 
 			@defender = Character.find(@battle.defender_id)
@@ -44,6 +45,10 @@ class BattlesController < ApplicationController
 
 				redirect_to battle_path(new_battle.id)
 			end
+	end
+
+	def take_turn
+
 	end
 
 		def attack # rename?
