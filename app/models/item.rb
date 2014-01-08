@@ -1,5 +1,6 @@
 class Item < ActiveRecord::Base
 	include ActiveModel::Serialization
+	# include ApplicationHelper
 
 	# --------------------------------------------------
 
@@ -42,7 +43,6 @@ class Item < ActiveRecord::Base
 			@type = type
 			@id = id
 		end
-
 	end
 
 	#---------------------
@@ -66,7 +66,6 @@ class Item < ActiveRecord::Base
 		def attributes
 			{'type' => 'Consumable', 'name' => @name, 'hp_regen' => @hp_regen, 'mp_regen' => @mp_regen}
 		end
-
 	end
 
 	class Food < Consumable
@@ -531,6 +530,241 @@ class Item < ActiveRecord::Base
 		weapon = weapons[index]
 	end
 
+#----------------------
 
+	def equip_item(slot_id)
+
+		no_save = false
+
+		equipped = already_equipped(self.id.to_i)
+
+		if equipped == false
+			case slot_id
+			when 'hat'
+				self.owner.hat_id = self.id
+			when 'top'
+				self.owner.top_id = self.id
+			when 'bottoms'
+				self.owner.bottoms_id = self.id
+			when 'weapon'
+				self.owner.right_hand_id = self.id
+			when 'shield'
+				self.owner.left_hand_id = self.id
+			when 'shoes'
+				self.owner.shoes_id = self.id
+			when 'consumable1'
+				self.owner.held1_id = self.id
+			when 'consumable2'
+				self.owner.held2_id = self.id
+			when 'consumable3'
+				self.owner.held3_id = self.id
+			when 'consumable4'
+				self.owner.held4_id = self.id
+			when 'consumable5'
+				self.owner.held5_id = self.id
+			when 'consumable6'
+				self.owner.held6_id = self.id
+			when 'consumable7'
+				self.owner.held7_id = self.id
+			when 'consumable8'
+				self.owner.held8_id = self.id
+			else
+				no_save = true
+			end
+
+			self.owner.save unless no_save
+
+		elsif equipped.is_a?(Integer)
+
+			@self = self
+
+			case slot_id
+			when 'consumable1'
+				
+
+				self.owner.held2_id = self.owner.held1_id if equipped == 1
+				self.owner.held3_id = self.owner.held1_id if equipped == 2
+				self.owner.held4_id = self.owner.held1_id if equipped == 3
+				self.owner.held5_id = self.owner.held1_id if equipped == 4
+				self.owner.held6_id = self.owner.held1_id if equipped == 5
+				self.owner.held7_id = self.owner.held1_id if equipped == 6
+				self.owner.held8_id = self.owner.held1_id if equipped == 7
+
+				self.owner.held1_id = self.id
+			when 'consumable2'
+				self.owner.held1_id = self.owner.held2_id if equipped == 0
+				self.owner.held3_id = self.owner.held2_id if equipped == 2
+				self.owner.held4_id = self.owner.held2_id if equipped == 3
+				self.owner.held5_id = self.owner.held2_id if equipped == 4
+				self.owner.held6_id = self.owner.held2_id if equipped == 5
+				self.owner.held7_id = self.owner.held2_id if equipped == 6
+				self.owner.held8_id = self.owner.held2_id if equipped == 7
+
+				self.owner.held2_id = self.id
+			when 'consumable3'
+				self.owner.held1_id = self.owner.held3_id if equipped == 0
+				self.owner.held2_id = self.owner.held3_id if equipped == 1
+				# self.owner.held3_id = self.owner.held3_id if equipped == 2
+				self.owner.held4_id = self.owner.held3_id if equipped == 3
+				self.owner.held5_id = self.owner.held3_id if equipped == 4
+				self.owner.held6_id = self.owner.held3_id if equipped == 5
+				self.owner.held7_id = self.owner.held3_id if equipped == 6
+				self.owner.held8_id = self.owner.held3_id if equipped == 7
+
+				self.owner.held3_id = self.id
+			when 'consumable4'
+				self.owner.held1_id = self.owner.held4_id if equipped == 0
+				self.owner.held2_id = self.owner.held4_id if equipped == 1
+				self.owner.held3_id = self.owner.held4_id if equipped == 2
+				# self.owner.held4_id = self.owner.held4_id if equipped == 3
+				self.owner.held5_id = self.owner.held4_id if equipped == 4
+				self.owner.held6_id = self.owner.held4_id if equipped == 5
+				self.owner.held7_id = self.owner.held4_id if equipped == 6
+				self.owner.held8_id = self.owner.held4_id if equipped == 7
+
+				self.owner.held4_id = self.id
+			when 'consumable5'
+				self.owner.held1_id = self.owner.held5_id if equipped == 0
+				self.owner.held2_id = self.owner.held5_id if equipped == 1
+				self.owner.held3_id = self.owner.held5_id if equipped == 2
+				self.owner.held4_id = self.owner.held5_id if equipped == 3
+				# self.owner.held5_id = self.owner.held5_id if equipped == 4
+				self.owner.held6_id = self.owner.held5_id if equipped == 5
+				self.owner.held7_id = self.owner.held5_id if equipped == 6
+				self.owner.held8_id = self.owner.held5_id if equipped == 7
+
+				self.owner.held5_id = self.id
+			when 'consumable6'
+				self.owner.held1_id = self.owner.held6_id if equipped == 0
+				self.owner.held2_id = self.owner.held6_id if equipped == 1
+				self.owner.held3_id = self.owner.held6_id if equipped == 2
+				self.owner.held4_id = self.owner.held6_id if equipped == 3
+				self.owner.held5_id = self.owner.held6_id if equipped == 4
+				# self.owner.held6_id = self.owner.held6_id if equipped == 5
+				self.owner.held7_id = self.owner.held6_id if equipped == 6
+				self.owner.held8_id = self.owner.held6_id if equipped == 7
+
+				self.owner.held6_id = self.id
+			when 'consumable7'
+				self.owner.held1_id = self.owner.held7_id if equipped == 0
+				self.owner.held2_id = self.owner.held7_id if equipped == 1
+				self.owner.held3_id = self.owner.held7_id if equipped == 2
+				self.owner.held4_id = self.owner.held7_id if equipped == 3
+				self.owner.held5_id = self.owner.held7_id if equipped == 4
+				self.owner.held6_id = self.owner.held7_id if equipped == 5
+				# self.owner.held7_id = self.owner.held7_id if equipped == 6
+				self.owner.held8_id = self.owner.held7_id if equipped == 7
+
+				self.owner.held7_id = self.id
+			when 'consumable8'
+				self.owner.held1_id = self.owner.held8_id if equipped == 0
+				self.owner.held2_id = self.owner.held8_id if equipped == 1
+				self.owner.held3_id = self.owner.held8_id if equipped == 2
+				self.owner.held4_id = self.owner.held8_id if equipped == 3
+				self.owner.held5_id = self.owner.held8_id if equipped == 4
+				self.owner.held6_id = self.owner.held8_id if equipped == 5
+				self.owner.held7_id = self.owner.held8_id if equipped == 6
+				# self.owner.held8_id = self.owner.held8_id if equipped == 7
+
+				self.owner.held8_id = self.id
+			else
+				no_save = true
+			end
+
+			self.owner.save unless no_save
+
+		end
+
+		
+
+	end
+
+	def already_equipped(id)
+		status = false
+
+		ids = []
+		ids << self.owner.hat_id
+		ids << self.owner.top_id
+		ids << self.owner.bottoms_id
+		ids << self.owner.left_hand_id
+		ids << self.owner.right_hand_id
+		ids << self.owner.shoes_id
+
+		status = 'equipped' if ids.include?(id)
+
+		ids = []
+		ids << self.owner.held1_id
+		ids << self.owner.held2_id
+		ids << self.owner.held3_id
+		ids << self.owner.held4_id
+		ids << self.owner.held5_id
+		ids << self.owner.held6_id
+		ids << self.owner.held7_id
+		ids << self.owner.held8_id
+
+		status = ids.index(id) if ids.index(id)
+
+		return status
+	end
+
+
+	
 
 end
+
+
+# elsif already_equipped(self.id.to_i).is_a?(Integer)
+
+# 			case already_equipped
+# 			when 1
+# 				target_slot = self.owner.held1_id
+# 			when 2
+# 				target_slot = self.owner.held2_id
+# 			when 3
+# 				target_slot = self.owner.held3_id
+# 			when 4
+# 				target_slot = self.owner.held4_id
+# 			when 5
+# 				target_slot = self.owner.held5_id
+# 			when 6
+# 				target_slot = self.owner.held6_id
+# 			when 7
+# 				target_slot = self.owner.held7_id
+# 			when 8
+# 				target_slot = self.owner.held8_id
+# 			end
+
+# 			case slot_id
+# 			when 'consumable1'
+# 				target_slot = self.owner.held1_id
+# 				self.owner.held1_id = self.id
+# 			when 'consumable2'
+# 				target_slot = self.owner.held2_id
+# 				self.owner.held2_id = self.id
+# 			when 'consumable3'
+# 				target_slot = self.owner.held3_id
+# 				self.owner.held3_id = self.id
+# 			when 'consumable4'
+# 				target_slot = self.owner.held4_id
+# 				self.owner.held4_id = self.id
+# 			when 'consumable5'
+# 				target_slot = self.owner.held5_id
+# 				self.owner.held5_id = self.id
+# 			when 'consumable6'
+# 				target_slot = self.owner.held6_id
+# 				self.owner.held6_id = self.id
+# 			when 'consumable7'
+# 				target_slot = self.owner.held7_id
+# 				self.owner.held7_id = self.id
+# 			when 'consumable8'
+# 				target_slot = self.owner.held8_id
+# 				self.owner.held8_id = self.id
+# 			else
+# 				no_save = true
+# 			end
+
+# 			self.owner.save unless no_save
+
+# 		end
+
+

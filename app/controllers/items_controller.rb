@@ -53,7 +53,7 @@ class ItemsController < ApplicationController
 		@item_ref = Item.find(params[:id])
 		@item = @item_ref.build_item
 
-		if @item.owner == current_char
+		if @item_ref.owner == current_char
 			@item_ref.destroy
 			redirect_to :inventory, notice: "Discarded #{@item.name}!"
 		else
@@ -117,7 +117,27 @@ class ItemsController < ApplicationController
 		else
 			redirect_to :inventory, alert: "Whoops! You can't use an item that's not yours!"
 		end
+	end
 
+	def equip
+
+		@item = Item.find(params[:inventory_item])
+
+		@slot = params[:target_slot]
+
+		if @slot == 'consumable'
+			@slot = "consumable#{params[:target_slot_id]}"
+		end
+
+		@char_id = current_char.id
+
+		@item.equip_item(@slot)
+
+
+		@item = params[:inventory_item]
+		respond_to do |format|
+       format.json { render json: {slot: @slot, item: @item, char: @char_id, type: params[:target_slot_id]}}
+  	end
 	end
 
 end

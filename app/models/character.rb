@@ -48,7 +48,7 @@ class Character < ActiveRecord::Base
 
     has_one :hat, class_name: "Item", foreign_key: "hat_id"
     has_one :top, class_name: "Item", foreign_key: "top_id"
-    has_one :bottom, class_name: "Item", foreign_key: "bottom_id"
+    has_one :bottoms, class_name: "Item", foreign_key: "bottoms_id"
     has_one :left_hand, class_name: "Item", foreign_key: "left_hand_id"
     has_one :right_hand, class_name: "Item", foreign_key: "right_hand_id"
     has_one :shoes, class_name: "Item", foreign_key: "shoes_id"
@@ -56,16 +56,6 @@ class Character < ActiveRecord::Base
     has_one :held2, class_name: "Item", foreign_key: "held2_id"
     has_one :hat, class_name: "Item", foreign_key: "hat_id"
     has_one :weapon, class_name: "Item", foreign_key: "weapon_id"
-
-
-
-
-
-
-
-
-
-
 
   #--------------------------
 
@@ -100,60 +90,64 @@ class Character < ActiveRecord::Base
   #------- inventory defs -------
 
   def hat
-    (Item.find(1)).build_item
+    hat_id ? (Item.find(hat_id)).build_item : nil
   end
 
   def top
-    (Item.find(1)).build_item
+    top_id ? (Item.find(top_id)).build_item : nil
   end
 
   def bottoms
-    (Item.find(1)).build_item
+    bottoms_id ? (Item.find(bottoms_id)).build_item : nil
   end
 
   def left_hand
-    (Item.find(1)).build_item
+    left_hand_id ? (Item.find(left_hand_id)).build_item : nil
   end
 
   def right_hand
-    (Item.find(1)).build_item
+    right_hand_id ? (Item.find(right_hand_id)).build_item : nil
   end
 
   def shoes
-    (Item.find(1)).build_item
+    shoes_id ? (Item.find(shoes_id)).build_item : nil
   end
 
 
   def held1
-    (Item.find(1)).build_item
+    held1_id ? (Item.find(held1_id)).build_item : nil
   end
 
   def held2
-    (Item.find(1)).build_item
+    held2_id ? (Item.find(held2_id)).build_item : nil
   end
 
   def held3
-    (Item.find(1)).build_item
+    held3_id ? (Item.find(held3_id)).build_item : nil
   end
 
   def held4
-    (Item.find(1)).build_item
+    held4_id ? (Item.find(held4_id)).build_item : nil
   end
 
   def held5
-    (Item.find(1)).build_item
+    held5_id ? (Item.find(held5_id)).build_item : nil
   end
 
   def held6
-    (Item.find(1)).build_item
+    held6_id ? (Item.find(held6_id)).build_item : nil
   end
 
   def held7
-    (Item.find(1)).build_item
+    held7_id ? (Item.find(held7_id)).build_item : nil
   end
 
   def held8
-    (Item.find(1)).build_item
+    held8_id ? (Item.find(held8_id)).build_item : nil
+  end
+
+  def equipped_item_ids
+    [hat_id, top_id, bottoms_id, right_hand_id, left_hand_id, shoes_id, held1_id, held2_id, held3_id, held4_id, held5_id, held6_id, held7_id, held8_id ]
   end
 
 

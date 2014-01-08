@@ -4,75 +4,75 @@
 
 		<div class="slot hat_slot">
 			<div class="slot_background">Hat</div>
-			<div class="item_holder" style="background-image: url( <%= asset_path current_char.hat.image_url %>)"></div>
+			<div class="item_holder <%= "id#{current_char.hat.id}" if current_char.hat != nil %>" data-type='hat' style="background-image: url( <%= asset_path current_char.hat.image_url if current_char.hat != nil %>)"></div>
 		</div>
 
 		<div class="slot top_slot">
 			<div class="slot_background">Top</div>
-			<div class="item_holder" style="background-image: url( <%= asset_path current_char.top.image_url %>)"></div>
+			<div class="item_holder <%= "id#{current_char.top.id}" if current_char.top != nil %>" data-type='top' style="background-image: url( <%= asset_path current_char.top.image_url if current_char.top != nil %>)"></div>
 			
 		</div>
 
 		<div class="slot bottoms_slot">
 			<div class="slot_background">Bottoms</div>
-			<div class="item_holder" style="background-image: url( <%= asset_path current_char.bottoms.image_url %>)"></div>
+			<div class="item_holder <%= "id#{current_char.bottoms.id}" if current_char.bottoms != nil %>" data-type='bottoms' style="background-image: url( <%= asset_path current_char.bottoms.image_url if current_char.bottoms != nil %>)"></div>
 		</div>
 
 		<div class="slot left_hand_slot">
 			<div class="slot_background">Off Hand</div>
-			<div class="item_holder" style="background-image: url( <%= asset_path current_char.left_hand.image_url %>)"></div>
+			<div class="item_holder <%= "id#{current_char.left_hand.id}" if current_char.left_hand != nil %>" data-type='shield' style="background-image: url( <%= asset_path current_char.left_hand.image_url if current_char.left_hand != nil %>)"></div>
 		</div>
 
 		<div class="slot right_hand_slot">
 			<div class="slot_background">Weapon</div>
-			<div class="item_holder" style="background-image: url( <%= asset_path current_char.right_hand.image_url %>)"></div>
+			<div class="item_holder <%= "id#{current_char.right_hand.id}" if current_char.right_hand != nil %>" data-type='weapon' style="background-image: url( <%= asset_path current_char.right_hand.image_url if current_char.right_hand != nil %>)"></div>
 		</div>
 
 		<div class="slot shoes_slot">
 			<div class="slot_background">Shoes</div>
-			<div class="item_holder" style="background-image: url( <%= asset_path current_char.shoes.image_url %>)"></div>
+			<div class="item_holder <%= "id#{current_char.shoes.id}" if current_char.shoes != nil %>" data-type='shoes' style="background-image: url( <%= asset_path current_char.shoes.image_url if current_char.shoes != nil %>)"></div>
 		</div>
 
 		<div class= "held_items">
 
 			<div class="slot held1_slot">
 				<div class="slot_background">Item</div>
-				<div class="item_holder" style="background-image: url( <%= asset_path current_char.held1.image_url %>)"></div>
+				<div class="item_holder <%= "id#{current_char.held1.id}" if current_char.held1 != nil %>" data-id="1" data-type='consumable' style="background-image: url( <%= asset_path current_char.held1.image_url if current_char.held1 != nil %>)"></div>
 			</div><!--
 
 			--><div class="slot held2_slot">
 				<div class="slot_background">Item</div>
-				<div class="item_holder" style="background-image: url( <%= asset_path current_char.held2.image_url %>)"></div>
+				<div class="item_holder <%= "id#{current_char.held2.id}" if current_char.held2 != nil %>" data-id="2" data-type='consumable' style="background-image: url( <%= asset_path current_char.held2.image_url if current_char.held2 != nil %>)"></div>
 			</div><!--
 
 			--><div class="slot held3_slot">
 				<div class="slot_background">Item</div>
-				<div class="item_holder" style="background-image: url( <%= asset_path current_char.held3.image_url %>)"></div>
+				<div class="item_holder <%= "id#{current_char.held3.id}" if current_char.held3 != nil %>" data-id="3" data-type='consumable' style="background-image: url( <%= asset_path current_char.held3.image_url if current_char.held3 != nil %>)"></div>
 			</div><!--
 
 			--><div class="slot held4_slot">
 				<div class="slot_background">Item</div>
-				<div class="item_holder" style="background-image: url( <%= asset_path current_char.held4.image_url %>)"></div>
+				<div class="item_holder <%= "id#{current_char.held4.id}" if current_char.held4 != nil %>" data-id="4" data-type='consumable' style="background-image: url( <%= asset_path current_char.held4.image_url if current_char.held4 != nil %>)"></div>
 			</div><!--
 			
 			--><div class="slot held5_slot">
 				<div class="slot_background">Item</div>
-				<div class="item_holder" style="background-image: url( <%= asset_path current_char.held5.image_url %>)"> </div>
+				<div class="item_holder <%= "id#{current_char.held5.id}" if current_char.held5 != nil %>" data-id="5" data-type='consumable' style="background-image: url( <%= asset_path current_char.held5.image_url if current_char.held5 != nil %>)"> </div>
 			</div><!--
 
 			--><div class="slot held6_slot">
 				<div class="slot_background">Item</div>
-				<div class="item_holder" style="background-image: url( <%= asset_path current_char.held6.image_url %>)"></div>
+				<div class="item_holder <%= "id#{current_char.held6.id}" if current_char.held6 != nil %>" data-id="6" data-type='consumable' style="background-image: url( <%= asset_path current_char.held6.image_url if current_char.held6 != nil %>)"></div>
 			</div><!--
 
 			--><div class="slot held7_slot">
 				<div class="slot_background">Item</div>
-				<div class="item_holder" style="background-image: url( <%= asset_path current_char.held7.image_url %>)"></div>
+				<div class="item_holder <%= "id#{current_char.held7.id}" if current_char.held7 != nil %>" data-id="7" data-type='consumable' style="background-image: url( <%= asset_path current_char.held7.image_url if current_char.held7 != nil %>)"></div>
 			</div><!--
 
 			--><div class="slot held8_slot">
 				<div class="slot_background">Item</div>
-				<div class="item_holder" style="background-image: url( <%= asset_path current_char.held8.image_url %>)"></div>
+				<div class="item_holder <%= "id#{current_char.held8.id}" if current_char.held8 != nil %>" data-id="8" data-type='consumable' style="background-image: url( <%= asset_path current_char.held8.image_url if current_char.held8 != nil %>)"></div>
 			</div>
 
 		</div>

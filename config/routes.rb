@@ -31,6 +31,7 @@ FightyTest::Application.routes.draw do
   get 'items/:id' => 'items#show', as: :item
   post 'items/:id' => 'items#consume', as: :consume
   delete 'items/:id' => 'items#destroy', as: :discard
+  post 'items/equip/:id' => 'items#equip', as: :equip
 
   resources :vendors do
     resources :items do
