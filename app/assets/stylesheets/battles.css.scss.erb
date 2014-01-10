@@ -400,17 +400,17 @@
 
 }
 
-.battle_alert_container {
-	position: absolute;
-	background-color: rgba(0,0,0,0.3);
+.alert_container {
+	position: fixed;
+	background-color: rgba(0,0,0,0.5);
 	top: 0; left: 0; bottom: 0; right: 0;
-	z-index: 9900;
+	z-index: 99900;
 	text-align: center;
 
 	opacity: 0;
 	display: none;
 
-	.battle_alert {
+	.alert_body {
 		border-radius: 15px;
 		border: 3px solid rgba(215,60,60,1);
 		position: relative;
@@ -430,6 +430,3 @@
 
 
 }
-
-
-
