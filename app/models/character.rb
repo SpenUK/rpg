@@ -29,8 +29,11 @@ class Character < ActiveRecord::Base
 
   has_many :off_battles, :class_name => "Battle", foreign_key: "challenger_id"
   has_many :def_battles, :class_name => "Battle", foreign_key: "defender_id"
+  has_many :won_battles, :class_name => "Battle", foreign_key: "winner_id"
 
   has_many :mob_battles
+  has_many :won_mob_battles, :class_name => "MobBattle", foreign_key: "winner_id" 
+
 
   has_and_belongs_to_many :attacks
 
@@ -152,6 +155,14 @@ class Character < ActiveRecord::Base
 
   def equipped_consumable_ids
     [held1_id, held2_id, held3_id, held4_id, held5_id, held6_id, held7_id, held8_id ]
+  end
+
+  def equipped_consumables
+    consumables = []
+    equipped_consumable_ids.each do |id|
+      consumables << Item.find(id) if id
+    end
+    return consumables
   end
 
 

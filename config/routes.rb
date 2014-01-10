@@ -50,6 +50,7 @@ FightyTest::Application.routes.draw do
   get 'inns/:id' => 'inns#show', as: :inn
   post 'inns/:id' => 'inns#sleep', as: :sleep
 
+  post 'take_turn' => 'battles#take_turn', as: :turn
 
   post 'attack/:id' => 'battles#attack', as: :attack
     post 'mob_attack/:id' => 'mob_battles#attack', as: :mob_attack

@@ -1,7 +1,7 @@
 class Skill < ActiveRecord::Base
 	include ActiveModel::Serialization
 
-	has_many :characters
+	belongs_to :character
 
 	def build_skill
 		@index = skill_id
@@ -20,7 +20,7 @@ class Skill < ActiveRecord::Base
 		end
 	end
 
-	def self.get_skill index
+	def get_skill index
 		attacks = [
 
 				{ type: 'none', name: 'none' },
@@ -252,12 +252,12 @@ class Skill < ActiveRecord::Base
 		end
 
 		def process caster, target
-				caster.current_mp -= new_skill.mp_consumption
+				caster.current_mp -= @mp_consumption
 
-				caster.current_hp += new_skill.added_hp
+				caster.current_hp += @added_hp
 				caster.current_hp = caster.max_hp if caster.current_hp > caster.max_hp
 
-				caster.current_mp += new_skill.added_mp
+				caster.current_mp += @added_mp
 				caster.current_mp = caster.max_mp if caster.current_mp > caster.max_mp
 		end
 
@@ -266,21 +266,79 @@ class Skill < ActiveRecord::Base
 		end
 	end
 
-	def self.process_skill(index, skill_level, caster, target, battle_id, battle_type)
+	# def self.process_skill(index, skill_level, caster, target, battle_id, battle_type)
+
+	# 	skill = get_skill(index)
+	# 	type = skill[:type]
+
+
+	# 	if skill[:type] == 'Attack'
+	# 		new_skill = Attack.new( skill[:name], skill[:type], skill[:base_dmg], skill[:dmg_range], skill[:mp_consumption], skill_level)
+
+	# 	elsif skill[:type] =='Buff'
+	# 		new_skill = Buff.new(skill[:name], skill[:type], skill[:turns], skill[:defense_up], skill[:attack_up], skill[:mp_consumption], skill_level)
+		
+	# 	elsif skill[:type] =='Support'
+	# 		new_skill = Support.new(skill[:name], skill[:type], skill[:hp_regen], skill[:mp_regen], skill[:mp_consumption], skill_level)
+
+	# 	end
+
+	# 	if caster.current_mp < new_skill.mp_consumption
+	# 		skill = "NotEnoughMP"
+	# 	else
+	# 		new_skill.process(caster, target)
+	# 	end
+
+	# 	if skill != "NotEnoughMP"
+
+	# 		target.save
+	# 		caster.save
+			
+	# 		skill_hash = new_skill.attributes
+
+	# 		if defined? target.name
+	# 			target_name = target.name
+	# 		else 
+	# 			target_name = target.species.name
+	# 		end
+
+	# 		if defined? caster.name
+	# 			caster_name = caster.name
+	# 		else 
+	# 			caster_name = caster.species.name
+	# 		end
+
+	# 			target_type = target.is_a?(Character) ? "Character" : "Mob"
+	# 			caster_type = caster.is_a?(Character) ? "Character" : "Mob"
+
+	# 		FightTurn.create( maker_id: caster.id, maker_type: caster_type, maker_name: caster_name,
+	# 								target_id: target.id, target_type: target_type, target_name: target_name,
+	# 								fight_type: battle_type, fight_id: battle_id, 
+	# 								serialized_object: skill_hash.to_json
+	# 								)
+	# 	end
+
+
+	# 	return skill
+	# end
+
+	def process_skill(aggression_id = 1)
+
+		index = skill_id
+		current_fight = character.battle_session.fight
+	
+		caster = character
+		target = current_fight.challenger_id == caster.id ? current_fight.defender : current_fight.challenger
 
 		skill = get_skill(index)
 		type = skill[:type]
 
-
 		if skill[:type] == 'Attack'
-			new_skill = Attack.new( skill[:name], skill[:type], skill[:base_dmg], skill[:dmg_range], skill[:mp_consumption], skill_level)
-
+			new_skill = Attack.new( skill[:name], skill[:type], skill[:base_dmg], skill[:dmg_range], skill[:mp_consumption], level)
 		elsif skill[:type] =='Buff'
-			new_skill = Buff.new(skill[:name], skill[:type], skill[:turns], skill[:defense_up], skill[:attack_up], skill[:mp_consumption], skill_level)
-		
+			new_skill = Buff.new(skill[:name], skill[:type], skill[:turns], skill[:defense_up], skill[:attack_up], skill[:mp_consumption], level)
 		elsif skill[:type] =='Support'
-			new_skill = Support.new(skill[:name], skill[:type], skill[:hp_regen], skill[:mp_regen], skill[:mp_consumption], skill_level)
-
+			new_skill = Support.new(skill[:name], skill[:type], skill[:hp_regen], skill[:mp_regen], skill[:mp_consumption], level)
 		end
 
 		if caster.current_mp < new_skill.mp_consumption
@@ -313,7 +371,7 @@ class Skill < ActiveRecord::Base
 
 			FightTurn.create( maker_id: caster.id, maker_type: caster_type, maker_name: caster_name,
 									target_id: target.id, target_type: target_type, target_name: target_name,
-									fight_type: battle_type, fight_id: battle_id, 
+									fight_type: current_fight.class.to_s, fight_id: current_fight.id, 
 									serialized_object: skill_hash.to_json
 									)
 		end

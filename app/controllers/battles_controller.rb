@@ -3,6 +3,7 @@ class BattlesController < ApplicationController
 	include CharacterSkills
 
 
+
 	def index
 
 		if battle_session
@@ -21,6 +22,7 @@ class BattlesController < ApplicationController
 			@defender = Character.find(@battle.defender_id)
 			@challenger = Character.find(@battle.challenger_id)
 			@skills = current_char.skills
+			@items = current_char.equipped_consumables
 
 		current_char.id == @defender.id ? (@player1 = @defender; @player2 = @challenger) : (@player2 = @defender; @player1 = @challenger)
 	end
@@ -48,6 +50,53 @@ class BattlesController < ApplicationController
 	end
 
 	def take_turn
+
+		@battle = Battle.find(battle_session.fight.id)
+		@skill_item = params[:skill_item]
+		@skill_id = params[:skill_id]
+		@item_id = params[:item_id]
+		@style_id = params[:style_id]
+		
+		@skill = Skill.find(@skill_id) if @skill_id != ''
+		read_time = 800
+
+		# checks that it is the current users turn.
+		if @battle.status == current_char.id.to_s
+			# determines user choice between item or skill
+			if @skill_id == '' && @item_id == ''
+				error = "You didn't make a choice"
+				# processes item if item was selected, otherwise use skill
+			elsif @skill_item == 'item' && @item_id != ''
+				# process item
+				error = "You can't use this item, because items don't even work yet, you can equip them, look at them but not use them... bit silly really."
+				read_time = 1800
+
+			elsif @skill_id != '' && @skill.character_id.to_s == current_char.id.to_s
+				# process skill
+					@attack = @skill.process_skill(@style_id)
+					@battle.winner
+
+				if @attack == "NotEnoughMP"
+					error = "You don't have enough MP!"
+				else
+	  	  	@battle.update_status
+  	  	end
+
+  	  else
+  	  	error = "There was a problem! Check that you've selected a skill or an item."
+  			read_time = 1100
+  		end
+
+		elsif @battle.status == "ended"
+	    error = "This fight has ended!"
+		else
+			error = "It's not your turn yet!"
+		end
+		
+
+		respond_to do |format|
+       format.json { render json: { error_msg: error, error_delay: read_time, style: @style_id, damage: @attack.inspect.to_s } }
+  	end
 
 	end
 
@@ -115,24 +164,5 @@ class BattlesController < ApplicationController
 	    end
 
     end
-
-
-
-    def change_battle_status(battle)
-    	# determines who's turn it is next or if the battle is ended
-
-    	if Character.find(battle.challenger_id).current_hp <= 0 || Character.find(battle.defender_id).current_hp <= 0 
-    		battle.status = "ended"
-    	elsif battle.status == "begin"
-    		battle.status = battle.defender_id.to_s
-    	elsif battle.status == battle.defender_id.to_s
-    		battle.status = battle.challenger_id
-    	else
-    		battle.status = battle.defender_id
-    	end
-
-    	battle.save
-    end
-
 
 end

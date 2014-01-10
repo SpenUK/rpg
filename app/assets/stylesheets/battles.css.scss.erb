@@ -213,6 +213,10 @@
 	text-align: center;
 	padding: 10px;
 
+	.disabled {
+		opacity: 0.6;
+	}
+
 	.attack_selection, .item_selection, .skill_dropdown, .aggression_dropdown, .go_button {
 		display:inline-block;
 		vertical-align: top;
@@ -267,6 +271,7 @@
 
 	.off:active, .on {
 		background-color: $c_button_on;
+		color: white;
 		top: 3px;
 		-moz-box-shadow: 0px 1px $c_button_on_shade;
 		-webkit-box-shadow: 0px 1px $c_button_on_shade;
@@ -338,12 +343,10 @@
 		}
 	}
 
-		.skill_options li, .item_options li{
+		.skill_options li, .item_options li, .aggression_options li{
+			color: rgba(140,140,140,1);
 			left:0; right: 0;
 			border-radius: inhert;
-		}
-
-		.skill_options li, .item_options li{
 			left: 0; right: 0;
 			height: $d_bar_height;
 			background-color: inherit;
@@ -397,6 +400,36 @@
 
 }
 
+.battle_alert_container {
+	position: absolute;
+	background-color: rgba(0,0,0,0.3);
+	top: 0; left: 0; bottom: 0; right: 0;
+	z-index: 9900;
+	text-align: center;
+
+	opacity: 0;
+	display: none;
+
+	.battle_alert {
+		border-radius: 15px;
+		border: 3px solid rgba(215,60,60,1);
+		position: relative;
+		top: 320px;
+		margin: auto;
+		max-width: 50%;
+		display:inline-block;
+		padding: 20px;
+		color: white;
+		font-size: 1.1em;
+	}
+
+	.error {
+		background-color: rgba(255,100,100,1);
+		border-color: rgba(215,60,60,1);
+	}
+
+
+}
 
 
 

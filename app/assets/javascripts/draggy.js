@@ -66,7 +66,6 @@ $(document).ready(function(){
 			$('.equipped_panel').offset({top: currentMousePos.y - y_offset, left: currentMousePos.x - x_offset});
 			// no_select class disables highlighting whilst drag is process
 			$('body').addClass('no_select');
-			console.log(currentMousePos);
 		}
 
 		if (item != null) {

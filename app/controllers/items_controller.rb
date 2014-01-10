@@ -67,11 +67,11 @@ class ItemsController < ApplicationController
 
 		if battle_session
 			redirect_to :inventory, alert: "Whoops! You can't use that while you have a battle in session!"
-		elsif @item_ref.owner == current_char
+		elsif @item_ref.owner == current_char 
 			
 			@character = Character.find(current_char.id)
 
-			if @item_ref.subclass_type == "Consumable"
+			if @item_ref.subclass_type == "Consumable" && !current_char.equipped_item_ids.include?(@item_ref.id)
 				@item = @item_ref.build_item
 
 				full_hp = (@character.current_hp >= @character.max_hp)
@@ -109,6 +109,8 @@ class ItemsController < ApplicationController
 					@message = "This item will have no effect!"
 				end
 
+			elsif current_char.equipped_item_ids.include?(@item_ref.id)
+				@message = "You can't consume an item while it is equipped."
 			else
 				@message = "You can't consume that item!"
 			end
@@ -131,7 +133,9 @@ class ItemsController < ApplicationController
 
 		@char_id = current_char.id
 
-		@item.equip_item(@slot)
+		if !battle_session
+			@item.equip_item(@slot) 
+		end
 
 
 		@item = params[:inventory_item]

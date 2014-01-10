@@ -4,6 +4,12 @@
 
 	<div class="arena no_select">
 
+		<div class="battle_alert_container">
+			<span><div class="battle_alert error">
+				
+			</div></span>
+		</div>
+
 		<div class="foreground"></div>
 		<div class="arena_shadow"></div>
 		<div class="background"></div>
@@ -30,18 +36,18 @@
     		<span class="label">Select Skill</span>
     		<div class="skills_container">
 	    		<ul class="skill_options">
-		        <li data-id="32">Skill 1</li>
-		        <li data-id="45">Skill 2</li>
-		        <li data-id="10">Skill 3</li>
-		        <li data-id="30">Skill 4</li>
-		        <li data-id="8">Skill 5</li>
+	    			<% @skills.each do |skill| %>
+	    				<li data-id="<%= skill.id %>"><%= skill.name %></li>	
+	    			<% end %>
 	    		</ul>
 	    	</div>
 	    	<div class="items_container">
 	    		<ul class="item_options">
-		        <li data-id="32">Item 1</li>
-		        <li data-id="24">Item 2</li>
-		        <li data-id="12">Item 3</li>
+		        <% @items.each do |item| %>
+		        	<% @built = item.build_item %>
+	    				<li data-id="<%= item.id %>"><%= @built.name %></li>	
+	    			<% end %>
+
 	    		</ul>
     		</div>
 			</div>
@@ -51,9 +57,9 @@
     		<span class="label">Select Style</span>
     		<div class="aggression_container">
 	    		<ul class="aggression_options">
-		        <li>Aggression 1</li>
-		        <li>Aggression 2</li>
-		        <li>Aggression 3</li>
+		        <li data-id="3">Aggresive</li>
+		        <li data-id="2">Defensive</li>
+		        <li data-id="1">Normal</li>
 	    		</ul>
     	</div>
 			</div>
@@ -62,7 +68,7 @@
 
 		</div>
 
-		<% if @battle.winner %>
+		<% if @battle.status == "ended" %>
 			<div class="outcome">
 
 				<h1><%= @battle.outcome %></h1>
