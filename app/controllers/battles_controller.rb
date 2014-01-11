@@ -95,7 +95,7 @@ class BattlesController < ApplicationController
 		
 
 		respond_to do |format|
-       format.json { render json: { error_msg: error, error_delay: read_time, style: @style_id, damage: @attack.inspect.to_s } }
+       format.json { render json: { error_msg: error, error_type: 'error', error_delay: read_time, style: @style_id, attrs: @attack } }
   	end
 
 	end

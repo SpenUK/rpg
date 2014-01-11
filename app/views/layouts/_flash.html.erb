@@ -1,7 +1,7 @@
 <div class="container">
 
 	<div class="alert_container">
-			<span><div class="alert_body error">				
+			<span><div class="alert_body">				
 			</div></span>
 		</div>
 
@@ -9,8 +9,10 @@
 	<% flash.each do |type, message| %>
 	<script type="text/javascript">
 		var message = "<%= raw message %>";
+		var type = "<%= raw flash_class type %>";
+
 		$(document).ready(function(e){
-			$.error_message(message, 1000);
+			$.error_message(message, type, 1000);
 		});
 	</script>
 

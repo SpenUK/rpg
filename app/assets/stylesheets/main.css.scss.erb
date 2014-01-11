@@ -150,13 +150,44 @@ ul { list-style: none; }
 	color: rgba(120,122,118,1);
 }
 
+/* Flash Alerts */
 
+.alert_container {
+	position: fixed;
+	background-color: rgba(0,0,0,0.5);
+	top: 0; left: 0; bottom: 0; right: 0;
+	z-index: 99900;
+	text-align: center;
+
+	opacity: 0;
+	display: none;
+
+	.alert_body {
+		border-radius: 15px;
+		border: 3px solid rgba(215,60,60,1);
+		position: relative;
+		top: 320px;
+		margin: auto;
+		max-width: 50%;
+		display:inline-block;
+		padding: 20px;
+		color: white;
+		font-size: 1.1em;
+	}
+
+	.error {
+		background-color: rgba(255,100,100,1);
+		border-color: rgba(215,60,60,1);
+	}
+
+	.success {
+		background-color: rgba(80,205,90,1);
+		border-color: rgba(40,140,45,1);
+	}
+
+}
 /*Wrapper/Container Styles*/
 
-.flash {
-	background: rgba(100,100,100,0.7);
-	color: white;
-}
 
 .page_wrap {
 	padding-top: 10px;

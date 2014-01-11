@@ -360,6 +360,54 @@
 	background-color: rgba(86,114,51,1);
 	position: relative;
 
+	.player2_effect_container{
+		top: 150px;
+		left: 620px;
+	}
+
+	.player1_effect_container {
+		top: 150px;
+		left: 100px;
+	}
+
+	.player2_effect_container, .player1_effect_container {
+		display: inline-block;
+		width: 280px;
+		// background-color: rgba(222,222,0,0.3);
+		height: 120px;
+		position: absolute;
+		z-index: 400;
+		font-size: 4.2em;
+		font-weight: bold;
+		text-align: center;
+
+		.hit_mark {
+			position:relative;
+			width:100%;
+			color: rgba(245,190,120,1);
+			-webkit-text-stroke: 4px rgba(225,100,60,1);
+			bottom: 0;
+			padding: 10px;
+			opacity: 0;
+		}
+		.heal_mark {
+			position:absolute;
+			width:100%;
+			color: rgba(255,160,160,1);
+			-webkit-text-stroke: 4px rgba(225,100,100,1);
+			bottom: 0px;
+			padding: 10px;
+			opacity: 0;
+		}
+		.critical_hit {
+			color: rgba(235,80,80,1);
+			-webkit-text-stroke: 4px rgba(200,60,60,1);
+		}
+	}
+
+
+
+
 }
 
 .outcome {
@@ -396,37 +444,6 @@
 		position: relative;
 	}
 
-
-
-}
-
-.alert_container {
-	position: fixed;
-	background-color: rgba(0,0,0,0.5);
-	top: 0; left: 0; bottom: 0; right: 0;
-	z-index: 99900;
-	text-align: center;
-
-	opacity: 0;
-	display: none;
-
-	.alert_body {
-		border-radius: 15px;
-		border: 3px solid rgba(215,60,60,1);
-		position: relative;
-		top: 320px;
-		margin: auto;
-		max-width: 50%;
-		display:inline-block;
-		padding: 20px;
-		color: white;
-		font-size: 1.1em;
-	}
-
-	.error {
-		background-color: rgba(255,100,100,1);
-		border-color: rgba(215,60,60,1);
-	}
 
 
 }

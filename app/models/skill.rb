@@ -377,7 +377,7 @@ class Skill < ActiveRecord::Base
 		end
 
 
-		return skill
+		return new_skill.attributes
 	end
 
 end

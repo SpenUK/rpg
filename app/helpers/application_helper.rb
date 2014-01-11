@@ -4,9 +4,9 @@ module ApplicationHelper
 
     case type
     when :alert
-      "alert-error"
+      "error"
     when :notice
-      "alert-success"
+      "success"
     else
       ""
     end
