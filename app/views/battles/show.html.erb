@@ -1,11 +1,14 @@
 <div class="container">
-
-	<h1>Battle!</h1><br>
-
 	<div class="arena no_select">
 
-		<div class="player2_effect_container"><span class="hit_mark">138</span></div>
-		<div class="player1_effect_container"><span class="heal_mark">40</span></div>
+
+		<div class="player2_effect_container"><span class="hit_mark"></span></div>
+		<div class="player1_effect_container"><span class="heal_mark"></span></div>
+		<div class="waiting_container">
+			<div class="waiting">
+			<%= image_tag "loading/loading100.gif" %>
+			<h4>Waiting For <br> Opponent</h4></div>
+		</div>
 
 		<div class="foreground"></div>
 		<div class="arena_shadow"></div>
@@ -81,6 +84,7 @@
 	</div>
 
 	<div class="turn_container">
+		<div class="turn_fade"></div>
 		<% @battle.turns.reverse.each do |turn| %>
 
 			<%= render "layouts/turn_display", turn: turn, current: @player1, opponent: @player2 %>

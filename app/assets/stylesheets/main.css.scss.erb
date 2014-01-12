@@ -3,8 +3,10 @@
 
 $font_stack: "ubuntu", sans-serif;
 
-$color_header: rgba(60,60,60,1);
-$color_bg: rgba(220,80,80,1);
+// $color_header: rgba(43,182,115,1);
+$color_header: rgba(30,170,155,1);
+$color_header_dim: rgba(0,120,110,1);
+$color_bg: rgba(0,0,0,1);
 $color_shadow: rgba(0,0,0,0.7);
 $color_light_shadow: rgba(255,255,255,0.7);
 
@@ -15,12 +17,20 @@ $color_off_white: rgba(255,252,240,1);
 
 $color_font_1: rgba(100,210,200,1);
 
-$color_panel_header: $color_header;
+$color_panel: rgba(45,45,45,1);
+$color_panel_header: rgba(60,60,60,1);
 $color_panel_body: rgba(245,240,235,1);
 
 $header_height: 50px;
 
+$success_green: rgba(43,182,115,1);
+$success_green_dim: rgba(0,148,68,1);
 
+$error_red: rgba(255,100,100,1);
+$error_red_dim: rgba(215,60,60,1);
+
+$warning_yellow: rgba(230,230,60,1);
+$warning_yellow: rgba(200,200,30,1);
 
 
 // Fix browser shit
@@ -43,7 +53,6 @@ ul { list-style: none; }
 }
 
 .header_icon {
-	opacity: 0.6;
 
 	display: inline-block;
 	float: left;
@@ -52,10 +61,6 @@ ul { list-style: none; }
 	height: 30px;
 	width: 30px;
 	text-align: center;
-}
-
-.header_icon:hover {
-	opacity: 0.8;
 }
 
 .settings_block {
@@ -76,8 +81,9 @@ ul { list-style: none; }
 
 
 .messages_block p {
-	// position:absolute;
-	color: red;
+	font-weight: bold;
+	color: $error_red;
+	margin-top: 4px;
 }
 
 .header {
@@ -131,23 +137,28 @@ ul { list-style: none; }
 	display: inline-block;
 	position: relative;
 	padding: 10px;
-	color: rgba(100,210,200,1);
+	color: rgba(230,231,232,1);
 }
 .logo:hover {
+	opacity: 0.8;
+}
+
+.nav a{
 	color: white;
 }
 
-.navlinks a:hover{
-	color: white;
-}
 
-.nav li, .nav li a, .balance {
+.nav li, .balance {
 	display: inline-block;
 	float: left;
 	margin: 0px 5px;
 	position: relative;
-	/*color: rgba(10,180,170,1);*/
-	color: rgba(120,122,118,1);
+	opacity: 0.7;
+	color: white;
+}
+
+.nav li:hover, .balance:hover{
+	opacity: 1;
 }
 
 /* Flash Alerts */
@@ -176,16 +187,45 @@ ul { list-style: none; }
 	}
 
 	.error {
-		background-color: rgba(255,100,100,1);
-		border-color: rgba(215,60,60,1);
+		background-color: $error_red;
+		border-color: $error_red_dim;
 	}
 
 	.success {
-		background-color: rgba(80,205,90,1);
-		border-color: rgba(40,140,45,1);
+		background-color: $success_green;
+		border-color: $success_green_dim;
 	}
 
 }
+
+/* buttons */
+
+	.button_green { 
+		display:inline-block;
+		vertical-align: top;
+		text-align: center;
+		position: relative;
+		line-height: 45px;
+
+		color: white;
+		font-size: 1.1em;
+		background-color: $success_green;
+		height: 45px;
+		width: 140px;
+		border-radius: 5px;
+		-moz-box-shadow: 0px 4px $success_green_dim;
+		-webkit-box-shadow: 0px 4px $success_green_dim;
+		box-shadow: 0px 4px $success_green_dim;
+	}
+
+	.button_green:active {
+		top: 3px;
+		-moz-box-shadow: 0px 1px $success_green_dim;
+		-webkit-box-shadow: 0px 1px $success_green_dim;
+		box-shadow: 0px 1px $success_green_dim;
+	}
+
+
 /*Wrapper/Container Styles*/
 
 
@@ -193,8 +233,6 @@ ul { list-style: none; }
 	padding-top: 10px;
 	min-height: 100%;
 	position: relative;
-	background-image: url(<%= asset_path "shards_3.png" %>);
-	background-repeat:repeat-x;
 }
 
 .container {
@@ -212,7 +250,7 @@ ul { list-style: none; }
 	position: absolute;
 	width: 100%;
 	height:3px;
-	background-color: black;
+	background-color: $color_header_dim;
 	bottom: 0;
 }
 
@@ -269,7 +307,7 @@ ul { list-style: none; }
 	}
 
 	h3 {
-		color: $color_header;
+		color: $color_panel;
 	}
 
 	.selection_p {
@@ -285,7 +323,7 @@ ul { list-style: none; }
 
 
 	h3 {
-		color: $color_header;
+		color: $color_panel;
 	}
 
 	.selection_p {
@@ -396,7 +434,7 @@ ul { list-style: none; }
 .battle_listing_panel {
 	padding: 20px;
 	min-height: 40px;
-	background: $color_header;
+	background: $color_panel;
 	margin: 10px 0px;
 	position: relative
 
@@ -458,7 +496,7 @@ display: inline-block;}
 	position: absolute;
 	height: 80px;
 	width: 100%;
-	background: $color_header;
+	background: $color_panel;
 	bottom: 0px;
 }
 
@@ -619,7 +657,7 @@ display: inline-block;}
 
 	margin-bottom:15px;
 
-	background: $color_header;
+	background: $color_panel;
 	
 	img, .welcome_message {
 		display: inline-block;
@@ -756,32 +794,13 @@ display: inline-block;}
 	}
 }
 
-//arena styles
-
-.turn_container {
-	max-height: 300px;
-	overflow-y: auto;
-	margin: 20px;
-	background-color: $color_light_shadow;
-
-}
-
-.battle_turn{
-	border: 2px solid rgba(60,60,60,1);
-	min-height: 20px;
-	margin: 10px;
-	background-color: $color_light_shadow;
-	padding:20px;
-
-}
-
 // leaderboard
 
 	.leaderboard_intro, .inventory_intro {
 
 		padding: 20px;
 
-		background-color: $color_header;
+		background-color: $color_panel;
 
 		h1 {
 			text-align: center;
@@ -794,7 +813,7 @@ display: inline-block;}
 	.leaderboard_entry, {
 
 
-		background-color: $color_header;
+		background-color: $color_panel;
 		position: relative;
 		margin: 20px 40px;
 
@@ -829,7 +848,7 @@ display: inline-block;}
 			color: white;
 
 			.name {
-				color: $color_bg;
+				color: $warning_yellow;
 			}
 
 			.exp {
@@ -853,7 +872,7 @@ display: inline-block;}
 
 .stats_update_panel {
 
-	background-color: $color_header;
+	background-color: $color_panel;
 	display: inline-block;
 	vertical-align:top;
 
@@ -921,7 +940,7 @@ display: inline-block;}
 
 .equipped_panel {
 
-	background-color: $color_header;
+	background-color: $color_panel;
 	padding: 10px;
 	position: absolute;
 	z-index: 20000;
@@ -981,14 +1000,13 @@ display: inline-block;}
 
 // scroll styles
 
-::-webkit-scrollbar {
-		width: 15px; }
+::-webkit-scrollbar { width: 15px; }
 	::-webkit-scrollbar-track {
-		background-color: rgba(0,0,0,0.5); }
+		background-color: rgba(30,30,30,1); }
 	::-webkit-scrollbar-thumb {
-		background-color: rgba(100,210,200,0.4);}
+		background-color: rgba(30,170,155,0.7);}
 	::-webkit-scrollbar-thumb:hover {
-		background-color: rgba(100,210,200,0.5);}
+		background-color: rgba(30,170,155,0.8);}
 	::-webkit-scrollbar-thumb:active {
-		background-color: rgba(100,210,200,0.7);}
+		background-color: rgba(30,170,155,0.9);}
 
