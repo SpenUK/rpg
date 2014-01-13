@@ -49,7 +49,7 @@ class Skill < ActiveRecord::Base
 				elemental: 'normal',
 				base_dmg: 14,
 				dmg_range: 8,
-				mp_consumption: 0
+				mp_consumption: 10
 				},
 
 				{
@@ -125,7 +125,7 @@ class Skill < ActiveRecord::Base
 				elemental: 'normal',
 				base_dmg: 14,
 				dmg_range: 8,
-				mp_consumption: 0
+				mp_consumption: 10
 				}
 		]
 
@@ -212,7 +212,7 @@ class Skill < ActiveRecord::Base
 		end
 
 		def attributes
-			{'type' => 'Attack', 'name' => @name ,'level' => @level, 'damage' => @dmg, 'critical' => @critical}
+			{'type' => 'Attack', 'name' => @name ,'level' => @level, 'damage' => @dmg, 'critical' => @critical, 'mp_consumption' => @mp_consumption }
 		end
 	end
 
@@ -235,7 +235,7 @@ class Skill < ActiveRecord::Base
 		end
 
 		def attributes
-			{'type' => 'Buff', 'name' => @name ,'level' => @level, 'damage' => @dmg, 'critical' => @critical}
+			{'type' => 'Buff', 'name' => @name ,'level' => @level, 'damage' => @dmg, 'critical' => @critical, 'mp_consumption' => @mp_consumption }
 		end
 	end
 
@@ -262,65 +262,9 @@ class Skill < ActiveRecord::Base
 		end
 
 		def attributes
-			{'type' => 'Support', 'name' => @name, 'added_hp' => @added_hp, 'added_mp' => @added_mp}
+			{'type' => 'Support', 'name' => @name, 'added_hp' => @added_hp, 'added_mp' => @added_mp, 'mp_consumption' => @mp_consumption }
 		end
 	end
-
-	# def self.process_skill(index, skill_level, caster, target, battle_id, battle_type)
-
-	# 	skill = get_skill(index)
-	# 	type = skill[:type]
-
-
-	# 	if skill[:type] == 'Attack'
-	# 		new_skill = Attack.new( skill[:name], skill[:type], skill[:base_dmg], skill[:dmg_range], skill[:mp_consumption], skill_level)
-
-	# 	elsif skill[:type] =='Buff'
-	# 		new_skill = Buff.new(skill[:name], skill[:type], skill[:turns], skill[:defense_up], skill[:attack_up], skill[:mp_consumption], skill_level)
-		
-	# 	elsif skill[:type] =='Support'
-	# 		new_skill = Support.new(skill[:name], skill[:type], skill[:hp_regen], skill[:mp_regen], skill[:mp_consumption], skill_level)
-
-	# 	end
-
-	# 	if caster.current_mp < new_skill.mp_consumption
-	# 		skill = "NotEnoughMP"
-	# 	else
-	# 		new_skill.process(caster, target)
-	# 	end
-
-	# 	if skill != "NotEnoughMP"
-
-	# 		target.save
-	# 		caster.save
-			
-	# 		skill_hash = new_skill.attributes
-
-	# 		if defined? target.name
-	# 			target_name = target.name
-	# 		else 
-	# 			target_name = target.species.name
-	# 		end
-
-	# 		if defined? caster.name
-	# 			caster_name = caster.name
-	# 		else 
-	# 			caster_name = caster.species.name
-	# 		end
-
-	# 			target_type = target.is_a?(Character) ? "Character" : "Mob"
-	# 			caster_type = caster.is_a?(Character) ? "Character" : "Mob"
-
-	# 		FightTurn.create( maker_id: caster.id, maker_type: caster_type, maker_name: caster_name,
-	# 								target_id: target.id, target_type: target_type, target_name: target_name,
-	# 								fight_type: battle_type, fight_id: battle_id, 
-	# 								serialized_object: skill_hash.to_json
-	# 								)
-	# 	end
-
-
-	# 	return skill
-	# end
 
 	def process_skill(aggression_id = 1)
 

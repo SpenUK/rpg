@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-	var skill_or_item
+	var skill_or_item;
 	var intervalTime = 600000;
 	var responsePending = false;
 	var noResponse = true;
@@ -95,8 +95,66 @@ $(document).ready(function(){
 		turn_request();
 	});
 
-	function player2Hit(dmg, critical){
+	function endBattle(){
+		console.log('End Battle');
+	}
+
+	function player1Update(mp_consumption){
+		// show and then fade HP / MP healed above player 1
+		var player1MaxHP = window.player1_max_hp;
+		var player1MaxMP = window.player1_max_mp;
+		var player1CurrentHP = window.player1_current_hp;
+		var player1CurrentMP = window.player1_current_mp;
+
+		var health_bar = $('.player_1_hud .hp_bar');
+		var health_indicator = $('.player_1_hud .hp_container_bar .hp_mp_stat');
+		var mp_bar = $('.player_1_hud .mp_bar');
+		var mp_indicator = $('.player_1_hud .mp_container_bar .hp_mp_stat');
+
+		if ((player1CurrentMP - mp_consumption) <= 0){
+			var updated_mp = 0;
+			defeated = true;
+		} else {
+			var updated_mp = player1CurrentMP - mp_consumption;
+		}
+		//updates player1 health & mp bars and global variables
+		//mp
+		var mpPercent = (updated_mp*100)/player1MaxMP;
+		mp_bar.animate({width: mpPercent+'%'}, { duration: (mp_consumption*100), easing: 'easeInOutCirc' })
+		window.player1_current_mp = updated_mp;
+		mp_indicator.html(updated_mp);
+
+	}
+
+	function player2Update(dmg, critical){
+		var player2MaxHP = window.player2_max_hp;
+		var player2MaxMP = window.player2_max_mp;
+		var player2CurrentHP = window.player2_current_hp;
+		var player2CurrentMP = window.player2_current_mp;
+
 		var target = $('.player2_effect_container span');
+		var health_bar = $('.player_2_hud .hp_bar');
+		var health_indicator = $('.player_2_hud .hp_container_bar .hp_mp_stat');
+		var mp_bar = $('.player_2_hud .mp_bar');
+		var mp_indicator = $('.player_2_hud .mp_container_bar .hp_mp_stat');
+		var defeated = false;
+		// change to function arg to allow mp change
+		var mp_reduction = 0;
+		// -------------------------
+		
+		if ((player2CurrentHP - dmg) <= 0){
+			var updated_health = 0;
+			defeated = true;
+		} else {
+			var updated_health = player2CurrentHP - dmg;
+		}
+
+		if ((player2CurrentMP - mp_reduction) <= 0){
+			var updated_mp = 0;
+			defeated = true;
+		} else {
+			var updated_mp = player2CurrentMP - mp_reduction;
+		}
 
 		// default critical to false 
 		critical = critical || false;
@@ -113,14 +171,31 @@ $(document).ready(function(){
 		target.animate({bottom:55, opacity: 1}, { duration: 400, easing: 'easeOutBack' });
 		target.delay(400).animate({bottom:0, opacity: 0}, { duration: 600, easing: 'easeInCubic' });
 
+		//updates player2 health & mp bars and global variables
+		//hp
+		var healthPercent = (updated_health*100)/player2MaxHP;
+		health_bar.animate({width: healthPercent+'%'}, { duration: (dmg*100), easing: 'easeInOutCirc' })
+		window.player2_current_hp = updated_health;
+		health_indicator.html(updated_health);
+		//mp
+		var mpPercent = (updated_mp*100)/player2MaxMP;
+		mp_bar.animate({width: mpPercent+'%'}, { duration: (mp_reduction*100), easing: 'easeInOutCirc' })
+		window.player2_current_mp = updated_mp;
+		mp_indicator.html(updated_mp);
 
 
-	}
-	function player1Heal(){
-		// show and then fade HP / MP healed above player 1
+
+
+		// calls endBattle if player is defeated
+		if (defeated) {
+			endBattle();
+		}
 	}
 
 	function turn_request() {
+
+		var player1MaxHP = window.player1_max_hp;
+		var player1MaxMP = window.player1_max_mp;
 
 		if (selected_item.id == null && selected_skill.id == null) {
 			$.error_message("You need to select either a skill or an item to use!", 'error', 1100);
@@ -142,7 +217,8 @@ $(document).ready(function(){
 						if (response.error_msg){
 							$.error_message(response.error_msg, response.error_type, response.error_delay);
 						} else {
-							player2Hit(response.attrs.damage, response.attrs.critical );
+							player2Update(response.attrs.damage, response.attrs.critical);
+							player1Update(response.attrs.mp_consumption);
 							console.log(response.attrs);
 						}
 					}	
@@ -163,9 +239,15 @@ $(document).ready(function(){
 
 	// ------------------
 
+	// function is to be triggered after player takes turn and skill animation is complete
+	// checks that a response is due and if it is it will indicate that the player is "waiting for opponent".
+	// Interval will ramp up and AJAX calls will be made to check if the opponent has made a move.
+	// Returnin false if not and updating view if they have.
+
+
 	function wait_for_response(){
 
-		if ( responsePending){
+		if (responsePending){
 			console.log('ajax request function start');
 			intervalTime = 4000;
 
@@ -185,10 +267,6 @@ $(document).ready(function(){
 
 	// var timer = setInterval(function(){wait_for_response()}, intervalTime);
 
-function sayHi() {
-   setTimeout(sayHi,intervalTime);
-   alert('hi');
-}
 
 wait_for_response();
 
