@@ -286,12 +286,9 @@ class Skill < ActiveRecord::Base
 		end
 
 		if caster.current_mp < new_skill.mp_consumption
-			skill = "NotEnoughMP"
+			return "NotEnoughMP"
 		else
 			new_skill.process(caster, target)
-		end
-
-		if skill != "NotEnoughMP"
 
 			target.save
 			caster.save
@@ -318,10 +315,9 @@ class Skill < ActiveRecord::Base
 									fight_type: current_fight.class.to_s, fight_id: current_fight.id, 
 									serialized_object: skill_hash.to_json
 									)
+
+			return new_skill.attributes
 		end
-
-
-		return new_skill.attributes
 	end
 
 end
