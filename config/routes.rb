@@ -18,6 +18,8 @@ FightyTest::Application.routes.draw do
   resources :battle_requests
   resources :battle_sessions
 
+  post 'opponent_check' => 'battles#opponent_check'
+
 
   get 'inventory' => 'inventory#index'
   

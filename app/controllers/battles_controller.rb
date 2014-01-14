@@ -165,4 +165,16 @@ class BattlesController < ApplicationController
 
     end
 
+   	def opponent_check
+   		@battle = battle_session.fight
+   		@last_turn = @battle.turns.last
+   		@data_hash = JSON.parse @last_turn.serialized_object
+
+   		@match = @last_turn.maker_id == current_char.id
+
+   		respond_to do |format|
+       format.json { render json: { waiting_for_opponent: @match, turn_data: @data_hash } }
+  	end
+   	end
+
 end

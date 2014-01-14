@@ -3,23 +3,6 @@ class Skill < ActiveRecord::Base
 
 	belongs_to :character
 
-	def build_skill
-		@index = skill_id
-
-		skill = self.class.get_skill(@index)
-		@type = skill[:type]
-
-		if @type == 'Attack'
-			@new_skill = Attack.new( skill[:name], skill[:type], skill[:base_dmg], skill[:dmg_range], skill[:mp_consumption], level)
-
-		elsif @type == 'Buff'
-			@new_skill = Buff.new(skill[:name], skill[:type], skill[:turns], skill[:defense_up], skill[:attack_up], skill[:mp_consumption], level)
-
-		elsif @type == 'Support'
-			@new_skill = Support.new(skill[:name], skill[:type], skill[:hp_regen], skill[:mp_regen], skill[:mp_consumption], level)
-		end
-	end
-
 	def get_skill index
 		attacks = [
 
@@ -192,7 +175,7 @@ class Skill < ActiveRecord::Base
 
 	class Attack < Skill
 		attr_accessor :name, :type, :mp_consumption, :dmg, :critical, :message_format
-		def initialize(name, type, base_dmg, dmg_range, mp_consumption, skill_level)
+		def initialize(name, type, base_dmg, dmg_range, mp_consumption, skill_level, index)
 				@name = name
 				@type = type
 				@level = skill_level
@@ -202,6 +185,7 @@ class Skill < ActiveRecord::Base
 				@critical = true if rand > 0.8
   			@dmg = (@base_dmg + rand(@dmg_range))
   			@dmg = (@dmg * 1.8).round if @critical
+  			@index = index
 		end
 
 		def process caster, target
@@ -212,13 +196,13 @@ class Skill < ActiveRecord::Base
 		end
 
 		def attributes
-			{'type' => 'Attack', 'name' => @name ,'level' => @level, 'damage' => @dmg, 'critical' => @critical, 'mp_consumption' => @mp_consumption }
+			{'type' => 'Attack', 'name' => @name ,'level' => @level, 'damage' => @dmg, 'critical' => @critical, 'mp_consumption' => @mp_consumption, 'index' => @index }
 		end
 	end
 
 	class Buff < Skill
 		attr_accessor :name, :type, :mp_consumption, :dmg, :critical, :message_format
-		def initialize(name, type, turns, defense_up, attack_up, mp_consumption, skill_level)
+		def initialize(name, type, turns, defense_up, attack_up, mp_consumption, skill_level, index)
 
 				@name = name
 				@type = type
@@ -227,6 +211,7 @@ class Skill < ActiveRecord::Base
 				@defense_up = defense_up
 				@attack_up = attack_up
 				@mp_consumption = mp_consumption || 0
+				@index = index
 
 		end
 
@@ -235,13 +220,13 @@ class Skill < ActiveRecord::Base
 		end
 
 		def attributes
-			{'type' => 'Buff', 'name' => @name ,'level' => @level, 'damage' => @dmg, 'critical' => @critical, 'mp_consumption' => @mp_consumption }
+			{'type' => 'Buff', 'name' => @name ,'level' => @level, 'damage' => @dmg, 'critical' => @critical, 'mp_consumption' => @mp_consumption, 'index' => @index }
 		end
 	end
 
 	class Support < Skill
 		attr_accessor :name, :type, :mp_consumption, :added_hp, :added_mp, :message_format 
-		def initialize(name, type, hp_regen, mp_regen, mp_consumption, skill_level)
+		def initialize(name, type, hp_regen, mp_regen, mp_consumption, skill_level, index)
 				@name = name
 				@type = type
 				@level = skill_level
@@ -249,6 +234,7 @@ class Skill < ActiveRecord::Base
 				@added_hp = hp_regen 
 				@added_mp = mp_regen 
 				@mp_consumption = mp_consumption
+				@index = index
 		end
 
 		def process caster, target
@@ -262,28 +248,34 @@ class Skill < ActiveRecord::Base
 		end
 
 		def attributes
-			{'type' => 'Support', 'name' => @name, 'added_hp' => @added_hp, 'added_mp' => @added_mp, 'mp_consumption' => @mp_consumption }
+			{'type' => 'Support', 'name' => @name, 'added_hp' => @added_hp, 'added_mp' => @added_mp, 'mp_consumption' => @mp_consumption, 'index' => @index }
 		end
+	end
+
+	def build_skill(id)
+
+		skill = get_skill(id)
+		@type = skill[:type]
+
+		if skill[:type] == 'Attack'
+			new_skill = Attack.new( skill[:name], skill[:type], skill[:base_dmg], skill[:dmg_range], skill[:mp_consumption], level, id)
+		elsif skill[:type] =='Buff'
+			new_skill = Buff.new(skill[:name], skill[:type], skill[:turns], skill[:defense_up], skill[:attack_up], skill[:mp_consumption], level, id)
+		elsif skill[:type] =='Support'
+			new_skill = Support.new(skill[:name], skill[:type], skill[:hp_regen], skill[:mp_regen], skill[:mp_consumption], level, id)
+		end
+
+		return new_skill
 	end
 
 	def process_skill(aggression_id = 1)
 
-		index = skill_id
 		current_fight = character.battle_session.fight
 	
 		caster = character
 		target = current_fight.challenger_id == caster.id ? current_fight.defender : current_fight.challenger
 
-		skill = get_skill(index)
-		type = skill[:type]
-
-		if skill[:type] == 'Attack'
-			new_skill = Attack.new( skill[:name], skill[:type], skill[:base_dmg], skill[:dmg_range], skill[:mp_consumption], level)
-		elsif skill[:type] =='Buff'
-			new_skill = Buff.new(skill[:name], skill[:type], skill[:turns], skill[:defense_up], skill[:attack_up], skill[:mp_consumption], level)
-		elsif skill[:type] =='Support'
-			new_skill = Support.new(skill[:name], skill[:type], skill[:hp_regen], skill[:mp_regen], skill[:mp_consumption], level)
-		end
+		new_skill = build_skill skill_id
 
 		if caster.current_mp < new_skill.mp_consumption
 			return "NotEnoughMP"

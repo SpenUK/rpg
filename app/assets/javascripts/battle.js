@@ -197,6 +197,7 @@ $(document).ready(function(){
 		var player1MaxHP = window.player1_max_hp;
 		var player1MaxMP = window.player1_max_mp;
 
+
 		if (selected_item.id == null && selected_skill.id == null) {
 			$.error_message("You need to select either a skill or an item to use!", 'error', 1100);
 		} else {
@@ -219,6 +220,8 @@ $(document).ready(function(){
 						} else {
 							player2Update(response.attrs.damage, response.attrs.critical);
 							player1Update(response.attrs.mp_consumption);
+							responsePending = true;
+							wait_for_response();
 							console.log(response.attrs);
 						}
 					}	
@@ -246,29 +249,35 @@ $(document).ready(function(){
 
 
 	function wait_for_response(){
-
-		if (responsePending){
+		
 			console.log('ajax request function start');
 			intervalTime = 4000;
+			var waiting = false;
 
-			if (true){
+			var ajaxy = $.ajax({
+				async: false,
+				url: "/opponent_check/",
+				type: "POST",
+				datatype : 'json',
+				data:{
+							action: 'battle',
+							controller: 'opponent_check' },
+				success: function(response){
+						waiting = response.waiting_for_opponent;
+						console.log('waiting?' + waiting);
+						console.log(response.turn_data);
+						}
+				});
+
+
+			if (waiting == true){
+				var wait_timeout = window.setTimeout(wait_for_response, intervalTime);				
+			} else {
 				responsePending = false;
 				window.clearTimeout(wait_timeout);
-				wait_for_response();
 				intervalTime = 600000;
 			}
-
-		} else {
-			console.log('no requesting');
-		}
-
-		wait_timeout = window.setTimeout(wait_for_response, intervalTime);
 	};
-
-	// var timer = setInterval(function(){wait_for_response()}, intervalTime);
-
-
-wait_for_response();
 
 });
 
