@@ -172,6 +172,8 @@ class BattlesController < ApplicationController
 
    		@match = @last_turn.maker_id == current_char.id
 
+   		#animation data and so on will be passed through here.
+
    		respond_to do |format|
        format.json { render json: { waiting_for_opponent: @match, turn_data: @data_hash } }
   	end

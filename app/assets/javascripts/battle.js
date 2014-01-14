@@ -99,17 +99,32 @@ $(document).ready(function(){
 		console.log('End Battle');
 	}
 
-	function player1Update(mp_consumption){
+	function player1Update(dmg, critical, mp_consumption){
+
+		// set defaults for missing args
+		dmg = dmg || 0;
+		critical = critical || false;
+		mp_consumption = mp_consumption || 0;
+
 		// show and then fade HP / MP healed above player 1
 		var player1MaxHP = window.player1_max_hp;
 		var player1MaxMP = window.player1_max_mp;
 		var player1CurrentHP = window.player1_current_hp;
 		var player1CurrentMP = window.player1_current_mp;
 
+		var target = $('.player1_effect_container span');
 		var health_bar = $('.player_1_hud .hp_bar');
 		var health_indicator = $('.player_1_hud .hp_container_bar .hp_mp_stat');
 		var mp_bar = $('.player_1_hud .mp_bar');
 		var mp_indicator = $('.player_1_hud .mp_container_bar .hp_mp_stat');
+
+		if ((player1CurrentHP - dmg) <= 0){
+			var updated_health = 0;
+			defeated = true;
+		} else {
+			var updated_health = player1CurrentHP - dmg;
+		}
+
 
 		if ((player1CurrentMP - mp_consumption) <= 0){
 			var updated_mp = 0;
@@ -117,16 +132,41 @@ $(document).ready(function(){
 		} else {
 			var updated_mp = player1CurrentMP - mp_consumption;
 		}
-		//updates player1 health & mp bars and global variables
-		//mp
-		var mpPercent = (updated_mp*100)/player1MaxMP;
-		mp_bar.animate({width: mpPercent+'%'}, { duration: (mp_consumption*100), easing: 'easeInOutCirc' })
-		window.player1_current_mp = updated_mp;
-		mp_indicator.html(updated_mp);
+
+		// damage done?
+		if (dmg >= 1) {
+			// handles critical hit class setting		
+			target.removeClass('critical_hit');
+			if (critical) {
+				target.addClass('critical_hit');
+			};
+			//sets damage amount in view
+			target.html(dmg);
+			// show and then fade damage done above player 2
+			target.animate({bottom:55, opacity: 1}, { duration: 400, easing: 'easeOutBack' });
+			target.delay(400).animate({bottom:0, opacity: 0}, { duration: 600, easing: 'easeInCubic' });
+
+			//updates player1 health & mp bars and global variables
+			//hp
+			var healthPercent = (updated_health*100)/player1MaxHP;
+			health_bar.animate({width: healthPercent+'%'}, { duration: (dmg*100), easing: 'easeInOutCirc' })
+			window.player1_current_hp = updated_health;
+			health_indicator.html(updated_health);
+			//mp
+			var mpPercent = (updated_mp*100)/player1MaxMP;
+			mp_bar.animate({width: mpPercent+'%'}, { duration: (mp_consumption*100), easing: 'easeInOutCirc' })
+			window.player1_current_mp = updated_mp;
+			mp_indicator.html(updated_mp);
+		}
 
 	}
 
-	function player2Update(dmg, critical){
+	function player2Update(dmg, critical, mp_consumption){
+		// set defaults for missing args
+		dmg = dmg || 0;
+		critical = critical || false;
+		mp_consumption = mp_consumption || 0;
+
 		var player2MaxHP = window.player2_max_hp;
 		var player2MaxMP = window.player2_max_mp;
 		var player2CurrentHP = window.player2_current_hp;
@@ -139,7 +179,7 @@ $(document).ready(function(){
 		var mp_indicator = $('.player_2_hud .mp_container_bar .hp_mp_stat');
 		var defeated = false;
 		// change to function arg to allow mp change
-		var mp_reduction = 0;
+		var mp_consumption = 0;
 		// -------------------------
 		
 		if ((player2CurrentHP - dmg) <= 0){
@@ -149,41 +189,36 @@ $(document).ready(function(){
 			var updated_health = player2CurrentHP - dmg;
 		}
 
-		if ((player2CurrentMP - mp_reduction) <= 0){
+		if ((player2CurrentMP - mp_consumption) <= 0){
 			var updated_mp = 0;
 			defeated = true;
 		} else {
-			var updated_mp = player2CurrentMP - mp_reduction;
+			var updated_mp = player2CurrentMP - mp_consumption;
 		}
 
-		// default critical to false 
-		critical = critical || false;
-		
-		// handles critical hit class setting		
-		target.removeClass('critical_hit');
-		if (critical) {
-			target.addClass('critical_hit');
-		};
-
-		//sets damage amount in view
-		target.html(dmg);
-		// show and then fade damage done above player 2
-		target.animate({bottom:55, opacity: 1}, { duration: 400, easing: 'easeOutBack' });
-		target.delay(400).animate({bottom:0, opacity: 0}, { duration: 600, easing: 'easeInCubic' });
-
-		//updates player2 health & mp bars and global variables
-		//hp
-		var healthPercent = (updated_health*100)/player2MaxHP;
-		health_bar.animate({width: healthPercent+'%'}, { duration: (dmg*100), easing: 'easeInOutCirc' })
-		window.player2_current_hp = updated_health;
-		health_indicator.html(updated_health);
-		//mp
-		var mpPercent = (updated_mp*100)/player2MaxMP;
-		mp_bar.animate({width: mpPercent+'%'}, { duration: (mp_reduction*100), easing: 'easeInOutCirc' })
-		window.player2_current_mp = updated_mp;
-		mp_indicator.html(updated_mp);
-
-
+		if (dmg >= 1) {
+			// handles critical hit class setting		
+			target.removeClass('critical_hit');
+			if (critical) {
+				target.addClass('critical_hit');
+			};
+			//sets damage amount in view
+			target.html(dmg);
+			// show and then fade damage done above player 2
+			target.animate({bottom:55, opacity: 1}, { duration: 400, easing: 'easeOutBack' });
+			target.delay(400).animate({bottom:0, opacity: 0}, { duration: 600, easing: 'easeInCubic' });
+			//updates player2 health & mp bars and global variables
+			//hp
+			var healthPercent = (updated_health*100)/player2MaxHP;
+			health_bar.animate({width: healthPercent+'%'}, { duration: (dmg*100), easing: 'easeInOutCirc' })
+			window.player2_current_hp = updated_health;
+			health_indicator.html(updated_health);
+			//mp
+			var mpPercent = (updated_mp*100)/player2MaxMP;
+			mp_bar.animate({width: mpPercent+'%'}, { duration: (mp_consumption*100), easing: 'easeInOutCirc' })
+			window.player2_current_mp = updated_mp;
+			mp_indicator.html(updated_mp);
+		}
 
 
 		// calls endBattle if player is defeated
@@ -218,8 +253,9 @@ $(document).ready(function(){
 						if (response.error_msg){
 							$.error_message(response.error_msg, response.error_type, response.error_delay);
 						} else {
-							player2Update(response.attrs.damage, response.attrs.critical);
-							player1Update(response.attrs.mp_consumption);
+							// below should be updated to accept all 3 args in future
+							player2Update(response.attrs.damage, response.attrs.critical, null);
+							player1Update(null, null, response.attrs.mp_consumption);
 							responsePending = true;
 							wait_for_response();
 							console.log(response.attrs);
@@ -229,18 +265,6 @@ $(document).ready(function(){
 				});
 		};
 	}
-
-	// test purposes only
-
-		$('.footer').on('click', function(e){
-			responsePending = !responsePending;
-			console.log("pending = " + responsePending);
-			window.clearTimeout(wait_timeout);
-			wait_for_response();
-
-		});
-
-	// ------------------
 
 	// function is to be triggered after player takes turn and skill animation is complete
 	// checks that a response is due and if it is it will indicate that the player is "waiting for opponent".
@@ -252,7 +276,8 @@ $(document).ready(function(){
 		
 			console.log('ajax request function start');
 			intervalTime = 4000;
-			var waiting = false;
+			var waiting = true;
+			var turn_data;
 
 			var ajaxy = $.ajax({
 				async: false,
@@ -264,18 +289,20 @@ $(document).ready(function(){
 							controller: 'opponent_check' },
 				success: function(response){
 						waiting = response.waiting_for_opponent;
-						console.log('waiting?' + waiting);
-						console.log(response.turn_data);
+						turn_data = response.turn_data;
 						}
 				});
 
-
 			if (waiting == true){
 				var wait_timeout = window.setTimeout(wait_for_response, intervalTime);				
+
 			} else {
+				console.log('else');
+				console.log(turn_data);
+				player1Update(turn_data.damage, turn_data.critical, null);
+				player2Update(null, null, turn_data.mp_comsumption);
 				responsePending = false;
 				window.clearTimeout(wait_timeout);
-				intervalTime = 600000;
 			}
 	};
 
