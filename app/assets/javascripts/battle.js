@@ -117,6 +117,7 @@ $(document).ready(function(){
 		var health_indicator = $('.player_1_hud .hp_container_bar .hp_mp_stat');
 		var mp_bar = $('.player_1_hud .mp_bar');
 		var mp_indicator = $('.player_1_hud .mp_container_bar .hp_mp_stat');
+		var defeated = false;
 
 		if ((player1CurrentHP - dmg) <= 0){
 			var updated_health = 0;
@@ -157,6 +158,11 @@ $(document).ready(function(){
 			mp_bar.animate({width: mpPercent+'%'}, { duration: (mp_consumption*100), easing: 'easeInOutCirc' })
 			window.player1_current_mp = updated_mp;
 			mp_indicator.html(updated_mp);
+		}
+
+			// calls endBattle if player is defeated
+		if (defeated) {
+			endBattle();
 		}
 
 	}
@@ -206,16 +212,20 @@ $(document).ready(function(){
 			target.html(dmg);
 			// show and then fade damage done above player 2
 			target.animate({bottom:55, opacity: 1}, { duration: 400, easing: 'easeOutBack' });
+			// target.animate({bottom:55, opacity: 1}, { duration: 400});
 			target.delay(400).animate({bottom:0, opacity: 0}, { duration: 600, easing: 'easeInCubic' });
+			// target.delay(400).animate({bottom:0, opacity: 0}, { duration: 600});
 			//updates player2 health & mp bars and global variables
 			//hp
 			var healthPercent = (updated_health*100)/player2MaxHP;
-			health_bar.animate({width: healthPercent+'%'}, { duration: (dmg*100), easing: 'easeInOutCirc' })
+			health_bar.animate({width: healthPercent+'%'}, { duration: (dmg*100), easing: 'easeInOutCirc' });
+			// health_bar.animate({width: healthPercent+'%'}, { duration: (dmg*100)});
 			window.player2_current_hp = updated_health;
 			health_indicator.html(updated_health);
 			//mp
 			var mpPercent = (updated_mp*100)/player2MaxMP;
-			mp_bar.animate({width: mpPercent+'%'}, { duration: (mp_consumption*100), easing: 'easeInOutCirc' })
+			mp_bar.animate({width: mpPercent+'%'}, { duration: (mp_consumption*100), easing: 'easeInOutCirc' });
+			// mp_bar.animate({width: mpPercent+'%'}, { duration: (mp_consumption*100)});
 			window.player2_current_mp = updated_mp;
 			mp_indicator.html(updated_mp);
 		}
@@ -271,6 +281,18 @@ $(document).ready(function(){
 	// Interval will ramp up and AJAX calls will be made to check if the opponent has made a move.
 	// Returnin false if not and updating view if they have.
 
+	function update_hp_mp_stats(object){
+		console.log(object);
+		console.log(object.player1_max_hp);
+		window.player1_max_hp = object['player1_max_hp'];
+		window.player1_max_mp = object['player1_max_mp'];
+		window.player2_max_hp = object['player2_max_hp'];
+		window.player2_max_mp = object['player2_max_mp'];
+		window.player1_current_hp = object['player1_current_hp'];
+		window.player1_current_mp = object['player1_current_mp'];
+		window.player2_current_hp = object['player2_current_hp'];
+		window.player2_current_mp = object['player2_current_mp'];
+	}
 
 	function wait_for_response(){
 		
@@ -278,6 +300,7 @@ $(document).ready(function(){
 			intervalTime = 4000;
 			var waiting = true;
 			var turn_data;
+			var stat_hash;
 
 			var ajaxy = $.ajax({
 				async: false,
@@ -290,6 +313,8 @@ $(document).ready(function(){
 				success: function(response){
 						waiting = response.waiting_for_opponent;
 						turn_data = response.turn_data;
+						stat_hash = response.stats_hash;
+						console.log(turn_data);
 						}
 				});
 
@@ -297,8 +322,8 @@ $(document).ready(function(){
 				var wait_timeout = window.setTimeout(wait_for_response, intervalTime);				
 
 			} else {
-				console.log('else');
-				console.log(turn_data);
+				console.log(stat_hash);
+				update_hp_mp_stats(stat_hash);
 				player1Update(turn_data.damage, turn_data.critical, null);
 				player2Update(null, null, turn_data.mp_comsumption);
 				responsePending = false;

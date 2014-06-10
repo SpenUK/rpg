@@ -168,14 +168,31 @@ class BattlesController < ApplicationController
    	def opponent_check
    		@battle = battle_session.fight
    		@last_turn = @battle.turns.last
-   		@data_hash = JSON.parse @last_turn.serialized_object
+   		@player1 = current_char
+   		@player2 = @battle.challenger_id == @player1.id ? @battle.defender : @battle.challenger
+   		
 
    		@match = @last_turn.maker_id == current_char.id
+
+   		if @match
+   			@turn_hash = JSON.parse @last_turn.serialized_object
+   			@stats_hash ={ 'player1_max_hp' => @player1.max_hp,
+   										'player1_max_mp' => @player1.max_mp,
+   										'player2_max_hp' => @player2.max_hp,
+   										'player2_max_mp' => @player2.max_mp,
+   										'player1_current_hp' => @player1.current_hp,
+   										'player1_current_mp' => @player1.current_mp,
+   										'player2_current_hp' => @player2.current_hp,
+   										'player2_current_mp' => @player2.current_mp }
+   		else
+				@turn_hash = {}
+   			@data_hash = {}
+   		end
 
    		#animation data and so on will be passed through here.
 
    		respond_to do |format|
-       format.json { render json: { waiting_for_opponent: @match, turn_data: @data_hash } }
+       format.json { render json: { waiting_for_opponent: @match, turn_data: @turn_hash, stats_hash: @stats_hash.to_json} }
   	end
    	end
 

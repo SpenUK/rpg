@@ -4,12 +4,18 @@
   <title>SomeGame</title>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"%>
+  <%#= javascript_include_tag "//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"%>
+  <%#= javascript_include_tag "assets/javascripts/jquery.ui.effect.js"%>
   <%= csrf_meta_tags %>
   <%= favicon_link_tag "favicon.png"%>
+
 </head>
 <body>
-
+<script type="text/javascript">
+$.ajaxSetup({headers: {
+  'X-CSRF-Token' : $('meta[name="csrf-token"]').attr('content')
+}});
+</script>
 <div id="lightbox" data-content="<%= @splash if @splash %>">
 <div class="lightbox_dim"></div>
   <%= (render partial: 'layouts/splash') if @splash == "login" %>
