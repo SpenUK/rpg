@@ -1,31 +1,10 @@
 <div class="container">
 
-<h2>Create Character</h2>
+<div class="new-character-display">
 
-<%= form_for @character do |f|%>
-	<% if @character.errors.any? %>
-		<div id="errors"><ul>
-			<% @character.errors.full_messages.each do |e| %>
-				<li><p><%= e %></p></li>
-				<% end %>
-		</ul></div>
-	<% end %>
+</div>
 
-	<div class="field">
-		<%= f.label :name %>
-		<%= f.text_field :name %>
-	</div>
+<%= render partial: 'characters/new' %>
 
-	<div class="field">
-		<%= f.radio_button :gender, 'male' %> <%= f.label :gender, "Male" %>
-		<%= f.radio_button :gender, 'female' %> <%= f.label :gender, "Female" %>
-	</div>
-
-	
-	
-	<div class="form_action">
-		<%= f.submit %>
-	</div>
-<% end %>
 
 </div>

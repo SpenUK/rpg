@@ -208,7 +208,7 @@ $(document).ready(function(){
 			if (critical) {
 				target.addClass('critical_hit');
 			};
-			//sets damage amount in view
+			// sets damage amount in view
 			target.html(dmg);
 			// show and then fade damage done above player 2
 			target.animate({bottom:55, opacity: 1}, { duration: 400, easing: 'easeOutBack' });

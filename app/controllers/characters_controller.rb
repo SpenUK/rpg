@@ -56,7 +56,7 @@ class CharactersController < ApplicationController
 
         current_user.characters << @character
 
-        redirect_to user_path(current_user.id), message: "Character Created!"
+        redirect_to characters_path, message: "Character Created!"
       else
         render :new, message: "Could not create character"
       end
